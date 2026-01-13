@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #6f42c1, #0056b3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .form-container h2 {
+      margin: 0 0 0.5rem;
+      color: #0056b3;
+    }
+
+    .form-container p {
+      margin-bottom: 1.5rem;
+      color: #666;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus {
+      border-color: #0056b3;
+      outline: none;
+    }
+
+    #loginButton {
+      width: 100%;
+      padding: 0.8rem;
+      background: #0056b3;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    #loginButton:hover {
+      background: #004494;
+      transform: translateY(-2px);
+    }
+
+    #message {
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #dc3545;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Admin / Mentor Login</h2>
+    <p>Access the Learning Management System control panel.</p>
+
+    <form id="adminLoginForm">
+      <div class="form-group">
+        <label for="email">Email Address (Login ID)</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" required>
+      </div>
+      <button type="submit" id="loginButton">Log In</button>
+      <div id="message"></div>
+    </form>
+  </div>
+
+  <script src="js/admin-common.js"></script>
+  <script src="js/admin-login.js"></script>
+</body>
+</html>

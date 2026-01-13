@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin | Generate Reports</title>
+  <link rel="stylesheet" href="css/admin-style.css"/>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .admin-container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 2rem;
+    }
+
+    .header {
+      background: linear-gradient(90deg, #0056b3, #6f42c1);
+      color: #fff;
+      padding: 1.5rem 2rem;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    }
+
+    .header h2 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    .btn {
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn-secondary {
+      background: #6c757d;
+      color: #fff;
+    }
+    .btn-secondary:hover {
+      background: #5a6268;
+      transform: translateY(-2px);
+    }
+    .btn-danger {
+      background: #dc3545;
+      color: #fff;
+    }
+    .btn-danger:hover {
+      background: #c82333;
+      transform: translateY(-2px);
+    }
+
+    .alert {
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+    .alert-info {
+      background: #e9f7fe;
+      color: #055160;
+    }
+    .alert-danger {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    .alert-warning {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .section-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+
+    .section-card h3 {
+      margin-top: 0;
+      color: #0056b3;
+    }
+
+    .stat-card-container {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .stat-card {
+      flex: 1;
+      background: #fdfdfd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.3s;
+    }
+    .stat-card:hover {
+      transform: translateY(-6px);
+    }
+    .stat-card h3 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: #6f42c1;
+    }
+    .stat-card p {
+      margin: 0;
+      color: #555;
+    }
+
+    .chart-container {
+      margin-top: 1rem;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    .table th,
+    .table td {
+      padding: 0.8rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    .table th {
+      background: #0056b3;
+      color: #fff;
+    }
+    .table-striped tr:nth-child(even) {
+      background: #f2f2f2;
+    }
+    .table tr:hover {
+      background: #e9ecef;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-container">
+    <header class="header">
+      <h2>📊 Generate Reports</h2>
+      <div>
+        <button onclick="window.location.href='admin-dashboard.html'" class="btn btn-secondary">Back to Dashboard</button>
+        <button id="logoutBtn" class="btn btn-danger">Logout</button>
+      </div>
+    </header>
+
+    <div id="loading" class="alert alert-info">
+      Fetching report data... Please wait.
+    </div>
+
+    <div id="errorDisplay" class="alert alert-danger d-none" style="display:none;">
+      Failed to load reports data.
+    </div>
+
+    <section class="section-card">
+      <h3>📈 Key Metrics</h3>
+      <div class="stat-card-container">
+        <div class="stat-card">
+          <h3 id="reportTotalStudents">...</h3>
+          <p>Total Registered Students</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="reportTotalCourses">...</h3>
+          <p>Total Active Courses</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h3>👥 Enrollment Trend (Cumulative)</h3>
+      <div class="chart-container">
+        <canvas id="enrollmentChart"></canvas>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h3>✅ Course Completion Details</h3>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Course ID</th>
+              <th>Title</th>
+              <th>Total Topics</th>
+              <th>Enrolled</th>
+              <th>Completed Students</th>
+              <th>Avg. Completion Rate</th>
+            </tr>
+          </thead>
+          <tbody id="courseCompletionBody"></tbody>
+        </table>
+      </div>
+      <div id="noDataMessage" class="alert alert-warning d-none" style="display:none;">
+        No course completion data available.
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="js/admin-common.js"></script>
+  <script src="js/admin-reports.js"></script>
+</body>
+</html>

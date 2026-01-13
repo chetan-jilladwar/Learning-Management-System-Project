@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Management - Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: #f8f9fa; }
+        .course-card { box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-radius: 10px; }
+        .btn-action { margin: 0 2px; }
+        #status-message { 
+            display: none; 
+            padding: 1rem; 
+            border-radius: 8px; 
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .course-table { background: white; border-radius: 10px; overflow: hidden; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid py-4">
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col">
+                <h1 class="fw-bold text-primary">📚 Course Management</h1>
+                <p class="text-muted">Manage all courses and topics</p>
+            </div>
+            <div class="col-auto">
+                <a href="admin-dashboard.html" class="btn btn-outline-primary">← Back to Dashboard</a>
+            </div>
+        </div>
+
+        <!-- Add Course Form -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div id="status-message"></div>
+                <div class="card course-card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="fas fa-plus me-2"></i>Add New Course</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="addCourseForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Course Title *</label>
+                                    <input type="text" class="form-control" id="title" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Category</label>
+                                    <input type="text" class="form-control" id="category" placeholder="e.g., Web Development">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Duration</label>
+                                    <input type="text" class="form-control" id="duration" placeholder="e.g., 4 weeks">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Instructor</label>
+                                    <input type="text" class="form-control" id="instructor" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Description</label>
+                                    <textarea class="form-control" id="description" rows="3" placeholder="Course description..."></textarea>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Image URL (optional)</label>
+                                    <input type="url" class="form-control" id="imageUrl" placeholder="https://example.com/image.jpg">
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary btn-lg" id="addCourseButton">
+                                        <i class="fas fa-plus me-2"></i>Add Course
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Courses List -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card course-card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="fas fa-list me-2"></i>All Courses</h5>
+                        <div id="loadingMessage" class="text-muted">Loading courses...</div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="courseList"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/admin-common.js"></script>
+    <script src="js/admin-courses.js"></script>
+</body>
+</html>

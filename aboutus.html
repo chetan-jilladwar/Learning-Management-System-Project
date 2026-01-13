@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us - LMS Platform</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Inter", sans-serif;
+      line-height: 1.7;
+      color: #0f172a;
+      background: #f8fafc;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      padding: 110px 20px 80px;
+      text-align: center;
+    }
+    .header-inner { max-width: 900px; margin: 0 auto; }
+    .header h1 {
+      font-size: clamp(2.4rem, 4vw, 3.5rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    section { padding: 80px 20px; }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #111827;
+    }
+    .section-sub {
+      text-align: center;
+      color: #6b7280;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      font-size: 0.98rem;
+    }
+
+    /* Stats */
+    .stats { background: #f9fafb; }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+    .stat-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px 20px;
+      text-align: center;
+      box-shadow: 0 12px 40px rgba(15, 23, 42, 0.06);
+    }
+    .stat-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      margin: 0 auto 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(99, 102, 241, 0.1);
+      color: #4f46e5;
+      font-size: 22px;
+    }
+    .stat-number {
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+    .stat-label { color: #6b7280; font-size: 0.95rem; }
+
+    /* Mission */
+    .mission-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 40px;
+      align-items: center;
+    }
+    .mission-text h2 {
+      font-size: 2.1rem;
+      margin-bottom: 12px;
+    }
+    .mission-text p {
+      color: #4b5563;
+      font-size: 0.98rem;
+      margin-bottom: 12px;
+    }
+    .mission-points {
+      margin-top: 16px;
+      list-style: none;
+    }
+    .mission-points li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      color: #374151;
+      font-size: 0.96rem;
+    }
+    .mission-points i { color: #10b981; }
+    .mission-img-wrap { position: relative; }
+    .mission-img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.18);
+      object-fit: cover;
+      max-height: 360px;
+    }
+
+    /* Team */
+    .team {
+      background: linear-gradient(135deg, #eef2ff 0%, #e5e7eb 100%);
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-top: 20px;
+    }
+    .team-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 28px 20px;
+      text-align: center;
+      box-shadow: 0 10px 32px rgba(15, 23, 42, 0.12);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .team-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.18);
+    }
+    .team-avatar {
+  width: 120px;      /* pehle 78px tha, isse bada hoga */
+  height: 120px;
+  border-radius: 50%;
+  margin: 0 auto 16px;
+  overflow: hidden;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.team-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+
+    .team-name { font-weight: 600; margin-bottom: 4px; }
+    .team-role {
+      color: #6b7280;
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
+    .team-meta {
+      color: #4b5563;
+      font-size: 0.9rem;
+    }
+
+    /* Values */
+    .values { background: #ffffff; }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-top: 20px;
+    }
+    .value-card {
+      background: #f9fafb;
+      border-radius: 16px;
+      padding: 22px 20px;
+      text-align: center;
+      border: 1px solid #e5e7eb;
+    }
+    .value-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      margin: 0 auto 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      color: #fff;
+      font-size: 24px;
+    }
+    .value-title { font-weight: 600; margin-bottom: 6px; }
+    .value-text { color: #6b7280; font-size: 0.95rem; }
+
+    /* CTA */
+    .cta {
+      background: #0f172a;
+      color: #e5e7eb;
+      text-align: center;
+      padding: 70px 20px 80px;
+    }
+    .cta h2 {
+      font-size: 2.1rem;
+      margin-bottom: 10px;
+      color: #f9fafb;
+    }
+    .cta p {
+      color: #9ca3af;
+      max-width: 480px;
+      margin: 0 auto 24px;
+      font-size: 0.98rem;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 26px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: #fff;
+      font-weight: 500;
+      font-size: 0.98rem;
+      box-shadow: 0 12px 35px rgba(79, 70, 229, 0.4);
+    }
+    .cta-btn i { font-size: 0.98rem; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .mission-grid { grid-template-columns: 1fr; }
+      .mission-img-wrap { order: -1; margin-bottom: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="header">
+    <div class="header-inner">
+      <h1>About Us - CODELINE AI</h1>
+      <p>
+        We build simple, powerful tools that help students learn faster and stay
+        consistent. From quizzes to progress tracking, everything is designed for you.
+      </p>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fas fa-users"></i></div>
+          <div class="stat-number">5K+</div>
+          <div class="stat-label">Active Learners</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fas fa-book-open"></i></div>
+          <div class="stat-number">120+</div>
+          <div class="stat-label">Structured Topics</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fas fa-clock"></i></div>
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Anytime Access</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fas fa-star"></i></div>
+          <div class="stat-number">4.9</div>
+          <div class="stat-label">Student Rating</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION -->
+  <section>
+    <div class="container mission-grid">
+      <div class="mission-text">
+        <h2>Our Mission</h2>
+        <p>
+          Make learning easy, structured and enjoyable for every student, no matter
+          where they are starting from.
+        </p>
+        <p>
+          Your course, assignment and quiz system is built to remove confusion and
+          keep learners focused on the next right step.
+        </p>
+        <ul class="mission-points">
+          <li><i class="fas fa-check-circle"></i> Clear topic‑wise progress</li>
+          <li><i class="fas fa-check-circle"></i> Auto‑checked quizzes & instant feedback</li>
+          <li><i class="fas fa-check-circle"></i> Simple dashboard for students and admins</li>
+        </ul>
+      </div>
+      <div class="mission-img-wrap">
+        <img
+          class="mission-img"
+          src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1000&q=80"
+          alt="Students learning online"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="team">
+    <div class="container">
+      <h2 class="section-title">Meet Our Team</h2>
+      <p class="section-sub">
+        A small, focused team that cares about clean code, smooth UX and real learning outcomes.
+      </p>
+
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-avatar">
+            <!-- apni image ka path yahan lagao -->
+            <img src="https://mohammedimranblog.wordpress.com/wp-content/uploads/2015/10/284574-shahid-kapoor.jpg" alt="Founder" />
+          </div>
+          <div class="team-name">Founder / Architect</div>
+          <div class="team-role">Product & System Design</div>
+          <div class="team-meta">
+            Designs the overall LMS flow – courses, topics, assignments and progress logic.
+          </div>
+        </div>
+
+        <div class="team-card">
+          <div class="team-avatar">
+            <img src="images/developer.jpg" alt="Developer" />
+          </div>
+          <div class="team-name">Full‑Stack Developer</div>
+          <div class="team-role">Frontend + Apps Script</div>
+          <div class="team-meta">
+            Builds the dashboard, quizzes, course pages and Google Sheets backend.
+          </div>
+        </div>
+
+        <div class="team-card">
+          <div class="team-avatar">
+            <img src="images/content.jpg" alt="Content Lead" />
+          </div>
+          <div class="team-name">Content Lead</div>
+          <div class="team-role">Courses & Assessments</div>
+          <div class="team-meta">
+            Structures topics, questions and assignments so students learn step by step.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section class="values">
+    <div class="container">
+      <h2 class="section-title">Our Core Values</h2>
+      <p class="section-sub">
+        These principles guide how we design features and make decisions for the platform.
+      </p>
+
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon"><i class="fas fa-compass"></i></div>
+          <div class="value-title">Clarity</div>
+          <div class="value-text">
+            Students should always know which topic comes next and what is required.
+          </div>
+        </div>
+
+        <div class="value-card">
+          <div class="value-icon"><i class="fas fa-bolt"></i></div>
+          <div class="value-title">Simplicity</div>
+          <div class="value-text">
+            Clean UI, minimal clicks, no confusion – just focus on learning.
+          </div>
+        </div>
+
+        <div class="value-card">
+          <div class="value-icon"><i class="fas fa-shield-alt"></i></div>
+          <div class="value-title">Reliability</div>
+          <div class="value-text">
+            Topic locking, submissions and progress tracking must work every time.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container">
+      <h2>Ready to continue your journey?</h2>
+      <p>Go back to your dashboard and pick up exactly where you left off.</p>
+      <a href="index.html" class="cta-btn">
+        <i class="fas fa-arrow-right"></i>
+        Go to Dashboard
+      </a>
+    </div>
+  </section>
+
+</body>
+</html>

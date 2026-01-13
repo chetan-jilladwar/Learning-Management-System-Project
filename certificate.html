@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate of Completion</title>
+    
+    <link rel="stylesheet" href="/css/style.css"> 
+    
+    <style>
+        /* Certificate Specific Styling (Aap ise styles.css mein bhi daal sakte hain) */
+        .certificate-container {
+            width: 800px;
+            height: 600px;
+            margin: 50px auto;
+            border: 20px solid #0056b3; /* Primary Color Border */
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            background: #fff url('images/certificate-bg.png') no-repeat center center; /* Optional: Use a background image */
+            background-size: cover;
+            text-align: center;
+            font-family: 'Times New Roman', serif;
+        }
+        .certificate-header {
+            color: #0056b3;
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .certificate-title {
+            font-size: 28px;
+            margin-bottom: 40px;
+            color: #333;
+        }
+        .certificate-name {
+            font-size: 40px;
+            font-family: 'Cursive', sans-serif; /* For a classic look */
+            color: #d9534f; /* Red or Gold-like color */
+            margin: 20px 0;
+            border-bottom: 2px dashed #ccc;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        .certificate-course {
+            font-size: 24px;
+            margin-top: 30px;
+            color: #007bff;
+            font-weight: 600;
+        }
+        .certificate-footer {
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            font-size: 16px;
+        }
+        .signature-area {
+            border-top: 1px solid #333;
+            width: 40%;
+            padding-top: 5px;
+        }
+        #download-button {
+            margin-top: 20px;
+        }
+        .error-message {
+            color: red;
+            font-size: 24px;
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="loading-message" class="loading-message" style="display: none;">Loading Certificate...</div>
+        
+        <div id="certificate-content" class="certificate-container" style="display: none;">
+            <div class="certificate-header">CERTIFICATE OF COMPLETION</div>
+            <div class="certificate-title">This is to certify that</div>
+            
+            <h1 class="certificate-name" id="student-name">...</h1>
+            
+            <p style="font-size: 20px;">has successfully completed the online course</p>
+            
+            <h2 class="certificate-course" id="course-title">...</h2>
+            
+            <p style="margin-top: 10px; font-size: 16px;">on <span id="completion-date">...</span></p>
+            
+            <div class="certificate-footer">
+                <div class="signature-area">
+                    <p id="instructor-name">...</p>
+                    <p>Instructor</p>
+                </div>
+                <div class="signature-area">
+                    <p>LSM Portal Authority</p>
+                    <p>Date Issued: <span id="issued-date">...</span></p>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div id="status-area" style="text-align: center; margin-top: 20px;">
+            <p id="error-message" class="error-message" style="display: none;"></p>
+            <button id="download-button" class="btn btn-primary" style="display: none;">Download Certificate (PDF)</button>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth-check.js"></script>
+    <script src="js/certificate.js"></script>
+</body>
+</html>

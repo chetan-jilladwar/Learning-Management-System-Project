@@ -1,0 +1,723 @@
+/* --- Global Styles & Variables --- */
+:root {
+    --primary-color: #007bff;
+    --primary-hover: #0056b3;
+    --secondary-color: #6c757d;
+    --light-bg: #f8f9fa;
+    --white: #ffffff;
+    --dark-text: #333;
+    --light-text: #777;
+    --border-color: #ddd;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: var(--white);
+    color: var(--dark-text);
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* --- Utility Classes (Buttons) --- */
+.btn {
+    display: inline-block;
+    padding: 0.7rem 1.2rem;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--white);
+}
+.btn-secondary:hover {
+    background-color: #555;
+}
+
+.btn-lg {
+    font-size: 1.1rem;
+    padding: 0.8rem 1.5rem;
+}
+
+
+/* --- Header / Navbar --- */
+.navbar {
+    background-color: var(--white);
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.navbar nav ul {
+    list-style: none;
+    display: flex;
+}
+
+.navbar nav li {
+    margin-left: 1.5rem;
+}
+
+.navbar nav a {
+    text-decoration: none;
+    color: var(--dark-text);
+    font-weight: bold;
+}
+.navbar nav a.active, .navbar nav a:hover {
+    color: var(--primary-color);
+}
+
+.auth-buttons .btn {
+    margin-left: 0.5rem;
+}
+
+/* --- Hero Section --- */
+.hero {
+    background-color: var(--primary-color);
+    color: var(--white);
+    text-align: center;
+    padding: 6rem 1rem;
+}
+.hero h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+}
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+/* --- Sections (Overview, Courses, Testimonials) --- */
+section {
+    padding: 4rem 0;
+}
+section h2 {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 2.5rem;
+}
+
+/* Overview Section */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+.feature-card {
+    background-color: var(--light-bg);
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+}
+.feature-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+/* Popular Courses Section */
+.popular-courses {
+    background-color: var(--light-bg);
+}
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+.course-card {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(196, 48, 48, 0.05);
+}
+.course-card img {
+    /* Placeholder styling */
+    background-color: #eee; 
+    height: 180px; 
+    width: 100%; 
+    display: block;
+}
+.course-card h3 {
+    padding: 1rem 1.5rem 0.5rem 1.5rem;
+}
+.course-card p {
+    padding: 0 1.5rem 1rem 1.5rem;
+    color: var(--light-text);
+}
+.course-card .btn {
+    margin: 0 1.5rem 1.5rem 1.5rem;
+}
+
+/* Testimonials */
+.testimonial-card {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+}
+.testimonial-card blockquote {
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--light-text);
+    margin-bottom: 1rem;
+}
+.testimonial-card p {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* --- Footer --- */
+.footer {
+    background-color: var(--dark-text);
+    color: var(--white);
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 2rem;
+}
+
+/* --- Login/Register Form Container (from old style.css) --- */
+/* Taaqi hamare purane pages bhi is CSS se chal sakein */
+.form-container {
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+    margin: 4rem auto; /* Page ke beech mein laane ke liye */
+}
+
+.form-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.form-container p {
+    text-align: center;
+    color: #777;
+    margin-bottom: 1.5rem;
+}
+.form-group {
+    margin-bottom: 1.25rem;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #555;
+}
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+.form-container button {
+    width: 100%;
+    padding: 0.85rem;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.form-container button:hover {
+    background-color: var(--primary-hover);
+}
+.form-container button:disabled {
+    background-color: #a0a0a0;
+}
+#message {
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: bold;
+}
+.success { color: green; }
+.error { color: red; }
+.login-link { margin-top: 1.5rem; }
+
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .features-grid, .course-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .navbar .container {
+        flex-direction: column;
+    }
+    .navbar nav {
+        margin: 1rem 0;
+    }
+    .auth-buttons {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+}
+/* --- Dashboard Layout Styles (Kadam 7) --- */
+
+.dashboard-wrapper {
+    display: flex; /* Flexbox use karke sidebar aur main content ko side-by-side rakhega */
+    min-height: 100vh;
+}
+
+/* --- Sidebar Styling --- */
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50; /* Dark blue/grey */
+    color: var(--white);
+    padding: 1rem 0;
+    flex-shrink: 0; /* Sidebar ka size fix rakhega */
+}
+
+.logo-area {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 1rem 0 2rem 0;
+    color: var(--primary-color);
+}
+
+.sidebar-nav ul {
+    list-style: none;
+}
+
+.sidebar-nav li a {
+    display: block;
+    padding: 0.8rem 1.5rem;
+    color: #ecf0f1; /* Light text */
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.sidebar-nav li.active a,
+.sidebar-nav li a:hover {
+    background-color: #34495e; /* Slightly lighter dark color on hover */
+    border-left: 4px solid var(--primary-color);
+    padding-left: 1.3rem;
+}
+
+/* --- Main Content Styling --- */
+.main-content {
+    flex-grow: 1; /* Bacha hua saara space lega */
+    padding: 2rem;
+    background-color: #f4f6f9; /* Light background for the content area */
+}
+
+.dashboard-header {
+    margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+    font-size: 2rem;
+    color: #2c3e50;
+}
+
+/* Summary Cards */
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.card {
+    background-color: var(--white);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.card h3 {
+    color: var(--light-text);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.card p {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.dashboard-section h2 {
+    text-align: left;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Responsive adjustments for mobile view */
+@media (max-width: 768px) {
+    .dashboard-wrapper {
+        flex-direction: column; /* Vertical stacking on smaller screens */
+    }
+    .sidebar {
+        width: 100%;
+        padding: 0;
+    }
+    .sidebar-nav ul {
+        display: flex;
+        flex-wrap: wrap; /* Menus ko wrap karein */
+        justify-content: space-around;
+        padding: 0.5rem;
+    }
+    .sidebar-nav li {
+        width: 48%; /* Do items per line */
+        text-align: center;
+    }
+    .sidebar-nav li a {
+        padding: 0.5rem;
+        border-left: none;
+        border-bottom: 2px solid transparent;
+    }
+    .sidebar-nav li.active a,
+    .sidebar-nav li a:hover {
+        border-bottom-color: var(--primary-color);
+        border-left: none;
+        padding-left: 0.5rem;
+    }
+    .logo-area {
+        display: none; /* Hide logo on small screens to save space */
+    }
+}
+
+/* --- My Courses Page Styles (Kadam 10) --- */
+
+.my-courses-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.course-card-enrolled {
+    background-color: var(--white);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.course-card-enrolled h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.course-card-enrolled .description {
+    color: var(--light-text);
+    margin: 0.5rem 0 1rem 0;
+}
+
+.progress-area {
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.progress-bar-container {
+    flex-grow: 1;
+    height: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    margin-right: 15px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    transition: width 0.4s ease;
+    border-radius: 5px;
+}
+
+/* --- Course Detail Styles (Kadam 12) --- */
+
+.course-tabs {
+    display: flex;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.course-tabs .tab-link {
+    text-decoration: none;
+    padding: 10px 15px;
+    color: var(--dark-text);
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.3s ease;
+}
+
+.course-tabs .tab-link:hover,
+.course-tabs .tab-link.active {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.tab-pane {
+    display: none; /* By default hide all tabs */
+    padding: 15px 0;
+}
+
+.tab-pane.active {
+    display: block; /* Show active tab */
+}
+
+.tab-content-wrapper {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.curriculum-list {
+    list-style: none;
+    padding-left: 0;
+}
+.curriculum-list li {
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px 0;
+}
+.curriculum-list li a {
+    text-decoration: none;
+    color: var(--dark-text);
+    display: block;
+}
+.curriculum-list li a:hover {
+    color: var(--primary-color);
+}
+
+/* --- Course Topic Page Styles (Kadam 15) --- */
+
+.learning-view-wrapper {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f4f6f9;
+}
+
+.topic-sidebar {
+    width: 280px;
+    background-color: var(--white);
+    padding: 1.5rem;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border-color);
+}
+
+.topic-sidebar h2 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.topic-list {
+    list-style: none;
+    padding: 0;
+}
+.topic-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px dotted var(--border-color);
+}
+.topic-list li a {
+    text-decoration: none;
+    color: var(--dark-text);
+    display: block;
+    transition: color 0.2s;
+}
+.topic-list li a:hover {
+    color: var(--primary-color);
+}
+
+
+.topic-main-content {
+    flex-grow: 1;
+    padding: 2rem;
+}
+
+.video-player-container {
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #000;
+}
+
+.topic-section {
+    background-color: var(--white);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.topic-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.notes-content {
+    line-height: 1.8;
+}
+
+.assignment-section p {
+    margin-bottom: 1rem;
+    font-weight: 500;
+    color: var(--dark-text);
+}
+
+#assignment-submission {
+    width: 100%;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.topic-navigation {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .learning-view-wrapper {
+        flex-direction: column;
+    }
+    .topic-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .topic-main-content {
+        padding: 1rem;
+    }
+}
+
+/* --- Profile Page Styles (Kadam 20) --- */
+
+.profile-container {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    max-width: 600px;
+}
+
+.profile-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+    color: var(--dark-text);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 5px;
+    color: var(--light-text);
+    font-size: 0.85rem;
+}
+
+/* --- Discussion Page Styles (Kadam 24) --- */
+
+.discussion-form-container {
+    background-color: var(--white);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.discussion-form-container h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.posts-container {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.post-card {
+    background-color: var(--white);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid var(--secondary-color);
+}
+
+.post-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--dark-text);
+}
+
+.post-meta {
+    font-size: 0.85rem;
+    color: var(--light-text);
+    margin-bottom: 1rem;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 5px;
+}
+
+.post-content {
+    color: var(--dark-text);
+    line-height: 1.6;
+}
+

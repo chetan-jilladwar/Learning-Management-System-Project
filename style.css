@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LSM Student Portal - Start Learning Now</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <header class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">LSM Portal</a>
+      <nav>
+        <ul>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="login.html" id="nav-dashboard">Dashboard</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+      <div class="auth-buttons" id="auth-controls">
+        <a href="login.html" class="btn btn-secondary">Login</a>
+        <a href="register.html" class="btn btn-primary">Register</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero">
+    <div class="container">
+      <h1>Welcome to LSM Portal</h1>
+      <p>Your journey to knowledge and success begins here.</p>
+      <a href="#course-catalog-container" class="btn btn-primary btn-lg">Start Exploring Courses</a>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES ===== -->
+  <section class="overview container">
+    <h2>Why Choose LSM?</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>👩‍🏫 Expert Instructors</h3>
+        <p>Learn from industry experts who are passionate about teaching.</p>
+      </div>
+      <div class="feature-card">
+        <h3>⏰ Flexible Learning</h3>
+        <p>Study at your own pace, anytime, anywhere.</p>
+      </div>
+      <div class="feature-card">
+        <h3>🚀 Career Growth</h3>
+        <p>Get the skills you need to advance your career.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== POPULAR COURSES ===== -->
+  <section class="popular-courses">
+    <div class="container">
+      <h2>Explore Our Courses</h2>
+      <div id="course-catalog-container" class="course-grid">
+
+        <!-- Course Card Example -->
+        <div class="course-card">
+          <div class="course-image-container">
+            <img src="https://via.placeholder.com/300x180?text=Java+Full+Stack" alt="Java Full Stack Course">
+          </div>
+          <div class="course-header">
+            <h3>Java Full Stack <span class="course-id">(CS001)</span></h3>
+          </div>
+          <div class="course-info">
+            <p><strong>Instructor:</strong> Anjali</p>
+            <p class="description">Master Java, Spring Boot, and Hibernate...</p>
+            <p><strong>Duration:</strong> 6 Months</p>
+          </div>
+          <div class="course-footer enroll-links">
+            <a href="course-detail.html?id=CS001">View Details</a>
+            <a href="enroll.html?id=CS001">Enroll</a>
+          </div>
+        </div>
+
+        <!-- More course cards -->
+        <div class="course-card">
+          <div class="course-image-container">
+            <img src="https://via.placeholder.com/300x180?text=Python+Course" alt="Python Course">
+          </div>
+          <div class="course-header">
+            <h3>Python <span class="course-id">(DS002)</span></h3>
+          </div>
+          <div class="course-info">
+            <p><strong>Instructor:</strong> Rohit</p>
+            <p class="description">Learn Python, Pandas, and Scikit-learn...</p>
+            <p><strong>Duration:</strong> 4 Months</p>
+          </div>
+          <div class="course-footer">
+            <p class="progress-text">Progress: 0%</p>
+            <a href="course-detail.html?id=DS002" class="action-link">Continue Learning</a>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-image-container">
+            <img src="https://via.placeholder.com/300x180?text=C+Programming" alt="C Programming">
+          </div>
+          <div class="course-header">
+            <h3>C Programming <span class="course-id">(KS002)</span></h3>
+          </div>
+          <div class="course-info">
+            <p><strong>Instructor:</strong> Omkar</p>
+            <p class="description">Learn Operators and basics of C...</p>
+            <p><strong>Duration:</strong> 3 Months</p>
+          </div>
+          <div class="course-footer">
+            <p class="progress-text">Progress: 0%</p>
+            <a href="course-detail.html?id=KS002" class="action-link">Continue Learning</a>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-image-container">
+            <img src="https://via.placeholder.com/300x180?text=C%2B%2B+Programming" alt="C++ Programming">
+          </div>
+          <div class="course-header">
+            <h3>C++ Programming <span class="course-id">(KS008)</span></h3>
+          </div>
+          <div class="course-info">
+            <p><strong>Instructor:</strong> Atharv</p>
+            <p class="description">Learn advanced concepts in C++...</p>
+            <p><strong>Duration:</strong> 10 Months</p>
+          </div>
+          <div class="course-footer">
+            <p class="progress-text">Progress: 0%</p>
+            <a href="course-detail.html?id=KS008" class="action-link">Continue Learning</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="testimonials container">
+    <h2>What Our Students Say</h2>
+    <div class="testimonial-card">
+      <blockquote>
+        "This platform changed my career. The Java course was practical and easy to follow."
+      </blockquote>
+      <p>- Admin</p>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 LSM Portal. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/course-catalog.js"></script>
+</body>
+</html>

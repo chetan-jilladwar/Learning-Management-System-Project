@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Discussions - LSM Portal</title>
+    <link rel="stylesheet" href="css/main.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* :::::: 1. GLOBAL VARIABLES (Synced) :::::: */
+        :root {
+            --primary-purple:rgba(111, 3, 106, 0.95);       /* Deep Royal Purple */
+            --primary-dark: rgba(111, 3, 106, 0.95);         /* Darker Purple for gradients */
+            --pista-green: #badc58;          /* Fresh Pistachio */
+            --bg-color: #f7f6ff;             /* Very light purple/lavender base */ 
+            --white: #ffffff;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+            --shadow-light: 0 4px 15px rgba(0,0,0,0.08);
+            --shadow-deep: 0 10px 30px rgba(72, 52, 212, 0.15);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: var(--bg-color); 
+            display: flex;
+            color: var(--text-dark);
+        }
+
+        .dashboard-wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* :::::: 2. SIDEBAR (Synced with Dashboard) :::::: */
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(180deg, var(--primary-purple) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem 1rem;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 50;
+        }
+        .logo-area {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+        .sidebar-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar-nav li {
+            margin-bottom: 0.5rem;
+        }
+        .sidebar-nav a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            transition: background 0.3s, color 0.3s;
+        }
+        .sidebar-nav a:hover {
+            background: rgba(255,255,255,0.15);
+        }
+        .sidebar-nav .active a {
+            background: var(--white);
+            color:  rgba(247, 240, 240, 0.9);
+            font-weight: 600;
+            box-shadow: var(--shadow-light);
+        }
+        /* Utility for Sidebar icons on mobile */
+        .sidebar-nav a span { display: inline-block; }
+        .sidebar-nav a::before { content: none; }
+
+        /* :::::: 3. MAIN CONTENT & HEADER :::::: */
+        .main-content {
+            flex: 1;
+            padding: 2.5rem;
+        }
+
+        .dashboard-header h1 {
+            margin: 0 0 1.5rem;
+            font-size: 2rem;
+            color: var(--primary-purple);
+            font-weight: 700;
+            border-bottom: 2px solid var(--pista-green);
+            padding-bottom: 10px;
+        }
+
+        /* :::::: 4. DISCUSSION FORM :::::: */
+        .discussion-form-container {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-light);
+            margin-bottom: 3rem;
+        }
+        .discussion-form-container h2 {
+            margin-top: 0;
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+            border-bottom: 1px dashed #e0e0e0;
+            padding-bottom: 10px;
+            margin-bottom: 1.5rem;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            color: var(--primary-purple); /* Purple labels */
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem; /* Larger padding */
+            border: 1px solid #ddd;
+            border-radius: 10px; /* More rounded */
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            box-sizing: border-box;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--pista-green); /* Pista focus border */
+            box-shadow: 0 0 0 3px rgba(186, 220, 88, 0.3); /* Pista glow */
+            outline: none;
+        }
+        .btn-action {
+            display: inline-block;
+            background: var(--primary-purple);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            text-decoration: none;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+        .btn-action:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(72, 52, 212, 0.4);
+        }
+
+        /* :::::: 5. DISCUSSION POST CARDS :::::: */
+        .posts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Slightly wider cards */
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        .post-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.8rem;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 5px solid var(--pista-green); /* Pista Accent */
+        }
+        .post-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-deep);
+        }
+        .post-card h3 {
+            margin: 0 0 0.5rem;
+            color: var(--primary-dark);
+            font-size: 1.4em;
+        }
+        .post-meta {
+            font-size: 0.9em;
+            color: var(--text-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 0.5rem;
+            border-top: 1px dashed #eee;
+            margin-top: 1rem;
+        }
+        .post-meta .author {
+            font-weight: 600;
+            color: var(--primary-purple);
+        }
+        .post-meta .replies {
+            font-weight: 700;
+            color: #ff9f43; /* Orange for Replies count */
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* :::::: 6. RESPONSIVE ADJUSTMENTS :::::: */
+        @media (max-width: 992px) {
+            .main-content {
+                padding: 1.5rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                /* Mini Sidebar style */
+                width: 70px;
+                padding: 1.5rem 0.5rem;
+            }
+            .logo-area {
+                font-size: 0; 
+                margin-bottom: 1.5rem;
+            }
+            .logo-area::before {
+                content: '🎓';
+                font-size: 2rem;
+            }
+            .sidebar-nav a {
+                justify-content: center;
+                gap: 0;
+            }
+            .sidebar-nav a span {
+                display: none;
+            }
+            .sidebar-nav a[data-icon]::before {
+                content: attr(data-icon);
+                font-size: 1.4rem;
+            }
+            .posts-container {
+                grid-template-columns: 1fr; /* Single column on mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <aside class="sidebar">
+            <div class="logo-area">🎓 LSM Portal</div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html" data-icon="🏠">🏠 <span>Dashboard</span></a></li>
+                    <li><a href="my-courses.html" data-icon="📚">📚 <span>My Courses</span></a></li>
+                    <li><a href="progress.html" data-icon="📈">📈 <span>Progress</span></a></li>
+                    <li class="active"><a href="discussions.html" data-icon="💬">💬 <span>Discussions</span></a></li>
+                    <li><a href="profile.html" data-icon="⚙️">⚙️ <span>Profile</span></a></li>
+                    <li><a href="index.html" data-icon="🏠">🏠 <span>Back to Home</span></a></li>
+                    <li><a href="#" id="logout-link" data-icon="🚪">🚪 <span>Logout</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="dashboard-header">
+                <h1>💬 Community Discussions</h1>
+            </header>
+            
+            <div class="discussion-form-container">
+                <h2>Start a New Discussion</h2>
+                <form id="new-post-form">
+                    <div class="form-group">
+                        <label for="topic">Topic Title</label>
+                        <input type="text" id="topic" name="topic" placeholder="E.g., Query about React Hooks or Java Stream API" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="content">Your Question/Post</label>
+                        <textarea id="content" name="content" rows="4" placeholder="Explain your question in detail..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-action" id="post-button">Post Discussion</button>
+                    <p id="post-message" style="margin-top: 10px;"></p>
+                </form>
+            </div>
+            
+            <h2 style="margin-top: 2rem; color:var(--primary-purple); font-size:1.5rem;">🔥 Trending Topics</h2>
+            <div id="posts-container" class="posts-container">
+                
+                <a href="discussion-1.html" class="post-card" style="text-decoration:none;">
+                    <h3>How to optimize Java code for better performance?</h3>
+                    <p style="font-size: 0.95em; color:var(--text-dark);">Looking for best practices for memory management and thread efficiency...</p>
+                    <div class="post-meta">
+                        <span class="author">By: Anjali</span>
+                        <span class="replies">8 <small style="color:#ff9f43;">💬 Replies</small></span>
+                    </div>
+                </a>
+                
+                <a href="discussion-2.html" class="post-card" style="text-decoration:none;">
+                    <h3>Best resources and roadmap for Data Science beginners.</h3>
+                    <p style="font-size: 0.95em; color:var(--text-dark);">Any recommendations on advanced Python libraries and statistical analysis courses?</p>
+                    <div class="post-meta">
+                        <span class="author">By: Rahul</span>
+                        <span class="replies">5 <small style="color:#ff9f43;">💬 Replies</small></span>
+                    </div>
+                </a>
+                
+                <a href="discussion-3.html" class="post-card" style="text-decoration:none;">
+                    <h3>Troubleshooting Spring Boot configuration issues in deployment.</h3>
+                    <p style="font-size: 0.95em; color:var(--text-dark);">Facing 'No suitable driver found' error on external server. Help needed!</p>
+                    <div class="post-meta">
+                        <span class="author">By: Priya</span>
+                        <span class="replies">2 <small style="color:#ff9f43;">💬 Replies</small></span>
+                    </div>
+                </a>
+                
+            </div>
+        </main>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+    <script src="js/discussions.js"></script>
+</body>
+</html>

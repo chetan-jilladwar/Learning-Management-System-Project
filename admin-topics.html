@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Topics - Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background:#f5f7fb; font-family: 'Segoe UI', Tahoma, sans-serif; }
+    .page-header { margin:1.5rem 0; }
+    #status-message { display:none; margin-bottom:1rem; padding:.75rem 1rem; border-radius:6px; font-weight:500; }
+    #status-message.success { background:#d4edda; color:#155724; }
+    #status-message.error { background:#f8d7da; color:#721c24; }
+  </style>
+</head>
+<body>
+<div class="container py-3">
+  <div class="d-flex justify-content-between align-items-center page-header">
+    <div>
+      <h3 id="courseTitle">Topics</h3>
+      <p class="text-muted mb-0" id="courseIdLabel"></p>
+    </div>
+    <a href="admin-dashboard.html" class="btn btn-outline-secondary btn-sm">← Back</a>
+  </div>
+
+  <div id="status-message"></div>
+
+  <!-- Add Topic form -->
+  <div class="card mb-4">
+    <div class="card-header bg-primary text-white">Add Topic</div>
+    <div class="card-body">
+      <form id="addTopicForm" class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Title *</label>
+          <input type="text" id="topicTitle" class="form-control" required>
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">Order</label>
+          <input type="number" id="topicOrder" class="form-control" min="1">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Duration (optional)</label>
+          <input type="text" id="topicDuration" class="form-control" placeholder="e.g. 15 min">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Video URL</label>
+          <input type="url" id="topicVideoUrl" class="form-control" placeholder="https://...">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Content URL (PDF/Notes)</label>
+          <input type="url" id="topicContentUrl" class="form-control" placeholder="https://...">
+        </div>
+        <div class="col-12">
+          <button id="addTopicButton" class="btn btn-primary">Add Topic</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Topics table -->
+  <div class="card">
+    <div class="card-header">Topics List</div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-striped mb-0">
+          <thead>
+          <tr>
+            <th>Order</th>
+            <th>Title</th>
+            <th>Video</th>
+            <th>Content</th>
+            <th>Duration</th>
+          </tr>
+          </thead>
+          <tbody id="topicsTable">
+          <tr><td colspan="5" class="text-center py-3 text-muted">Loading topics...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/admin-common.js"></script>
+<script src="js/admin-topics.js"></script>
+</body>
+</html>

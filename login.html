@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Login - CODELINE AI Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --primary-color: #4a00e0;
+      --secondary-color: #e2b82d;
+      --text-color: #333;
+      --form-bg: rgba(255, 255, 255, 0.15);
+      --border-radius-large: 16px;
+    }
+
+    /* Animated Gradient Background */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, #4a00e0,  #9a0669, #705293, #d2b835);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      color: var(--text-color);
+    }
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    /* Glassmorphism Form */
+    .form-container {
+      width: 92%;
+      max-width: 440px;
+      padding: 40px 36px;
+      background: var(--form-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: var(--border-radius-large);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .form-container:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 22px 48px rgba(0,0,0,0.35);
+    }
+
+    h1 {
+      color: #fff;
+      font-size: 2.2rem;
+      margin: 0 0 8px;
+      text-align: center;
+      letter-spacing: -0.3px;
+    }
+    p.subtitle {
+      margin: 0 0 28px;
+      color: #eaeaea;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    /* Floating Labels */
+    .form-group {
+      position: relative;
+      margin-bottom: 22px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 14px 14px;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.22);
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .form-input::placeholder {
+      color: transparent;
+    }
+    .form-input:focus {
+      background: rgba(255,255,255,0.28);
+      box-shadow: 0 0 0 3px rgba(142,45,226,0.25);
+    }
+    .form-label {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      font-size: 0.95rem;
+      color: #ddd;
+      pointer-events: none;
+      padding: 0 6px;
+      transition: 0.25s ease;
+      background: transparent;
+      border-radius: 4px;
+    }
+    .form-input:focus + .form-label,
+    .form-input:not(:placeholder-shown) + .form-label {
+      top: -10px;
+      left: 10px;
+      font-size: 0.75rem;
+      color: #fff;
+      background: rgba(0,0,0,0.35);
+    }
+
+    /* Button with Ripple */
+    .btn-primary {
+      display: block;
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 8px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s ease, transform 0.1s ease;
+      box-shadow: 0 8px 18px rgba(142,45,226,0.35);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(90deg, #5b00ff, #a140f5);
+    }
+    .btn-primary:active {
+      transform: translateY(1px);
+    }
+    .ripple {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: rgba(255,255,255,0.4);
+      border-radius: 50%;
+      transform: scale(0);
+      animation: rippleEffect 0.6s linear;
+      pointer-events: none;
+      left: 0;
+      top: 0;
+    }
+    @keyframes rippleEffect {
+      to {
+        transform: scale(2.6);
+        opacity: 0;
+      }
+    }
+
+    /* Messages */
+    .message {
+      text-align: center;
+      margin-top: 14px;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .error-message { color: #ff6b6b; }
+    .success-message { color: #2ecc71; }
+
+    /* Footer */
+    .form-footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 0.92rem;
+      color: #f3f3f3;
+    }
+    .form-footer a {
+      color: #ffffff;
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s ease;
+    }
+    .form-footer a:hover {
+      border-color: #ffffff;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .form-container { padding: 28px 20px; }
+      h1 { font-size: 1.9rem; }
+      .btn-primary { font-size: 1rem; padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="form-container" role="main" aria-label="Login form">
+    <h1>Student Login</h1>
+    <p class="subtitle">Welcome back! Please login to your account.</p>
+
+    <form id="login-form" novalidate>
+      <div class="form-group">
+        <input type="email" id="email" class="form-input" placeholder=" " autocomplete="email" required aria-required="true" />
+        <label for="email" class="form-label">Email</label>
+      </div>
+
+      <div class="form-group">
+        <input type="password" id="password" class="form-input" placeholder=" " autocomplete="current-password" required aria-required="true" minlength="6" />
+        <label for="password" class="form-label">Password</label>
+      </div>
+
+      <button type="submit" class="btn-primary" id="login-button">Login</button>
+      <p id="login-message" class="message" aria-live="polite"></p>
+    </form>
+
+    <p class="form-footer">New user? <a href="register.html">Create an account</a></p>
+  </main>
+
+  <script>
+    // Ripple effect on button
+    const btn = document.querySelector('.btn-primary');
+    btn.addEventListener('click', function (e) {
+      const rect = this.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      ripple.style.left = (e.clientX - rect.left - 50) + 'px';
+      ripple.style.top = (e.clientY - rect.top - 50) + 'px';
+      this.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    });
+
+    // Validation and feedback
+    const loginForm = document.getElementById('login-form');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const loginMessage = document.getElementById('login-message');
+
+    function isValidEmail(email) {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regex.test(email);
+    }
+
+    loginForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      loginMessage.textContent = '';
+      loginMessage.className = 'message';
+
+      if (!email || !password) {
+        loginMessage.textContent = 'Please enter both email and password.';
+        loginMessage.classList.add('error-message');
+        return;
+      }
+      if (!isValidEmail(email)) {
+        loginMessage.textContent = 'Please enter a valid email address.';
+        loginMessage.classList.add('error-message');
+        return;
+      }
+      if (password.length < 6) {
+        loginMessage.textContent = 'Password must be at least 6 characters long.';
+        loginMessage.classList.add('error-message');
+        return;
+      }
+
+      loginMessage.textContent = 'Login Successful! Redirecting...';
+      loginMessage.classList.add('success-message');
+
+      setTimeout(() => {
+        console.log('Redirecting to dashboard...');
+        // window.location.href = 'dashboard.html';
+      }, 1500);
+    });
+  </script>
+  <script src="js/config.js"></script> <script src="js/login.js"></script>   </body>
+</body>
+</html>

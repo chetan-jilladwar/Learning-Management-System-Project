@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Profile - CODELINE AI</title>
+
+  <link rel="stylesheet" href="css/main.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    /* ===== SAME THEME AS OTHER PAGES ===== */
+    :root {
+      --primary-purple: #6f036a;
+      --primary-dark: #3b1a91;
+      --pista-green: #badc58;
+
+      --bg-color: #f6f7fb;
+      --white: #ffffff;
+      --card-bg: var(--white);
+      --text-dark: #111827;
+      --text-light: #6b7280;
+
+      --shadow-light: 0 8px 20px rgba(15, 23, 42, 0.08);
+      --shadow-deep: 0 20px 45px rgba(15, 23, 42, 0.18);
+
+      --sidebar-gradient-start: rgba(111, 3, 106, 0.98);
+      --sidebar-gradient-end: #6d135d;
+      --sidebar-text: var(--white);
+    }
+
+    [data-theme="dark"] {
+      --primary-purple: #c084fc;
+      --primary-dark: #60a5fa;
+      --pista-green: #22c55e;
+
+      --bg-color: #050816;
+      --white: #020617;
+      --card-bg: #020617;
+      --text-dark: #e5e7eb;
+      --text-light: #9ca3af;
+
+      --shadow-light: 0 10px 30px rgba(0,0,0,0.55);
+      --shadow-deep: 0 24px 60px rgba(0,0,0,0.85);
+
+      --sidebar-gradient-start: #3a1c71;
+      --sidebar-gradient-end: #2a0845;
+      --sidebar-text: #e5e7ff;
+    }
+
+    *{box-sizing:border-box;}
+
+    body{
+      font-family:'Poppins',sans-serif;
+      margin:0;
+      background: radial-gradient(circle at top, rgba(186,220,88,0.18), transparent 55%), var(--bg-color);
+      color:var(--text-dark);
+      scroll-behavior:smooth;
+      transition:background 0.3s ease,color 0.3s ease;
+      overflow-x:hidden;
+      min-height:100vh;
+      display:flex;
+    }
+
+    .dashboard-wrapper{
+      display:flex;
+      width:100%;
+      min-height:100vh;
+      flex-direction:column;
+    }
+
+    /* ===== SIDEBAR (IDENTICAL TO OTHER PAGES) ===== */
+    .sidebar{
+      position:fixed;
+      inset:0 auto 0 0;
+      width:280px;
+      background:linear-gradient(180deg,var(--sidebar-gradient-start),var(--sidebar-gradient-end));
+      color:var(--sidebar-text);
+      z-index:1000;
+      transform:translateX(-100%);
+      transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);
+      padding:1.75rem 1.3rem;
+      box-shadow:8px 0 30px rgba(0,0,0,0.4);
+      display:flex;
+      flex-direction:column;
+      gap:1.5rem;
+    }
+    .sidebar.mobile-open{transform:translateX(0);}
+
+    .logo-area{
+      font-size:1.65rem;
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      gap:0.5rem;
+      letter-spacing:0.5px;
+    }
+    .logo-area span{font-size:1.1rem;opacity:0.9;}
+    .sidebar-sub{font-size:0.8rem;opacity:0.8;margin-top:0.25rem;}
+
+    .sidebar-nav{flex:1;}
+    .sidebar-nav ul{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:flex;
+      flex-direction:column;
+      gap:0.3rem;
+    }
+    .sidebar-nav li{border-radius:12px;overflow:hidden;}
+
+    .sidebar-nav a{
+      color:var(--sidebar-text);
+      text-decoration:none;
+      font-weight:500;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:0.85rem 1rem;
+      font-size:0.95rem;
+      position:relative;
+      transition:background 0.25s ease,transform 0.2s ease;
+    }
+    .sidebar-nav a i{font-size:1.05rem;width:22px;text-align:center;}
+
+    .sidebar-nav a::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at 0 0,rgba(227, 220, 220, 0.18),transparent 55%);
+      opacity:0;
+      transition:opacity 0.25s ease;
+    }
+    .sidebar-nav a:hover{
+      transform:translateX(2px);
+      background:rgba(247, 243, 243, 0.1);
+    }
+    .sidebar-nav a:hover::after{opacity:1;}
+
+    .sidebar-nav .active a{
+      background:var(--card-bg);
+      color:#ffffff;
+      box-shadow:0 12px 30px rgba(15,23,42,0.35);
+    }
+
+    .sidebar-footer{
+      font-size:0.8rem;
+      opacity:0.8;
+    }
+
+    .sidebar-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(15,23,42,0.60);
+      z-index:900;
+      opacity:0;
+      visibility:hidden;
+      transition:opacity 0.3s ease,visibility 0.3s ease;
+    }
+    .sidebar-overlay.active{opacity:1;visibility:visible;}
+
+    /* ===== MAIN CONTENT ===== */
+    .main-content{
+      flex:1;
+      width:100%;
+      max-width:1200px;
+      margin:0 auto;
+      padding:1.4rem 1.4rem 2.4rem;
+    }
+
+    .dashboard-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:1rem;
+      margin-bottom:1.8rem;
+    }
+    .dashboard-header h1{
+      margin:0;
+      font-size:clamp(1.6rem,4vw,2.25rem);
+      font-weight:700;
+      color:var(--primary-dark);
+      display:flex;
+      align-items:center;
+      gap:0.5rem;
+    }
+    .dashboard-header h1 span.emoji{font-size:1.7rem;}
+
+    .header-actions{
+      display:flex;
+      align-items:center;
+      gap:0.75rem;
+    }
+
+    .mobile-menu-btn{
+      background:var(--card-bg);
+      border:1px solid rgba(148,163,184,0.7);
+      color:var(--primary-dark);
+      font-size:1.2rem;
+      cursor:pointer;
+      padding:10px;
+      border-radius:10px;
+      transition:all 0.25s ease;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-width:42px;
+      min-height:42px;
+    }
+    .mobile-menu-btn:hover{
+      background:var(--primary-purple);
+      color:#fff;
+      transform:translateY(-1px);
+      border-color:transparent;
+    }
+
+    #dark-mode-toggle{
+      background:var(--card-bg);
+      border:1px solid rgba(148,163,184,0.7);
+      color:var(--primary-dark);
+      font-size:1.1rem;
+      cursor:pointer;
+      padding:9px 11px;
+      border-radius:999px;
+      transition:all 0.25s ease;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-width:40px;
+      min-height:40px;
+    }
+    #dark-mode-toggle:hover{
+      background:var(--primary-purple);
+      color:#fff;
+      border-color:transparent;
+      transform:rotate(12deg) scale(1.03);
+    }
+    [data-theme="dark"] #dark-mode-toggle{background:var(--bg-color);color:var(--text-dark);}
+
+    /* ===== PROFILE CONTAINER ===== */
+    .profile-container{
+      background:var(--card-bg);
+      border-radius:20px;
+      padding:2rem;
+      box-shadow:var(--shadow-deep);
+      position:relative;
+      overflow:hidden;
+    }
+    .profile-container::before{
+      content:"";
+      position:absolute;
+      inset:-40% 40% auto auto;
+      background:radial-gradient(circle at top right,rgba(186,220,88,0.25),transparent 55%);
+      opacity:0.6;
+      pointer-events:none;
+    }
+
+    .profile-section{
+      margin-bottom:2.5rem;
+      padding-bottom:1.8rem;
+      border-bottom:1px dashed rgba(148,163,184,0.4);
+    }
+    .profile-section:last-child{border-bottom:none;}
+    .profile-section h2{
+      margin:0 0 1.2rem;
+      font-size:1.15rem;
+      color:var(--primary-dark);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-weight:600;
+    }
+    .profile-section h2::after{
+      content:"";
+      height:3px;
+      width:32px;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--pista-green),var(--primary-purple));
+    }
+
+    /* ===== PROFILE PIC ===== */
+    .profile-pic-area{
+      display:flex;
+      align-items:center;
+      gap:1.4rem;
+      margin-bottom:1.5rem;
+    }
+    .profile-pic-placeholder{
+      width:clamp(85px,16vw,110px);
+      height:clamp(85px,16vw,110px);
+      background:radial-gradient(circle at 30% 0,#fff,var(--pista-green));
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:1.6rem;
+      font-weight:700;
+      color:var(--primary-purple);
+      border:3px solid rgba(255,255,255,0.9);
+      box-shadow:var(--shadow-light);
+      flex-shrink:0;
+    }
+
+    .profile-pic-info h3{
+      margin:0 0 0.3rem;
+      font-size:1.1rem;
+      color:var(--primary-dark);
+      font-weight:600;
+    }
+    .profile-pic-info p{
+      margin:0 0 1rem;
+      color:var(--text-light);
+      font-size:0.88rem;
+    }
+
+    .upload-buttons{
+      display:flex;
+      gap:0.8rem;
+      flex-wrap:wrap;
+    }
+    .upload-btn{
+      padding:9px 16px;
+      border-radius:10px;
+      border:none;
+      font-weight:600;
+      font-size:0.88rem;
+      cursor:pointer;
+      transition:all 0.25s ease;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      text-decoration:none;
+    }
+    .upload-photo-btn{
+      background:var(--primary-purple);
+      color:#fff;
+      box-shadow:0 4px 15px rgba(111,3,106,0.35);
+    }
+    .upload-photo-btn:hover{
+      background:var(--primary-dark);
+      transform:translateY(-2px);
+    }
+    .remove-photo-btn{
+      background:transparent;
+      color:var(--text-light);
+      border:2px solid rgba(148,163,184,0.5);
+    }
+    .remove-photo-btn:hover{
+      background:var(--text-light);
+      color:var(--card-bg);
+      border-color:transparent;
+    }
+
+    /* ===== FORM FIELDS ===== */
+    .form-group{
+      margin-bottom:1.6rem;
+    }
+    .form-group label{
+      display:block;
+      margin-bottom:0.6rem;
+      color:var(--primary-purple);
+      font-weight:600;
+      font-size:0.92rem;
+    }
+    .form-group input{
+      width:100%;
+      padding:1rem 1.2rem;
+      border:2px solid rgba(148,163,184,0.4);
+      border-radius:14px;
+      font-size:1rem;
+      background:var(--card-bg);
+      color:var(--text-dark);
+      transition:all 0.3s ease;
+      font-family:inherit;
+    }
+    .form-group input:focus{
+      outline:none;
+      border-color:var(--pista-green);
+      box-shadow:0 0 0 4px rgba(186,220,88,0.2);
+      transform:translateY(-1px);
+    }
+    .form-group input:disabled{
+      background:rgba(148,163,184,0.12);
+      color:var(--text-light);
+      cursor:not-allowed;
+    }
+    .form-help{
+      color:var(--text-light);
+      font-size:0.82rem;
+      margin-top:0.5rem;
+      display:block;
+      font-style:normal;
+    }
+
+    /* ===== ACTION BUTTONS ===== */
+    .btn-action{
+      width:100%;
+      padding:1.1rem 2rem;
+      border:none;
+      border-radius:14px;
+      font-weight:600;
+      font-size:1rem;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      margin-top:0.8rem;
+      text-decoration:none;
+    }
+    .btn-save{
+      background:var(--primary-purple);
+      color:#fff;
+      box-shadow:0 6px 20px rgba(111,3,106,0.4);
+    }
+    .btn-save:hover{
+      background:var(--primary-dark);
+      transform:translateY(-2px);
+      box-shadow:0 10px 30px rgba(111,3,106,0.5);
+    }
+    .btn-password{
+      background:var(--pista-green);
+      color:var(--primary-purple);
+      box-shadow:0 6px 20px rgba(186,220,88,0.4);
+    }
+    .btn-password:hover{
+      background:#a3c85a;
+      transform:translateY(-2px);
+    }
+
+    #message{
+      margin-top:1.2rem;
+      padding:1rem 1.2rem;
+      border-radius:12px;
+      text-align:center;
+      font-weight:500;
+      font-size:0.92rem;
+    }
+    .message-success{
+      background:var(--pista-green);
+      color:#fff;
+    }
+    .message-error{
+      background:#ef4444;
+      color:#fff;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width:768px){
+      .profile-pic-area{flex-direction:column;text-align:center;}
+      .upload-buttons{justify-content:center;}
+    }
+
+    @media (min-width:769px){
+      .dashboard-wrapper{flex-direction:row;}
+      .sidebar{position:sticky;inset:0;width:250px;transform:none;}
+      .sidebar-overlay{display:none;}
+      .main-content{padding:2rem 2.4rem 2.6rem;}
+      .mobile-menu-btn{display:none;}
+    }
+
+    @media (min-width:1200px){
+      .main-content{padding:2.4rem 3rem 3rem;}
+    }
+  </style>
+</head>
+<body data-theme="light">
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <div class="dashboard-wrapper">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div>
+        <div class="logo-area">
+          <span>🎓</span> CODELINE AI
+        </div>
+        <div class="sidebar-sub">Student Learning Portal</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="dashboard.html"><i class="fas fa-house"></i><span>Dashboard</span></a></li>
+          <li><a href="my-courses.html"><i class="fas fa-layer-group"></i><span>My Courses</span></a></li>
+          <li><a href="progress.html"><i class="fas fa-chart-line"></i><span>Progress</span></a></li>
+          <li><a href="fees.html"><i class="fas fa-wallet"></i><span>Fees</span></a></li>
+          <li class="active"><a href="profile.html"><i class="fas fa-user-gear"></i><span>Profile</span></a></li>
+          <li><a href="#" id="logout-link"><i class="fas fa-arrow-right-from-bracket"></i><span>Logout</span></a></li>
+          <li><a href="index.html"><i class="fas fa-arrow-left"></i><span>Back to Home</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span>Logged in as</span><br/>
+        <strong id="sidebar-user-name">Student</strong>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+      <header class="dashboard-header">
+        <h1><span class="emoji">⚙️</span> My Profile Settings</h1>
+        <div class="header-actions">
+          <button class="mobile-menu-btn" id="mobile-menu-btn" title="Open Menu">
+            <i class="fas fa-bars"></i>
+          </button>
+          <button id="dark-mode-toggle" title="Toggle Dark/Light Mode">
+            <i class="fas fa-moon"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="profile-container">
+        <form id="profile-form">
+          <!-- Profile Picture Section -->
+          <div class="profile-section">
+            <h2><i class="fas fa-user"></i> Profile Picture</h2>
+            <div class="profile-pic-area">
+              <div class="profile-pic-placeholder" id="profile-pic-placeholder">AJ</div>
+              <div class="profile-pic-info">
+                <h3>Avatar & Photo</h3>
+                <p>Update your profile image to personalize your learning experience.</p>
+                <div class="upload-buttons">
+                  <button type="button" class="upload-btn upload-photo-btn" id="upload-photo-btn">
+                    <i class="fas fa-camera"></i> Upload Photo
+                  </button>
+                  <button type="button" class="upload-btn remove-photo-btn" id="remove-photo-btn">
+                    <i class="fas fa-trash"></i> Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Personal Info Section -->
+          <div class="profile-section">
+            <h2><i class="fas fa-id-card"></i> Personal Information</h2>
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" value="Anshuman Jain" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Email Address (Login ID)</label>
+              <input type="email" id="email" name="email" value="anshuman.jain@lsm.com" required disabled>
+              <small class="form-help">Email address is used for login and notifications and cannot be changed here.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" value="+91 98765 43210">
+            </div>
+            
+            <button type="submit" class="btn-action btn-save" id="save-button">
+              <i class="fas fa-save"></i> Save Personal Details
+            </button>
+          </div>
+
+          <!-- Password Section -->
+          <div class="profile-section">
+            <h2><i class="fas fa-lock"></i> Account Security</h2>
+            <div class="form-group">
+              <label for="current-password">Current Password</label>
+              <input type="password" id="current-password" name="current-password" placeholder="Required to change password">
+            </div>
+            <div class="form-group">
+              <label for="new-password">New Password</label>
+              <input type="password" id="new-password" name="new-password" placeholder="Enter new password (min 8 characters)">
+            </div>
+            <div class="form-group">
+              <label for="confirm-password">Confirm New Password</label>
+              <input type="password" id="confirm-password" name="confirm-password" placeholder="Re-enter new password">
+            </div>
+            
+            <button type="button" class="btn-action btn-password" id="change-password-button">
+              <i class="fas fa-key"></i> Change Password
+            </button>
+          </div>
+
+          <div id="message"></div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Mobile sidebar controls (same as other pages)
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+    function toggleSidebar(){
+      const open = sidebar.classList.toggle('mobile-open');
+      sidebarOverlay.classList.toggle('active', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+    function closeSidebar(){
+      sidebar.classList.remove('mobile-open');
+      sidebarOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    mobileMenuBtn?.addEventListener('click', toggleSidebar);
+    sidebarOverlay?.addEventListener('click', closeSidebar);
+    document.querySelectorAll('.sidebar-nav a').forEach(link=>{
+      link.addEventListener('click', closeSidebar);
+    });
+
+    // Dark mode sync (same as other pages)
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const rootEl = document.documentElement;
+
+    function applyTheme(theme){
+      rootEl.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      const icon = darkModeToggle?.querySelector('i');
+      if(icon) icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    applyTheme(savedTheme);
+
+    darkModeToggle?.addEventListener('click', () => {
+      const current = rootEl.getAttribute('data-theme') || 'light';
+      applyTheme(current === 'light' ? 'dark' : 'light');
+    });
+  </script>
+
+  <script src="js/config.js"></script>
+  <script src="js/auth-check.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+Enforce HTTPS
+http://* https://:splat 301!
+
+# Direct all requests to their correct HTML file
+/ /index.html 200
+
+# Ensure all HTML files are served correctly (optional but good practice)
+/*.html /:splat.html 200

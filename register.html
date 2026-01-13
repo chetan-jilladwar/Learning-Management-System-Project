@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Signup - LSM Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --primary-color: #4a00e0;
+      --secondary-color: #8e2de2;
+      --text-color: #333;
+      --form-bg: rgba(255, 255, 255, 0.15);
+      --border-radius-large: 16px;
+    }
+
+    /* Animated Gradient Background */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, #4a00e0, #739ddc, #705293, #d2b835);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      color: var(--text-color);
+    }
+
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    /* Glassmorphism Form */
+    .form-container {
+      width: 92%;
+      max-width: 440px;
+      padding: 40px 36px;
+      background: var(--form-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: var(--border-radius-large);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .form-container:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 22px 48px rgba(0,0,0,0.35);
+    }
+
+    h2 {
+      color: #fff;
+      font-size: 2.2rem;
+      margin: 0 0 8px;
+      text-align: center;
+    }
+    .form-container p:not(.login-link) {
+      margin: 0 0 28px;
+      color: #eaeaea;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    /* Floating Labels */
+    .form-group {
+      position: relative;
+      margin-bottom: 22px;
+    }
+    .form-group label {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      font-size: 0.95rem;
+      color: #ddd;
+      pointer-events: none;
+      padding: 0 6px;
+      transition: 0.25s ease;
+      background: transparent;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 14px 14px;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.22);
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    /* Floating effect */
+    .form-group input:focus + label,
+    .form-group input:not(:placeholder-shown) + label {
+      top: -10px;
+      left: 10px;
+      font-size: 0.75rem;
+      color: #fff;
+      background: rgba(0,0,0,0.35);
+      border-radius: 4px;
+      padding: 0 4px;
+    }
+
+    .form-group input:focus {
+      background: rgba(255,255,255,0.28);
+      box-shadow: 0 0 0 3px rgba(142,45,226,0.25);
+    }
+
+    /* Button */
+    #submit-btn {
+      display: block;
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 8px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s ease;
+      box-shadow: 0 8px 18px rgba(142,45,226,0.35);
+    }
+    #submit-btn:hover {
+      background: linear-gradient(90deg, #5b00ff, #a140f5);
+    }
+
+    .ripple {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: rgba(255,255,255,0.4);
+      border-radius: 50%;
+      transform: scale(0);
+      animation: rippleEffect 0.6s linear;
+      pointer-events: none;
+    }
+    @keyframes rippleEffect {
+      to {
+        transform: scale(2.6);
+        opacity: 0;
+      }
+    }
+
+    #message {
+      text-align: center;
+      margin: 14px 0 0;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .error { color: #ff6b6b; }
+    .success { color: #2ecc71; }
+
+    .login-link {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 0.92rem;
+      color: #f3f3f3;
+    }
+    .login-link a {
+      color: #ffffff;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    @media (max-width: 480px) {
+      .form-container { padding: 28px 20px; }
+      h2 { font-size: 1.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container" role="main">
+    <h2>Student Signup</h2>
+    <p>Join LSM and start learning today.</p>
+
+    <form id="register-form" novalidate>
+      
+      <div class="form-group">
+        <input type="text" id="name" name="name" required placeholder=" " autocomplete="name"/>
+        <label for="name">Full Name</label>
+      </div>
+
+      <div class="form-group">
+        <input type="email" id="email" name="email" required placeholder=" " autocomplete="email"/>
+        <label for="email">Email</label>
+      </div>
+
+      <div class="form-group">
+        <input type="tel" id="phone" name="phone" placeholder=" " autocomplete="tel"/>
+        <label for="phone">Phone (Optional)</label>
+      </div>
+
+      <div class="form-group">
+        <input type="password" id="password" name="password" required placeholder=" " autocomplete="new-password"/>
+        <label for="password">Password</label>
+      </div>
+
+      <button type="submit" id="submit-btn">Register</button>
+
+      <p id="message"></p>
+    </form>
+
+    <p class="login-link">Already have an account? <a href="login.html">Login here</a></p>
+  </div>
+
+  <script>
+    // Ripple Animation
+    const btn = document.getElementById('submit-btn');
+    btn.addEventListener('click', function (e) {
+      if (this.disabled) return;
+
+      const rect = this.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      ripple.style.left = (e.clientX - rect.left - 50) + 'px';
+      ripple.style.top = (e.clientY - rect.top - 50) + 'px';
+      this.appendChild(ripple);
+
+      setTimeout(() => ripple.remove(), 600);
+    });
+  </script>
+  <script src="js/register.js"></script>
+
+</body>
+</html>
