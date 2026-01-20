@@ -7,762 +7,296 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
   <style>
-  /* PREMIUM PURPLE FUTURISTIC THEME 
-   CODELINE AI - FULL RE-DESIGN
-*/
+  /* --- CODELINE AI - CLEANED THEME --- */
 
-* { 
+  /* 🔥 ADDED: Smooth Scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  * { 
     margin: 0; 
     padding: 0; 
     box-sizing: border-box; 
     font-family: 'Poppins', sans-serif; 
-}
+  }
 
-:root {
+  /* --- 1. CSS VARIABLES (THEME ENGINE) --- */
+  :root {
+    /* Brand Colors */
     --primary: #9a0669;
-    --primary-light: #a64dff; 
     --primary-dark: #4b0082;
-    --accent: #9a0669;
-    --bg-dark: #06060c;
+    --accent: #06b6d4;
+    
+    /* DARK MODE (Default) */
+    --bg-body: #06060c;
+    --bg-nav: rgba(154, 6, 105, 0.85); /* Glassy Purple */
     --bg-card: rgba(255, 255, 255, 0.03);
-    --white: #ffffff;
+    --bg-card-hover: rgba(30, 30, 50, 1);
+    --bg-footer: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%);
+    
+    --text-main: #ffffff;
     --text-dim: #b0b0c0;
-}
-/* LIGHT MODE (Professional Clean) */
-/* ⭐ PREMIUM LIGHT MODE - CODELINE AI ⭐ */
-[data-theme="light"] {
-    /* Backgrounds - Clean & Modern */
-    --bg-dark: #f8fafc;           /* Soft slate gray */
-    --bg-secondary: #ffffff;      /* Pure white */
-    --bg-card: rgba(255, 255, 255, 0.92);  /* Glass white */
+    --border-color: rgba(138, 43, 226, 0.2);
+    --shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+
+  /* LIGHT MODE OVERRIDES */
+  [data-theme="light"] {
+    --bg-body: #f8fafc;
+    --bg-nav: rgba(154, 6, 105, 0.85);
+    --bg-card: #ffffff;
+    --bg-card-hover: #f1f5f9;
+    --bg-footer: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
     
-    /* Text Colors - Perfect Readability */
-    --white: #1e293b;             /* Dark slate */
-    --text-dim: #64748b;          /* Medium slate */
-    
-    /* Purple Theme Maintained - Light Variant */
-    --primary: #7c3aed;           /* Perfect purple */
-    --primary-light: #a78bfa;     /* Light purple */
-    --primary-dark: #6d28d9;      /* Dark purple */
-    --accent: #ec4899;            /* Pink accent */
-    
-    /* Additional Light Mode Colors */
-    --success: #10b981;
-    --warning: #f59e0b;
-    --border-light: rgba(148, 163, 184, 0.2);
-}
-/* Light Mode Specific Fixes */
-[data-theme="light"] {
-    /* Navbar */
-    .navbar {
-        background: rgba(151, 10, 118, 0.95) !important;
-        border-bottom: 1px solid var(--border-light);
-        box-shadow: 0 2px 20px rgba(0,0,0,0.08);
-    }
-    
-    /* Feature Cards */
-    .feature-card {
-        background: rgba(102, 116, 101, 0.9) !important;
-        border: 1px solid var(--border-light);
-        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-    }
-    
-    /* Course Cards */
-    .course-card {
-        background: rgba(255, 255, 255, 0.95) !important;
-        border: 1px solid var(--border-light);
-    }
-    
-    /* Testimonials */
-    .testimonial-card {
-        background: rgba(255, 255, 255, 0.9) !important;
-        border: 1px solid var(--border-light);
-    }
-    
-    /* Footer */
-    .modern-footer {
-        background: #f1f5f9 !important;
-        border-top: 1px solid var(--border-light);
-    }
-}
+    --text-main: #1e293b;
+    --text-dim: #64748b;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --shadow: 0 10px 30px rgba(0,0,0,0.08);
+  }
 
-/* Hero Overlay Light Mode */
-[data-theme="light"] .overlay {
-    background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, rgba(30, 41, 59, 0.85) 100%);
-}
-/* Mobile Optimizations */
-@media (max-width: 768px) {
-    [data-theme="light"] .navbar {
-        background: rgba(167, 23, 124, 0.98) !important;
-        backdrop-filter: blur(20px);
-    }
-    
-    [data-theme="light"] .course-card {
-        background: white !important;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-    }
-}
+  /* Global Styles */
+  body {
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-x: hidden; /* Prevent horizontal scroll from animations */
+  }
 
-
-/* 🔥 PERFECT RESPONSIVE THEME TOGGLE - MOBILE + LAPTOP */
-/* 🔥 SMART POSITION THEME TOGGLE - MOBILE & LAPTOP */
-.theme-toggle {
-    position: fixed;
-    z-index: 10000;
-    border: none;
-    border-radius: 50%;
-    background: var(--bg-card);
-    backdrop-filter: blur(25px);
-    border: 2px solid rgba(138,43,226,0.3);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--white);
-    transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    font-size: 18px;
-}
-/* Mobile Navbar Perfect Alignment */
-@media (max-width: 768px) {
-    .nav-flex {
-        position: relative;
-        padding: 0 15px;
-    }
-    
-    .hamburger {
-        position: absolute;
-        top: 50%;
-        right: 15px;
-        transform: translateY(-50%);
-        margin: 0;
-    }
-    
-    /* Logo left side */
-    .logo {
-        margin-right: auto;
-    }
-}
-
-
-/* ⭐ LAPTOP: Placements section ke RIGHT side mein */
-@media (min-width: 769px) {
-    .theme-toggle {
-        top: 25px;
-        right: 25px;
-        width: 56px;
-        height: 56px;
-        font-size: 18px;
-    }
-}
-
-/* Light Mode */
-[data-theme="light"] .theme-toggle {
-    background: rgba(124,58,237,0.15);
-    border-color: rgba(124,58,237,0.4);
-    color: #7c3aed;
-}
-
-/* Hover */
-.theme-toggle:hover {
-    transform: scale(1.1);
-    box-shadow: 0 15px 40px rgba(138,43,226,0.4);
-}
-
-/* MOBILE - Smaller + Safe Position */
-@media (max-width: 768px) {
-    .theme-toggle {
-        top: 75px !important;      /* Navbar height ke baad */
-        right: 15px;
-        width: 48px;               /* Chota button */
-        height: 48px;
-        font-size: 16px;
-    }
-}
-
-/* TABLET - Medium Size */
-@media (max-width: 1024px) and (min-width: 769px) {
-    .theme-toggle {
-        width: 52px;
-        height: 52px;
-        font-size: 17px;
-    }
-}
-
-/* Light Mode Button Fix */
-[data-theme="light"] .theme-toggle {
-    background: rgba(124,58,237,0.15) !important;
-    border-color: rgba(124,58,237,0.4) !important;
-    color: #7c3aed !important;
-}
-
-/* Hover Effects (All Devices) */
-.theme-toggle:hover {
-    transform: scale(1.1) !important;
-    box-shadow: 0 15px 40px rgba(138,43,226,0.4) !important;
-}
-
-/* Navbar Z-Index Fix (Toggle peeche na jaye) */
-.navbar {
-    z-index: 1000 !important;
-}
-/* Touch-friendly mobile button */
-@media (max-width: 768px) {
-    .theme-toggle:active {
-        transform: scale(0.95) !important;  /* Press effect */
-    }
-}
-
-.theme-toggle {
-    z-index: 10000 !important;  /* Higher than navbar */
-}
-/* Mobile Navbar Safe Height */
-@media (max-width: 768px) {
-    .navbar {
-        padding: 12px 0 !important;  /* Thoda compact */
-        min-height: 65px !important; /* Fixed height */
-    }
-    
-    /* Hero content ko niche shift karo */
-    .hero-content {
-        padding-top: 80px;  /* Navbar space */
-    }
-}
-/* Touch-friendly mobile button */
-@media (max-width: 768px) {
-    .theme-toggle:active {
-        transform: scale(0.95) !important;  /* Press effect */
-    }
-}
-
-
-
-
-
-
-
-/* Smooth theme transition */
-body {
-    background-color: var(--bg-dark);
-    color: var(--white);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-
-.container {
+  a { text-decoration: none; color: inherit; }
+  ul { list-style: none; }
+  
+  .container {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 20px;
-}
+  }
 
-/* --- NAVBAR --- */
-/* --- NAVBAR (Aapka Original Style) --- */
-.navbar {
+  /* --- 2. NAVBAR --- */
+  .navbar {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    top: 0; left: 0; width: 100%;
     z-index: 1000;
     padding: 15px 0;
-    background: #9a0669; /* Aapka original background */
+    background: var(--bg-nav);
     backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(138, 43, 226, 0.2);
-}
+    border-bottom: 1px solid var(--border-color);
+    transition: background 0.3s ease;
+  }
 
-.nav-flex {
+  .nav-flex {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
+  }
 
-.logo {
+  .logo {
     font-size: 26px;
     font-weight: 900;
-    color: white;
-    text-decoration: none;
+    color: var(--text-main);
     letter-spacing: 1px;
-}
+  }
+  
+  [data-theme="light"] .logo { color:  #f8fafc; } 
+  [data-theme="light"] .logo span { color: #1e293b; }
 
-/* Laptop View (Default) */
-nav ul {
+  nav ul {
     display: flex;
-    list-style: none;
     gap: 30px;
     align-items: center;
-}
+  }
 
-nav ul li a {
-    color: #ffffff;
-    text-decoration: none;
+  nav ul li a {
+    color: var(--text-main);
     font-weight: 600;
     font-size: 16px;
-    transition: 0.3s;
     text-transform: uppercase;
-}
-
-nav ul li a:hover, nav ul li a.active {
-    color: #06060c;
-}
-
-.hamburger {
-    display: none; /* Laptop par hide */
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-}
-
-.hamburger span {
-    width: 25px;
-    height: 3px;
-    background: white;
     transition: 0.3s;
-}
+  }
+  
+  [data-theme="light"] nav ul li a { color: #1e293b; }
+  
+  nav ul li a:hover, nav ul li a.active {
+    color: var(--bg-body); /* Contrast on hover */
+  }
+  [data-theme="light"] nav ul li a:hover { color: var(--primary); }
 
-.mobile-only { display: none; }
-
-/* --- MOBILE VIEW (992px se niche) --- */
-@media (max-width: 992px) {
-    .hamburger { display: flex; }
-    .desktop-only { display: none; }
-    .mobile-only { display: block; }
-
-    nav ul {
-        position: fixed;
-        top: 70px; /* Navbar height ke baad shuru ho */
-        right: -100%; /* Shuru me bahar */
-        width: 100%;
-        height: 100vh;
-        background: #9a0669;
-        flex-direction: column;
-        padding-top: 50px;
-        transition: 0.4s ease;
-        gap: 40px;
-    }
-
-    nav ul.active {
-        right: 0; /* Click karne pe andar aaye */
-    }
-}
-
-/* Hamburger Animation */
-.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
-.hamburger.active span:nth-child(2) { opacity: 0; }
-.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
-
-/* Aapka Button Style */
-.btn-red {
+  /* Buttons */
+  .btn-red {
     background: linear-gradient(135deg, #8a2be2, #4b0082);
     color: white;
     padding: 10px 25px;
     border-radius: 50px;
-    text-decoration: none;
     font-weight: 600;
     font-size: 14px;
     transition: 0.4s;
     border: none;
-}
-/* --- HERO SECTION --- */
-.hero-section {
+  }
+  
+  .btn-red-large {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    padding: 18px 45px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 18px;
+    display: inline-block;
+    transition: 0.4s;
+  }
+
+  /* --- 3. THEME TOGGLE (Responsive) --- */
+  .theme-toggle {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    z-index: 10001;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--border-color);
+    color: var(--text-main);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+  
+  [data-theme="light"] .theme-toggle {
+    background: white;
+    color: var(--primary);
+    border-color: var(--primary);
+  }
+
+  .theme-toggle:hover { transform: scale(1.1); }
+
+  /* --- 4. HERO SECTION --- */
+  .hero-section {
     position: relative;
     height: 100vh;
     display: flex;
     align-items: center;
     overflow: hidden;
-}
+  }
 
-#hero-video {
+  #hero-video {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     object-fit: cover;
     z-index: -1;
-}
+  }
 
-.overlay {
+  .overlay {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
     background: radial-gradient(circle, rgba(138, 43, 226, 0.1) 0%, rgba(6, 6, 12, 0.8) 100%);
-}
+  }
+  
+  [data-theme="light"] .overlay {
+     background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, rgba(255, 255, 255, 0.8) 100%);
+  }
 
-.hero-content h1 {
+  .hero-content h1 {
     font-size: 65px;
     line-height: 1.1;
     margin-bottom: 20px;
-}
+  }
+  
+  [data-theme="light"] .hero-content h1 { color: #1e293b; }
 
-.hero-content h1 span {
+  .hero-content h1 span {
     background: linear-gradient(to right, var(--primary), var(--accent));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-}
+  }
+  
+  [data-theme="light"] .hero-content p { color: #475569; font-weight: 500; }
+  [data-theme="light"] .hero-content h6 { color: var(--primary); }
 
-.btn-red-large {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
-    padding: 18px 45px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 18px;
-    display: inline-block;
-    transition: 0.4s;
-}
-
-/* --- FEATURE OVERLAP --- */
-.features-overlap {
+  /* --- 5. FEATURES --- */
+  .features-overlap {
     margin-top: -80px;
     position: relative;
     z-index: 10;
-}
+  }
 
-.feature-grid {
+  .feature-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 25px;
-}
+  }
 
-.feature-card {
-    background: rgba(20, 20, 35, 0.9);
+  .feature-card {
+    background: var(--bg-card);
     padding: 40px;
     border-radius: 20px;
     text-align: center;
-    border: 1px solid rgba(138, 43, 226, 0.2);
+    border: 1px solid var(--border-color);
     transition: 0.3s;
-}
-
-.feature-card:hover {
-    transform: translateY(-10px);
-    border-color: var(--primary);
-    background: rgba(30, 30, 50, 1);
-}
-
-.feature-card i { font-size: 45px; color: var(--accent); margin-bottom: 20px; }
-
-
-
-
-
-/* Cards Container - Ise hi hum row mein set karenge */
-.why-features-grid {
-    display: flex; /* Cards ko ek line mein layega */
-    justify-content: center;
-    align-items: stretch;
-    gap: 20px;
-    width: 100%;
-}
-
-
-/* --- COURSE SLIDER --- */
-.parallax-section { padding: 100px 0; background-attachment: fixed; }
-
-.section-heading h2 { font-size: 40px; text-align: center; margin-bottom: 50px; }
-.section-heading span { color: #9a0669; }
-
-.course-slider-wrapper { position: relative; padding: 0 40px; }
-
-#course-catalog-container {
-    display: flex;
-    gap: 25px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    scroll-snap-type: x mandatory;
-    padding: 20px 5px;
-}
-
-#course-catalog-container::-webkit-scrollbar { display: none; }
-
-.course-card {
-    flex: 0 0 calc(33.333% - 17px);
-    max-width: calc(33.333% - 17px);
-    background: var(--bg-card);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    overflow: hidden;
-    scroll-snap-align: start;
-    transition: 0.4s;
-}
+    box-shadow: var(--shadow);
+  }
+  
+  [data-theme="light"] .feature-card { background: white; }
 
-.course-card:hover {
+  .feature-card:hover {
+    transform: translateY(-10px);
     border-color: var(--primary);
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(138, 43, 226, 0.2);
-}
+    background: var(--bg-card-hover);
+  }
 
-.course-image-container img { width: 100%; height: 200px; object-fit: cover; }
+  .feature-card i { font-size: 45px; color: var(--accent); margin-bottom: 20px; }
+  .feature-card h3 { margin-bottom: 10px; color: var(--text-main); }
+  .feature-card p { color: var(--text-dim); }
 
-.course-header { padding: 20px; }
-.course-info { padding: 0 20px 20px; color: var(--text-dim); font-size: 14px; }
-
-.course-actions {
-    display: flex;
-    gap: 10px;
-    padding: 15px;
-    background: rgba(0,0,0,0.3);
-}
-
-.btn-action {
-    flex: 1; text-align: center; padding: 10px; border-radius: 8px;
-    font-weight: bold; font-size: 12px; text-decoration: none;
-}
-
-.btn-enroll, .btn-continue { background: var(--primary); color: white; }
-.btn-view { background: rgba(255,255,255,0.1); color: white; }
-
-/* --- ARROWS --- */
-.slider-btn {
-    position: absolute;
-    top: 50%; transform: translateY(-50%);
-    background: var(--primary); color: white;
-    width: 50px; height: 50px; border-radius: 50%;
-    cursor: pointer; z-index: 10; border: none;
-    transition: 0.3s;
-}
-
-.slider-btn:hover { background: var(--white); color: var(--primary); }
-.prev-btn { left: -10px; }
-.next-btn { right: -10px; }
-
-/* --- METRICS --- */
-.metrics-section {
-    background: linear-gradient(135deg, var(--primary-dark), #06060c);
-    padding: 80px 0;
-}
-
-.metric-item h3 { font-size: 50px; color: var(--accent); }
-
-/* 🔥 TESTIMONIALS - PERFECT DARK + LIGHT MODE */
-.testimonials-marquee-section {
+  /* --- 6. WHY SECTION --- */
+  .why-section-new {
     padding: 100px 0;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
-    overflow: hidden;
-}
-
-/* ☀️ LIGHT MODE BACKGROUND */
-[data-theme="light"] .testimonials-marquee-section {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-}
-
-/* Marquee */
-.t-marquee-container {
-    display: flex;
-    overflow: hidden;
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-}
-
-.t-track {
-    display: flex;
-    gap: 40px;
-    animation: testimonial-loop 30s linear infinite;
-    padding: 30px 0;
-}
-
-.t-marquee-container:hover .t-track {
-    animation-play-state: paused;
-}
-
-@keyframes testimonial-loop {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
-/* 🔥 DARK MODE CARDS */
-.testimonial-card {
-    flex: 0 0 350px;
-    background: rgba(26, 26, 46, 0.9);        /* Deep Purple Glass */
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(139, 92, 246, 0.4); /* Purple Border */
-    border-radius: 20px;
-    padding: 30px;
     position: relative;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-}
+    overflow: hidden;
+  }
 
-.testimonial-card:hover {
-    background: rgba(139, 92, 246, 0.15);     /* Purple Glow */
-    border-color: #8b5cf6;
-    transform: translateY(-10px);
-    box-shadow: 
-        0 25px 50px rgba(139, 92, 246, 0.3),
-        0 0 25px rgba(139, 92, 246, 0.2);
-}
-
-.quote-icon {
-    color: #8b5cf6;  /* Purple */
-    font-size: 24px;
-    margin-bottom: 15px;
-    opacity: 0.8;
-}
-
-.review-text {
-    color: #e0d7ff;  /* Light Purple */
-    font-size: 15px;
-    line-height: 1.6;
-    font-style: italic;
-    margin-bottom: 25px;
-    min-height: 80px;
-}
-
-.student-info-row img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 3px solid rgba(139, 92, 246, 0.6); /* Purple Ring */
-    object-fit: cover;
-    box-shadow: 0 5px 15px rgba(139, 92, 246, 0.2);
-}
-
-.student-info-row h4 {
-    color: #ffffff;
-    font-size: 16px;
-    margin: 0;
-}
-
-.student-info-row span {
-    color: #06b6d4;  /* Cyan */
-    font-size: 12px;
-    display: block;
-}
-
-/* ☀️ LIGHT MODE OVERRIDE */
-[data-theme="light"] .testimonial-card {
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(124, 58, 237, 0.25);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-}
-
-[data-theme="light"] .testimonial-card:hover {
-    background: rgba(124, 58, 237, 0.08);
-    border-color: #7c3aed;
-    box-shadow: 
-        0 25px 50px rgba(124, 58, 237, 0.15),
-        0 0 25px rgba(124, 58, 237, 0.1);
-}
-
-[data-theme="light"] .student-info-row img {
-    border: 3px solid rgba(124, 58, 237, 0.4);
-    box-shadow: 0 5px 15px rgba(124, 58, 237, 0.15);
-}
-
-[data-theme="light"] .review-text {
-    color: #475569;
-}
-
-[data-theme="light"] .student-info-row h4 {
-    color: #1e293b;
-}
-
-[data-theme="light"] .student-info-row span {
-    color: #0ea5e9;
-}
-
-[data-theme="light"] .quote-icon {
-    color: #7c3aed;
-}
-
-
-
-/* --- NEW WHY CODELINE AI SECTION (Reference Image Style) --- */
-
-
-.feature-item {
-    font-size: 16px;
-    color: var(--white);
-    font-weight: 500;
-    display: flex;
+  .why-grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
     align-items: center;
-}
+  }
 
-.feature-item i {
-    color: var(--primary-light); /* Purple checkmark */
-    margin-right: 10px;
-    font-size: 20px;
-}
+  .main-image-wrapper {
+    position: relative;
+    z-index: 2;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+    border: 5px solid var(--primary);
+  }
 
-/* New Primary Button */
-.btn-primary-new {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: var(--white);
-    padding: 15px 35px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 16px;
-    display: inline-block;
-    transition: 0.4s ease;
-    box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
-}
+  .main-image-wrapper img { width: 100%; height: 500px; object-fit: cover; display: block; }
+  
+  .why-content-right h2 { font-size: 42px; line-height: 1.2; margin-bottom: 25px; color: var(--text-main); }
+  .why-content-right h2 span { color: var(--primary); }
+  .why-content-right p { font-size: 16px; margin-bottom: 20px; color: var(--text-dim); opacity: 0.9; }
 
-.btn-primary-new:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(138, 43, 226, 0.6);
-    background: var(--accent); /* Hover pe Cyan ho sakta hai for contrast */
-    color: var(--bg-dark);
-}
+  .why-features-list {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 30px 0;
+  }
+  
+  .feature-item { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; color: var(--text-main); }
+  .feature-item i { color: var(--primary); font-size: 18px; }
 
-/* --- Responsive Adjustments --- */
-@media (max-width: 992px) {
-    .why-grid-container {
-        flex-direction: column;
-        text-align: center;
-        gap: 60px;
-    }
-
-    .why-image-collage {
-        width: 100%;
-        height: auto;
-        max-width: 400px; /* Limit image collage width on tablets */
-        margin: 0 auto;
-    }
-
-    .why-content-right {
-        max-width: 100%;
-    }
-
-    .why-content-right h2 {
-        font-size: 38px;
-    }
-    
-    .why-features-list {
-        grid-template-columns: 1fr; /* Stack features vertically on tablets */
-        text-align: left; /* Align feature items to left */
-    }
-
-    .why-content-right .btn-primary-new {
-        width: 100%;
-        text-align: center;
-    }
-}
-
-@media (max-width: 576px) {
-    .why-section-new {
-        padding: 60px 0;
-    }
-    .why-content-right h2 {
-        font-size: 32px;
-    }
-    .why-image-collage {
-        grid-template-columns: 1fr; /* Stack images on very small screens */
-        height: auto;
-    }
-    .why-image-collage .image-wrapper {
-        width: 80%;
-        margin: 0 auto; /* Center single images */
-    }
-    .why-image-collage .image-wrapper:nth-child(even) {
-        margin-top: 20px; /* Add some spacing when stacked */
-    }
-}
-
-
-/* Placements Container */
+  /* --- 7. PLACEMENTS --- */
+  /* Placements Container */
 .placements-new-section {
     padding: 100px 0;
     background: #323242;
@@ -915,663 +449,53 @@ dfdssdd
     background: rgba(0, 0, 0, 0.9);
     box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
 }
-
-/* ☀️ LIGHT MODE OVERRIDE */
-[data-theme="light"] .alumni-card {
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(124, 58, 237, 0.25);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-}
-
-[data-theme="light"] .alumni-card:hover {
-    background: rgba(124, 58, 237, 0.08);
-    border-color: #7c3aed;
-    box-shadow: 
-        0 25px 50px rgba(124, 58, 237, 0.15),
-        0 0 25px rgba(124, 58, 237, 0.1);
-}
-
-[data-theme="light"] .alumni-img-wrapper {
-    border: 4px solid rgba(124, 58, 237, 0.4);
-    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.15);
-}
-
-[data-theme="light"] .alumni-dept {
-    color: #64748b;
-}
-
-[data-theme="light"] .alumni-tooltip {
-    background: rgba(0, 0, 0, 0.85);
-    box-shadow: 0 15px 40px rgba(124, 58, 237, 0.3);
-}
-
-/* Marquee Animation (Add if missing) */
-.marquee-container {
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-}
-
-.marquee-track {
-    display: flex;
-    gap: 20px;
-    animation: placementScroll 30s linear infinite;
-}
-
-.marquee-track:hover {
-    animation-play-state: paused;
-}
-
-@keyframes placementScroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
-
-
-
-
-/* --- MODERN FOOTER STYLING --- */
-/* 🔥 PROFESSIONAL FOOTER - DARK + LIGHT MODE */
-.main-footer {
-    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%);
-    border-top: 1px solid rgba(139, 92, 246, 0.3);
-    padding: 60px 0 30px;
-    position: relative;
-    overflow: hidden;
-}
-
-.main-footer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #8b5cf6, #06b6d4, transparent);
-}
-
-/* Footer Grid */
-.footer-top {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1.5fr;
-    gap: 50px;
-    margin-bottom: 40px;
-}
-
-.footer-brand h3 {
-    font-size: 28px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #ffffff, #8b5cf6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 12px;
-}
-
-.footer-brand p {
-    color: #94a3b8;
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 25px;
-}
-
-/* Social Icons */
-.social-links {
-    display: flex;
-    gap: 15px;
-}
-
-.social-icon {
-    width: 50px;
-    height: 50px;
-    background: rgba(139, 92, 246, 0.2);
-    border: 1px solid rgba(139, 92, 246, 0.4);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #e0d7ff;
-    font-size: 18px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.social-icon:hover {
-    background: linear-gradient(135deg, #8b5cf6, #06b6d4);
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 15px 35px rgba(139, 92, 246, 0.4);
-}
-
-/* 🔥 TALL PROFESSIONAL FOOTER - INCREASED HEIGHT */
-.main-footer {
-    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%);
-    border-top: 1px solid rgba(139, 92, 246, 0.3);
-    padding: 100px 0 50px;  /* ↑ HEIGHT DOUBLED: 60px→100px, 30px→50px */
-    position: relative;
-    overflow: hidden;
-}
-
-/* MORE SPACIOUS GRID */
-.footer-top {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1.5fr;
-    gap: 60px;              /* ↑ 50px → 60px */
-    margin-bottom: 60px;    /* ↑ 40px → 60px */
-}
-
-/* BRAND SECTION - TALLER */
-.footer-brand {
-    padding: 20px 0;        /* Extra breathing space */
-}
-
-.footer-brand h3 {
-    font-size: 32px;        /* ↑ Slightly bigger logo */
-    margin-bottom: 20px;    /* ↑ More space */
-}
-
-.footer-brand p {
-    font-size: 16px;
-    line-height: 1.8;       /* Better readability */
-    margin-bottom: 35px;    /* ↑ Extra space */
-}
-
-/* LINK COLUMNS - BETTER SPACING */
-.footer-links {
-    padding: 15px 0;
-}
-
-.footer-links h4 {
-    margin-bottom: 25px;    /* ↑ More space under heading */
-}
-
-.footer-links li {
-    margin-bottom: 16px;    /* ↑ Line spacing */
-}
-
-/* NEWSLETTER - EXPANDED */
-.footer-newsletter {
-    padding: 20px 0;
-}
-
-.newsletter-form {
-    padding: 4px;           /* Slightly thicker glass border */
-}
-
-.newsletter-form input {
-    padding: 18px 20px;     /* ↑ Bigger input field */
-    font-size: 16px;
-}
-
-.newsletter-form button {
-    width: 55px;            /* ↑ Slightly bigger button */
-    height: 55px;
-}
-
-/* FOOTER BOTTOM - MORE SPACE */
-.footer-bottom {
-    padding-top: 50px;      /* ↑ 30px → 50px */
-    border-top: 1px solid rgba(139, 92, 246, 0.3);
-    padding-bottom: 30px;   /* Bottom cushion */
-    margin-top: 40px;
-}
-
-/* PERFECT RESPONSIVE HEIGHTS */
-@media (max-width: 1024px) {
-    .main-footer {
-        padding: 80px 0 40px;   /* Medium screens */
-    }
-    
-    .footer-top {
-        grid-template-columns: 2fr 1fr 1fr;
-        gap: 50px;
-        margin-bottom: 50px;
-    }
-}
-
-@media (max-width: 768px) {
-    .main-footer {
-        padding: 60px 0 30px;   /* Mobile optimized */
-    }
-    
-    .footer-top {
-        grid-template-columns: 1fr;
-        gap: 40px;              /* Single column spacing */
-        margin-bottom: 40px;
-        text-align: center;
-    }
-    
-    .footer-brand h3 {
-        font-size: 28px;
-    }
-    
-    .newsletter-form {
-        flex-direction: column;
-    }
-    
-    .newsletter-form input {
-        margin-bottom: 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    .main-footer {
-        padding: 50px 0 25px;   /* Small mobile */
-    }
-    
-    .footer-top {
-        gap: 30px;
-    }
-}
-
-
-/* --- COMMUNITY SECTION --- */
-/* 🔥 COMMUNITY SECTION - ADVANCED EFFECTS */
-.community-section {
-    padding: 120px 0;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-.community-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #8b5cf6, #06b6d4, transparent);
-    animation: glow-line 3s ease-in-out infinite alternate;
-}
-
-@keyframes glow-line {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-}
-
-/* Community Box */
-.community-box {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.community-content h2 {
-    font-size: clamp(32px, 5vw, 48px);
-    font-weight: 800;
-    background: linear-gradient(135deg, #ffffff, #c4b5fd, #06b6d4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 20px;
-}
-
-.community-content h2 span {
-    background: linear-gradient(135deg, #8b5cf6, #06b6d4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.community-content p {
-    color: #94a3b8;
-    font-size: 18px;
-    line-height: 1.7;
-    max-width: 500px;
-    margin-bottom: 40px;
-}
-
-/* 🔥 ADVANCED COMMUNITY CARDS */
-.community-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.comm-card {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 25px;
-    border-radius: 24px;
-    text-decoration: none;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(139, 92, 246, 0.3);
-    background: rgba(26, 26, 46, 0.6);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-}
-
-.comm-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.6s;
-}
-
-.comm-card:hover::before {
-    left: 100%;
-}
-
-.comm-card i {
-    font-size: 32px;
-    padding: 20px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.4s ease;
-    flex-shrink: 0;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-/* Discord Card */
-.comm-card.discord i {
-    background: rgba(116, 127, 225, 0.9);
-    color: white;
-}
-
-.comm-card.discord:hover i {
-    background: linear-gradient(135deg, #5865f2, #7289da);
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 20px 40px rgba(88, 101, 242, 0.4);
-}
-
-/* Telegram Card */
-.comm-card.telegram i {
-    background: rgba(0, 219, 165, 0.9);
-    color: white;
-}
-
-.comm-card.telegram:hover i {
-    background: linear-gradient(135deg, #0088cc, #00baab);
-    transform: scale(1.1) rotate(-5deg);
-    box-shadow: 0 20px 40px rgba(0, 136, 204, 0.4);
-}
-
-/* WhatsApp Card */
-.comm-card.whatsapp i {
-    background: rgba(37, 211, 102, 0.9);
-    color: white;
-}
-
-.comm-card.whatsapp:hover i {
-    background: linear-gradient(135deg, #25d366, #128c7e);
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 20px 40px rgba(37, 211, 102, 0.4);
-}
-
-.comm-card:hover {
-    transform: translateY(-15px) scale(1.02);
-    border-color: #8b5cf6;
-    box-shadow: 
-        0 30px 60px rgba(139, 92, 246, 0.3),
-        0 0 30px rgba(139, 92, 246, 0.2);
-}
-
-.comm-card h4 {
-    color: #ffffff;
-    font-size: 20px;
-    font-weight: 700;
-    margin: 0 0 4px 0;
-    letter-spacing: -0.5px;
-}
-
-.comm-card span {
-    color: #a78bfa;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-/* Community Image */
-.community-image img {
-    width: 100%;
-    height: 500px;
-    object-fit: cover;
-    border-radius: 24px;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
-}
-
-.community-image:hover img {
-    transform: scale(1.02);
-    box-shadow: 0 40px 100px rgba(139, 92, 246, 0.3);
-}
-
-/* ☀️ LIGHT MODE */
-[data-theme="light"] .community-section {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-}
-
-[data-theme="light"] .comm-card {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(124, 58, 237, 0.2);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-}
-
-[data-theme="light"] .comm-card:hover {
-    border-color: #7c3aed;
-    box-shadow: 
-        0 30px 60px rgba(124, 58, 237, 0.2),
-        0 0 30px rgba(124, 58, 237, 0.15);
-}
-
-[data-theme="light"] .comm-card h4 {
-    color: #1e293b;
-}
-
-[data-theme="light"] .comm-card span {
-    color: #7c3aed;
-}
-
-[data-theme="light"] .community-content p {
-    color: #64748b;
-}
-
-[data-theme="light"] .community-image img {
-    box-shadow: 0 30px 80px rgba(0,0,0,0.15);
-}
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-    .community-box {
-        grid-template-columns: 1fr;
-        gap: 50px;
-        text-align: center;
-    }
-    
-    .community-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    
-    .comm-card {
-        padding: 20px;
-        justify-content: center;
-    }
-}
-
-
-/* --- COURSES SECTION STYLING --- */
-.courses-section {
-    padding: 100px 0;
-    background: #0d0dc4;
-}
-
-.courses-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
-    margin-top: 50px;
-}
-
-.course-card-premium {
-    background: rgba(60, 102, 175, 0.03);
-    border: 1px solid rgba(138, 43, 226, 0.2);
-    border-radius: 20px;
-    overflow: hidden;
-    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
+  /* --- 8. COURSES --- */
+  .popular-courses-modern { padding: 80px 0; }
+  .section-heading-centered { text-align: center; margin-bottom: 50px; }
+  .section-heading-centered h2 { font-size: 40px; color: var(--text-main); }
+  .section-heading-centered h2 span { color: var(--primary); }
+  .section-heading-centered p { color: var(--text-dim); }
+
+  .course-slider-wrapper-modern { position: relative; padding: 0 40px; }
+  
+  #course-catalog-container {
+    display: flex; gap: 25px; overflow-x: auto;
+    scroll-behavior: smooth; scrollbar-width: none;
+    padding: 20px 5px;
+    scroll-snap-type: x mandatory;
+  }
+  #course-catalog-container::-webkit-scrollbar { display: none; }
+
+  .course-card {
+    flex: 0 0 320px;
+    background: var(--bg-card);
     backdrop-filter: blur(10px);
-}
-
-.course-card-premium:hover {
-    transform: translateY(-15px);
-    border-color: #8a2be2;
-    box-shadow: 0 15px 40px rgba(138, 43, 226, 0.2);
-}
-/* Mobile Responsive Fix */
-@media (max-width: 768px) {
-    .popular-courses-modern {
-        padding: 40px 0;
-    }
-
-    /* Slider wrapper ko horizontal scrollable banana */
-    .course-catalog-dynamic {
-        display: flex;
-        gap: 15px;
-        overflow-x: auto; /* Horizontal scroll enable */
-        scroll-snap-type: x mandatory; /* Smooth snapping */
-        padding: 10px 20px 30px; /* Niche space taaki shadow na kate */
-        -webkit-overflow-scrolling: touch; /* iOS smooth scroll */
-    }
-
-    /* Card ki width fix karna taaki wo pichke nahi */
-    .course-card {
-        flex: 0 0 85%; /* Ek waqt mein ek card 85% dikhega, baaki agla card dikhega */
-        max-width: 300px;
-        scroll-snap-align: center; /* Card center mein rukega */
-        margin-bottom: 0;
-    }
-
-    /* Slider buttons mobile par hide kar dena (swipe best hota hai) */
-    .slider-control {
-        display: none !important;
-    }
-
-    /* Heading text size chota karna mobile ke liye */
-    .section-heading-centered h2 {
-        font-size: 28px;
-    }
-}
-
-/* Image Wrapper & Tags */
-.course-img-wrapper {
-    position: relative;
-    height: 200px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
     overflow: hidden;
-}
+    scroll-snap-align: start;
+    transition: 0.4s;
+    box-shadow: var(--shadow);
+  }
+  
+  [data-theme="light"] .course-card { background: white; }
 
-.course-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: 0.5s;
-}
+  .course-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-10px);
+  }
 
-.course-card-premium:hover .course-img-wrapper img {
-    transform: scale(1.1);
-}
+  .course-image-container img { width: 100%; height: 200px; object-fit: cover; }
+  .course-header { padding: 20px; }
+  .course-header h3 { color: var(--text-main); font-size: 20px; }
+  .course-info { padding: 0 20px 20px; color: var(--text-dim); font-size: 14px; }
+  
+  .course-actions { display: flex; gap: 10px; padding: 15px; background: rgba(0,0,0,0.1); }
+  .btn-action { flex: 1; text-align: center; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 12px; }
+  .btn-enroll { background: var(--primary); color: white; }
+  .btn-view { background: rgba(138,43,226,0.1); color: var(--text-main); border: 1px solid var(--border-color); }
 
-.course-tag {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    background: #8a2be2;
-    color: white;
-    padding: 5px 12px;
-    border-radius: 50px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.course-tag.blue { background: #00f2ff; color: #000; }
-
-/* Course Body */
-.course-body {
-    padding: 25px;
-}
-
-.course-meta {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    font-size: 13px;
-    color: #b0b0c0;
-}
-
-.course-body h3 {
-    color: white;
-    font-size: 20px;
-    margin-bottom: 12px;
-    line-height: 1.4;
-}
-
-.course-body p {
-    color: #888;
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 20px;
-}
-
-
-.original {
-    color: #666;
-    text-decoration: line-through;
-    font-size: 16px;
-}
-
-/* Buttons */
-.course-footer {
-    display: flex;
-    gap: 15px;
-}
-
-.btn-enroll {
-    flex: 2;
-    background:  #9a0669;
-    color: white;
-    padding: 12px;
-    text-align: center;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 14px;
-    transition: 0.3s;
-}
-
-.btn-enroll:hover {
-    background: white;
-    color:  #9a0669;
-    box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
-}
-
-.btn-view-details {
-    flex: 1;
-    border: 1px solid  #9a0669;
-    color: white;
-    padding: 12px;
-    text-align: center;
-    border-radius: 10px;
-    text-decoration: none;
-    font-size: 14px;
-    transition: 0.3s;
-}
-
-.btn-view-details:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-/* --- Faculty Section Styling --- */
-/* 🔥 ORIGINAL + BETTER COLORS */
+  /* 🔥 ORIGINAL + BETTER COLORS */
 .faculty-marquee-section {
     padding: 80px 0;
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
@@ -1746,137 +670,226 @@ dfdssdd
 }
 
 
-/* --- WHY SECTION STYLING --- */
-.why-section-new {
+  /* --- 10. TESTIMONIALS --- */
+  /* 🔥 TESTIMONIALS - PERFECT DARK + LIGHT MODE */
+.testimonials-marquee-section {
     padding: 100px 0;
-    position: relative;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
     overflow: hidden;
 }
 
-.why-grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
+/* ☀️ LIGHT MODE BACKGROUND */
+[data-theme="light"] .testimonials-marquee-section {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
 }
 
-/* Image Side */
-.why-image-single {
-    position: relative;
+/* Marquee */
+.t-marquee-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.main-image-wrapper {
-    position: relative;
-    z-index: 2;
-    border-radius: 30px;
     overflow: hidden;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-    border: 5px solid var(--pista); /* Pista Green Border */
-    transition: var(--transition);
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
-.main-image-wrapper img {
-    width: 100%;
-    height: 500px;
+.t-track {
+    display: flex;
+    gap: 40px;
+    animation: testimonial-loop 30s linear infinite;
+    padding: 30px 0;
+}
+
+.t-marquee-container:hover .t-track {
+    animation-play-state: paused;
+}
+
+@keyframes testimonial-loop {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* 🔥 DARK MODE CARDS */
+.testimonial-card {
+    flex: 0 0 350px;
+    background:#9a0669;        /* Deep Purple Glass */
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(139, 92, 246, 0.4); /* Purple Border */
+    border-radius: 20px;
+    padding: 30px;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+.testimonial-card:hover {
+    background: rgba(59, 10, 164, 0.15);     /* Purple Glow */
+    border-color: #8b5cf6;
+    transform: translateY(-10px);
+    box-shadow: 
+        0 25px 50px rgba(139, 92, 246, 0.3),
+        0 0 25px rgba(139, 92, 246, 0.2);
+}
+
+.quote-icon {
+    color: #8b5cf6;  /* Purple */
+    font-size: 24px;
+    margin-bottom: 15px;
+    opacity: 0.8;
+}
+
+.review-text {
+    color: #e0d7ff;  /* Light Purple */
+    font-size: 15px;
+    line-height: 1.6;
+    font-style: italic;
+    margin-bottom: 25px;
+    min-height: 80px;
+}
+
+.student-info-row img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid rgba(139, 92, 246, 0.6); /* Purple Ring */
     object-fit: cover;
+    box-shadow: 0 5px 15px rgba(139, 92, 246, 0.2);
+}
+
+.student-info-row h4 {
+    color: #ffffff;
+    font-size: 16px;
+    margin: 0;
+}
+
+.student-info-row span {
+    color: #06b6d4;  /* Cyan */
+    font-size: 12px;
     display: block;
 }
 
-.main-image-wrapper:hover {
-    transform: translateY(-10px) rotate(-1deg);
-}
+  /* --- 11. COMMUNITY --- */
+  .community-section {
+    padding: 120px 0;
+    background: var(--bg-footer);
+    position: relative; overflow: hidden;
+  }
+  
+  .community-box { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  .community-content h2 { font-size: 48px; font-weight: 800; color: var(--text-main); margin-bottom: 20px; }
+  .community-content h2 span { color: var(--primary); }
+  .community-content p { color: var(--text-dim); font-size: 18px; line-height: 1.7; margin-bottom: 40px; }
+  
+  .community-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  
+  .comm-card {
+    display: flex; align-items: center; gap: 20px; padding: 25px;
+    border-radius: 24px; text-decoration: none;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    transition: 0.3s;
+  }
+  
+  [data-theme="light"] .comm-card { background: white; }
+  .comm-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+  
+  .comm-card i { font-size: 32px; padding: 15px; border-radius: 15px; color: white; }
+  .comm-card.discord i { background: #5865f2; }
+  .comm-card.telegram i { background: #0088cc; }
+  .comm-card.whatsapp i { background: #25d366; }
+  
+  .comm-card h4 { color: var(--text-main); font-size: 18px; font-weight: 700; margin: 0; }
+  .comm-card span { color: var(--primary); font-size: 12px; font-weight: 500; }
+  
+  .community-image img { width: 100%; border-radius: 24px; box-shadow: var(--shadow); }
 
-/* Floating Tag */
-.experience-tag {
-    position: absolute;
-    bottom: 30px;
-    right: -20px;
-    background: var(--white);
-    color: var(--primary-dark);
-    padding: 15px 25px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    display: flex;
-    flex-direction: column;
-    z-index: 3;
-    border-left: 5px solid var(--primary);
-}
+  /* --- 12. FOOTER --- */
+  .main-footer {
+    background: var(--bg-footer);
+    border-top: 1px solid var(--border-color);
+    padding: 80px 0 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 60px; margin-bottom: 60px; }
+  
+  .footer-brand h3 { font-size: 28px; font-weight: 800; color: var(--text-main); margin-bottom: 12px; }
+  .footer-brand p { color: var(--text-dim); font-size: 16px; line-height: 1.6; margin-bottom: 25px; }
+  
+  .social-links { display: flex; gap: 15px; }
+  .social-icon {
+    width: 45px; height: 45px;
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-dim); transition: 0.3s;
+  }
+  .social-icon:hover { background: var(--primary); color: white; transform: translateY(-5px); }
+  
+  .footer-links h4 { margin-bottom: 25px; color: var(--text-main); }
+  .footer-links ul li { margin-bottom: 12px; }
+  .footer-links a { color: var(--text-dim); transition: 0.3s; }
+  .footer-links a:hover { color: var(--primary); }
+  
+  .newsletter-form { display: flex; gap: 10px; margin-top: 15px; }
+  .newsletter-form input {
+    flex: 1; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color);
+    background: var(--bg-card); color: var(--text-main);
+  }
+  .newsletter-form button { width: 50px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; }
+  
+  .footer-bottom { 
+    padding-top: 30px; border-top: 1px solid var(--border-color); 
+    display: flex; justify-content: space-between; color: var(--text-dim); font-size: 14px;
+  }
+  .footer-right { display: flex; gap: 20px; }
 
-.experience-tag .number { font-weight: 800; font-size: 20px; color: var(--primary); }
-.experience-tag .text { font-size: 12px; font-weight: 600; opacity: 0.8; }
 
-/* Glow Background Effect */
-.glow-bg {
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
-    opacity: 0.2;
-    z-index: 1;
-    filter: blur(50px);
-}
+  /* --- RESPONSIVE CSS --- */
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 25px; height: 3px; background: var(--text-main); transition: 0.3s; }
+  .mobile-only { display: none; }
+  .desktop-only { display: block; }
 
-/* Right Content Side */
-.why-content-right h2 {
-    font-size: 42px;
-    line-height: 1.2;
-    margin-bottom: 25px;
-}
-
-.why-content-right h2 span {
-    color: var(--primary);
-}
-
-.why-content-right p {
-    font-size: 16px;
-    margin-bottom: 20px;
-    color: var(--text-color);
-    opacity: 0.9;
-}
-
-.why-features-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin: 30px 0;
-}
-
-.feature-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 600;
-    font-size: 15px;
-}
-
-.feature-item i {
-    color: var(--primary); /* Purple check icon */
-    font-size: 18px;
-}
-
-/* Mobile Responsive */
-@media (max-width: 992px) {
-    .why-grid-container {
-        grid-template-columns: 1fr;
-        text-align: center;
+  @media (max-width: 992px) {
+    .hamburger { display: flex; }
+    .desktop-only { display: none; }
+    .mobile-only { display: block; }
+    
+    .nav-flex { padding: 0 15px; }
+    
+    nav ul {
+      position: fixed; top: 70px; right: -100%; width: 100%; height: 100vh;
+      background: var(--bg-body); flex-direction: column; padding-top: 50px;
+      transition: 0.4s ease; border-top: 1px solid var(--border-color);
     }
+    nav ul.active { right: 0; }
+
+    /* Theme Toggle Position Mobile */
+    .theme-toggle { top: 75px; right: 15px; width: 45px; height: 45px; font-size: 18px; }
+    
+    .why-grid-container, .community-box, .footer-top { grid-template-columns: 1fr; text-align: center; }
+    .community-grid { grid-template-columns: 1fr; }
     .why-image-single { order: 2; }
     .why-content-right { order: 1; }
-    .experience-tag { right: 20px; }
-    .why-features-list { justify-items: center; }
-}
+    .footer-bottom { flex-direction: column; align-items: center; gap: 15px; }
+    
+    .hero-content h1 { font-size: 40px; }
+  }
 
+  /* Hamburger Animation */
+  .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
   </style>
 </head>
 
 <body data-theme="dark">
-    <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme" title="Dark/Light Mode">
-        <i class="fas fa-sun active-icon"></i>
-        <i class="fas fa-moon inactive-icon"></i>
-    </button>
+
+  <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+      <i class="fas fa-sun" style="display: none;"></i>
+      <i class="fas fa-moon"></i>
+  </button>
 
   <nav class="navbar">
     <div class="container nav-flex">
@@ -1898,14 +911,14 @@ dfdssdd
 
         <a href="#" class="btn-red desktop-only">Login/Register</a>
     </div>
-</nav>
+  </nav>
 
   <section class="hero-section">
     <video autoplay muted loop playsinline id="hero-video">
       <source src="https://www.pexels.com/download/video/3209298.mp4" type="video/mp4">
     </video>
     <div class="overlay"></div>
-    <div class="container hero-content">
+    <div class="container hero-content" data-aos="fade-up" data-aos-duration="1000">
       <h6>HELLO STUDENTS</h6>
       <h1>WELCOME TO <span>CODELINE AI</span></h1>
       <p>Build real projects, get mentored, and land your dream job at top tech companies.</p>
@@ -1917,17 +930,17 @@ dfdssdd
   <section class="features-overlap">
     <div class="container">
       <div class="feature-grid">
-        <div class="feature-card">
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
           <i class="fas fa-desktop"></i>
           <h3>Online Meeting</h3>
           <p>Interactive live sessions with top mentors to clear all your doubts in real-time.</p>
         </div>
-        <div class="feature-card">
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="150">
           <i class="fas fa-users"></i>
           <h3>Best Networking</h3>
           <p>Join a global community of developers and build your professional network.</p>
         </div>
-        <div class="feature-card">
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
           <i class="fas fa-graduation-cap"></i>
           <h3>Best Education</h3>
           <p>Get industry-recognized certificates and work on real-world industry projects.</p>
@@ -1935,47 +948,35 @@ dfdssdd
       </div>
     </div>
   </section>
-<section class="why-section-new">
+
+  <section class="why-section-new">
     <div class="container why-grid-container">
-        <div class="why-image-single">
+        <div class="why-image-single" data-aos="fade-right" data-aos-duration="1000">
             <div class="main-image-wrapper">
-                <img src="Codeline Img.png" alt="Learning at Codeline AI">
-                
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800" alt="Learning at Codeline AI">
             </div>
-            <div class="glow-bg"></div>
         </div>
 
-        <div class="why-content-right">
+        <div class="why-content-right" data-aos="fade-left" data-aos-duration="1000">
             <h2>Why <span>CODELINE AI</span> Learning Platform?</h2>
             <p>Aapki tech journey ko naya mod dene ke liye humne banaya hai ek aisa environment jahan sirf theory nahi, practical execution par focus hota hai. Get industry-recognized certificates and work on real-world industry projects with top mentors.</p>
             
             <p>We're developing an innovative bootstrap-powered UI Kit tool designed specifically for developers, engineers, and digital agencies.</p>
 
             <div class="why-features-list">
-                <div class="feature-item">
-                    <i class="fas fa-check-circle"></i> Wide Range of Courses
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-check-circle"></i> Cost-Effective
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-check-circle"></i> Global Networking
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-check-circle"></i> Get Certificate
-                </div>
+                <div class="feature-item"><i class="fas fa-check-circle"></i> Wide Range of Courses</div>
+                <div class="feature-item"><i class="fas fa-check-circle"></i> Cost-Effective</div>
+                <div class="feature-item"><i class="fas fa-check-circle"></i> Global Networking</div>
+                <div class="feature-item"><i class="fas fa-check-circle"></i> Get Certificate</div>
             </div>
 
             <a href="#" class="btn-red-large">Create an Account</a>
         </div>
     </div>
-</section>
-      
-    </div>
   </section>
 
 
- <section class="placements-new-section" id="placements">
+<section class="placements-new-section" id="placements">
     <div class="container">
         <div class="section-heading" style="text-align: center; margin-bottom: 50px;">
             <h2 style="font-size: 40px;">Our Students <span style="color: var(--primary);">Placed At</span></h2>
@@ -2058,30 +1059,24 @@ dfdssdd
                     </div>
                 </div>
 
-                </div>
+            </div>
         </div>
     </div>
 </section>
 
-<section class="popular-courses-modern" id="popular-courses-section">
+  <section class="popular-courses-modern">
     <div class="container">
-        <div class="section-heading-centered">
+        <div class="section-heading-centered" data-aos="fade-up">
             <h2>🔥 Trending <span>Courses</span></h2>
             <p>Top-rated classes selected just for you</p>
         </div>
-        
-        <div class="course-slider-wrapper-modern">
-            <button id="prevBtn" class="slider-control prev"><i class="fas fa-chevron-left"></i></button>
-            
-            <div id="course-catalog-container" class="course-catalog-dynamic">
-                </div>
-  
-            <button id="nextBtn" class="slider-control next"><i class="fas fa-chevron-right"></i></button>
+        <div class="course-slider-wrapper-modern" data-aos="fade-up" data-aos-delay="200">
+            <div id="course-catalog-container"></div>
         </div>
     </div>
-</section>
-        
-<section class="faculty-marquee-section">
+  </section>
+
+  <section class="faculty-marquee-section">
     <div class="container">
         <div class="section-heading-centered">
             <h2>Our Expert <span>Faculty</span></h2>
@@ -2160,13 +1155,12 @@ dfdssdd
                         <a href="#"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
-                
-                </div>
+
+            </div>
         </div>
     </div>
 </section>
-    
-<section class="testimonials-marquee-section">
+  <section class="testimonials-marquee-section">
     <div class="container">
         <div class="section-heading-centered">
             <h2>What Our <span>Students Say</span></h2>
@@ -2210,60 +1204,36 @@ dfdssdd
                         </div>
                     </div>
                 </div>
-                
-                </div>
+
+            </div>
         </div>
     </div>
 </section>
-
-
-
-
-
-
-<section class="community-section">
+  <section class="community-section">
     <div class="container">
         <div class="community-box">
-            <div class="community-content">
-                <h2>Join Our <span>Growing Community</span></h2>
-                <p>10,000+ students are already learning together. Get exclusive access to free resources, job alerts, and 24/7 doubt support.</p>
-                
+            <div class="community-content" data-aos="fade-right">
+                <h2>Join Our <span>Community</span></h2>
+                <p>10,000+ students are already learning together. Get exclusive access to free resources.</p>
                 <div class="community-grid">
-                    <a href="#" class="comm-card discord">
-                        <i class="fab fa-discord"></i>
-                        <div>
-                            <h4>Discord</h4>
-                            <span>5k+ Members</span>
-                        </div>
-                    </a>
-                    <a href="#" class="comm-card telegram">
-                        <i class="fab fa-telegram-plane"></i>
-                        <div>
-                            <h4>Telegram</h4>
-                            <span>3k+ Subscribers</span>
-                        </div>
-                    </a>
-                    <a href="#" class="comm-card whatsapp">
-                        <i class="fab fa-whatsapp"></i>
-                        <div>
-                            <h4>WhatsApp</h4>
-                            <span>Join Group</span>
-                        </div>
-                    </a>
+                    <a href="#" class="comm-card discord" data-aos="zoom-in" data-aos-delay="0"><i class="fab fa-discord"></i><div><h4>Discord</h4><span>5k+</span></div></a>
+                    <a href="#" class="comm-card telegram" data-aos="zoom-in" data-aos-delay="150"><i class="fab fa-telegram-plane"></i><div><h4>Telegram</h4><span>3k+</span></div></a>
+                    <a href="#" class="comm-card whatsapp" data-aos="zoom-in" data-aos-delay="300"><i class="fab fa-whatsapp"></i><div><h4>WhatsApp</h4><span>Join</span></div></a>
                 </div>
             </div>
-            <div class="community-image">
-                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" alt="Community">
+            <div class="community-image" data-aos="fade-left" data-aos-delay="200">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800" alt="Community">
             </div>
         </div>
     </div>
-</section>
-<footer class="main-footer">
-    <div class="container">
+  </section>
+
+  <footer class="main-footer">
+    <div class="container" data-aos="fade-up">
         <div class="footer-top">
             <div class="footer-brand">
                 <h3>CODELINE AI</h3>
-                <p>Transforming careers through AI-powered coding education</p>
+                <p>Transforming careers through AI-powered education.</p>
                 <div class="social-links">
                     <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
                     <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
@@ -2271,472 +1241,246 @@ dfdssdd
                     <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
-            
             <div class="footer-links">
                 <h4>Product</h4>
-                <ul>
-                    <li><a href="#">Courses</a></li>
-                    <li><a href="#">Dashboard</a></li>
-                    <li><a href="#">Projects</a></li>
-                    <li><a href="#">Mentorship</a></li>
-                </ul>
+                <ul><li><a href="#">Courses</a></li><li><a href="#">Mentorship</a></li></ul>
             </div>
-            
             <div class="footer-links">
                 <h4>Company</h4>
-                <ul>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
+                <ul><li><a href="#">About</a></li><li><a href="#">Contact</a></li></ul>
             </div>
-            
             <div class="footer-newsletter">
                 <h4>Stay Updated</h4>
-                <p>Get latest course updates & job alerts</p>
                 <div class="newsletter-form">
-                    <input type="email" placeholder="Enter your email">
+                    <input type="email" placeholder="Email">
                     <button><i class="fas fa-arrow-right"></i></button>
                 </div>
             </div>
         </div>
-        
         <div class="footer-bottom">
-            <div class="footer-left">
-                <p>© 2026 CODELINE AI. All rights reserved.</p>
-            </div>
-            <div class="footer-right">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Cookie Policy</a>
-            </div>
+            <p>© 2026 CODELINE AI. All rights reserved.</p>
+            <div class="footer-right"><a href="#">Privacy</a><a href="#">Terms</a></div>
         </div>
     </div>
-</footer>
+  </footer>
 
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
   <script>
-
-    class CodeLineLMSTheme {
-    constructor() {
-        this.toggleBtn = document.getElementById('themeToggle');
-        this.init();
-    }
-    
-    init() {
-        // Load saved theme OR detect system preference
-        const savedTheme = localStorage.getItem('codeline-theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const theme = savedTheme || (prefersDark ? 'dark' : 'light');
-        
-        document.documentElement.setAttribute('data-theme', theme);
-        this.updateToggleIcon(theme);
-        
-        // Event listeners
-        this.toggleBtn.addEventListener('click', () => this.toggleTheme());
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            if (!localStorage.getItem('codeline-theme')) {
-                this.setTheme(e.matches ? 'dark' : 'light');
-            }
-        });
-    }
-    
-    toggleTheme() {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        this.setTheme(newTheme);
-    }
-    
-    setTheme(theme) {
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('codeline-theme', theme);
-        this.updateToggleIcon(theme);
-    }
-    
-    updateToggleIcon(theme) {
-        const sunIcon = this.toggleBtn.querySelector('.fa-sun');
-        const moonIcon = this.toggleBtn.querySelector('.fa-moon');
-        
-        if (theme === 'dark') {
-            sunIcon.classList.add('active-icon');
-            sunIcon.classList.remove('inactive-icon');
-            moonIcon.classList.add('inactive-icon');
-            moonIcon.classList.remove('active-icon');
-        } else {
-            sunIcon.classList.add('inactive-icon');
-            sunIcon.classList.remove('active-icon');
-            moonIcon.classList.add('active-icon');
-            moonIcon.classList.remove('inactive-icon');
-        }
-    }
-}
-
-// Initialize when DOM loads
-document.addEventListener('DOMContentLoaded', () => {
-    new CodeLineLMSTheme();
-});
-
-
-const hamburger = document.getElementById('hamburger');
-const navMenu = document.getElementById('nav-menu');
-
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
-
-// Link click karte hi menu band ho jaye
-document.querySelectorAll('nav ul li a').forEach(link => {
-    link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-    });
-});
-
-
-
-const container = document.getElementById('course-catalog-container');
-const nextBtn = document.getElementById('nextBtn');
-const prevBtn = document.getElementById('prevBtn');
-
-if (nextBtn && prevBtn && container) {
-    nextBtn.addEventListener('click', () => {
-        container.scrollLeft += 345; // Card width + gap
-    });
-
-    prevBtn.addEventListener('click', () => {
-        container.scrollLeft -= 345;
-    });
-}
-
-
-
-
-const tTrack = document.querySelector('.t-track');
-if (tTrack) {
-    tTrack.innerHTML += tTrack.innerHTML; // Content double for seamless loop
-}
-
-
-
-
-
-    const fTrack = document.querySelector('.f-track');
-if (fTrack) {
-    fTrack.innerHTML += fTrack.innerHTML; // Content double karega for loop
-}
-
-
-
-    document.addEventListener('DOMContentLoaded', () => {
-    const facultyTrack = document.querySelector('.faculty-track');
-    if (facultyTrack) {
-        // Clone the content to create a seamless loop
-        facultyTrack.innerHTML += facultyTrack.innerHTML;
-    }
-});
-    // Copying track content for seamless loop
-const track = document.querySelector('.marquee-track');
-const content = track.innerHTML;
-track.innerHTML = content + content;
-
-    function initPlacementsMarquee() {
-    const marquee = document.getElementById('placement-marquee');
-    if (!marquee) return;
-
-    // Content ko clone karna taaki loop seamless dikhe
-    const content = marquee.innerHTML;
-    marquee.innerHTML = content + content + content; // 3 baar clone karein
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    initPlacementsMarquee();
-});
-
-
-
-
-
-function setupInfiniteScroll(sliderId) {
-      const slider = document.getElementById(sliderId);
-      if (!slider) return;
-
-      // 1. Clone cards for seamless loop
-      const content = slider.innerHTML;
-      slider.innerHTML = content + content; 
-
-      let scrollPos = 0;
-      let isPaused = false;
-
-      function animate() {
-        if (!isPaused) {
-          scrollPos += 1; // Speed (1 pixel per frame)
-          if (scrollPos >= slider.scrollWidth / 2) {
-            scrollPos = 0;
-          }
-          slider.scrollLeft = scrollPos;
-        }
-        requestAnimationFrame(animate);
-      }
-
-      slider.addEventListener('mouseenter', () => isPaused = true);
-      slider.addEventListener('mouseleave', () => isPaused = false);
-
-      animate();
-    }
-
-    // Initialize Everything
-    document.addEventListener('DOMContentLoaded', () => {
-      setupInfiniteScroll('faculty-slider');
-      setupInfiniteScroll('logo-track');
-    });
-
-
-    const slider = document.getElementById('testimonialSlider');
-let isPaused = false;
-
-function startAutoPlay() {
-    
-    setInterval(() => {
-        if (!isPaused) {
-            const cardWidth = slider.querySelector('.testi-card').offsetWidth + 30; // Card width + gap
-            const maxScroll = slider.scrollWidth - slider.clientWidth;
-
-            if (slider.scrollLeft >= maxScroll - 5) {
-                // Agar aakhri card par pahunch gaye toh wapas shuruat mein jayein
-                slider.scrollTo({ left: 0, behavior: 'smooth' });
-            } else {
-                // Agle card par move karein
-                slider.scrollBy({ left: cardWidth, behavior: 'smooth' });
-            }
-        }
-    }, 3000); // 3 second ka delay
-}
-
-// Jab user khud scroll kare ya mouse le jaye toh auto-play pause ho jaye
-slider.addEventListener('mouseenter', () => isPaused = true);
-slider.addEventListener('mouseleave', () => isPaused = false);
-slider.addEventListener('touchstart', () => isPaused = true);
-slider.addEventListener('touchend', () => isPaused = false);
-
-// Auto-play shuru karein
-startAutoPlay();
-
-
-    // DYNAMIC COURSE CATALOG GENERATION
-    const coursesData = [
-        {
-            title: "ReactJS Masterclass",
-            info: "Intermediate • 12 Weeks • John Doe",
-            image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=800&auto=format&fit=crop",
-            status: "continue",
-            detailsUrl: "#",
-            enrollUrl: "#"
-        },
-        {
-            title: "Python for Data Science",
-            info: "Beginner • 8 Weeks • Jane Smith",
-            image: "https://images.unsplash.com/photo-1581092928929-e85b9b7e7a5d?q=80&w=800&auto=format&fit=crop",
-            status: "enroll",
-            detailsUrl: "#",
-            enrollUrl: "#"
-        },
-        {
-            title: "Introduction to Cybersecurity",
-            info: "Beginner • 6 Weeks • Alex Kim",
-            image: "https://images.unsplash.com/photo-1526498460520-4c2463309647?q=80&w=800&auto=format&fit=crop",
-            status: "enroll",
-            detailsUrl: "#",
-            enrollUrl: "#"
-        },
-        {
-            title: "Modern UI/UX Design",
-            info: "Intermediate • 10 Weeks • Sarah Lee",
-            image: "https://images.unsplash.com/photo-1558548177-3e11b0520d2a?q=80&w=800&auto=format&fit=crop",
-            status: "enroll",
-            detailsUrl: "#",
-            enrollUrl: "#"
-        },
-        {
-            title: "Advanced Java Spring Boot",
-            info: "Advanced • 14 Weeks • Michael Chen",
-            image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop",
-            status: "enroll",
-            detailsUrl: "#",
-            enrollUrl: "#"
-        },
-        {
-            title: "AWS Cloud Architect",
-            info: "Advanced • 10 Weeks • Amazon Certified",
-            image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop",
-            status: "enroll",
-            detailsUrl: "#",
-            enrollUrl: "#"
-        }
-    ];
-
-    const courseContainer = document.getElementById('course-catalog-container');
-
-    function renderCourses() {
-        if (!courseContainer) return;
-        
-        courseContainer.innerHTML = ''; 
-
-        courseContainer.innerHTML = coursesData.map(course => {
-            let actionButton = '';
-            
-            if (course.status === 'continue') {
-                actionButton = `
-                    <a href="${course.enrollUrl}" class="btn-action btn-continue">CONTINUE LEARNING</a>
-                    <a href="${course.detailsUrl}" class="btn-action btn-view">DETAILS</a>
-                `;
-            } else {
-                actionButton = `
-                    <a href="${course.enrollUrl}" class="btn-action btn-enroll">ENROLL NOW</a>
-                    <a href="${course.detailsUrl}" class="btn-action btn-view">VIEW DETAILS</a>
-                `;
-            }
-
-            return `
-                <div class="course-card">
-                    <div class="course-image-container">
-                        <img src="${course.image}" alt="${course.title}" loading="lazy">
-                    </div>
-                    <div class="course-header">
-                        <h3>${course.title}</h3>
-                    </div>
-                    <div class="course-info">
-                        <p>${course.info}</p>
-                    </div>
-                    <div class="course-actions">
-                        ${actionButton}
-                    </div>
-                </div>
-            `;
-        }).join('');
-    }
-
-    renderCourses();
-
-
-
-    function moveSlider(direction) {
-    const container = document.getElementById('course-catalog-container');
-    const firstCard = container.querySelector('.course-card');
-    
-    if (firstCard) {
-        // Ek card ki poori width (card + gap) calculate karein
-        const cardFullWidth = firstCard.offsetWidth + 20; 
-        
-        // Desktop par 3 cards scroll honge, mobile par sirf 1
-        const scrollStep = window.innerWidth > 1024 ? cardFullWidth * 3 : cardFullWidth;
-        
-        container.scrollBy({
-            left: scrollStep * direction,
-            behavior: 'smooth'
-        });
-    }
-}
-
-  
-    
-
-
-    // DARK MODE LOGIC 
-    const darkModeToggle = document.getElementById('dark-mode-toggle');
-  const body = document.body;
-  const icon = darkModeToggle.querySelector('i');
-
-  function setTheme(theme) {
-    body.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-    if (theme === 'dark') {
-      icon.classList.replace('fa-moon', 'fa-sun');
-    } else {
-      icon.classList.replace('fa-sun', 'fa-moon');
-    }
-  }
-
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  setTheme(savedTheme);
-
-  darkModeToggle.addEventListener('click', () => {
-    const currentTheme = body.getAttribute('data-theme');
-    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-  });
-  
-  // NAVIGATION & UI LOGIC
-  const mobileToggle = document.getElementById('mobile-toggle');
-  const mainNav = document.getElementById('main-nav');
-  
-  mobileToggle.addEventListener('click', () => {
-    mainNav.classList.toggle('active');
-  });
-
-  document.querySelectorAll('.navbar nav ul li a').forEach(link => {
-    link.addEventListener('click', () => {
-      if (window.innerWidth <= 768) {
-        mainNav.classList.remove('active');
-      }
-    });
-  });
-
-  // Slideshow
-  let slideIndex = 0;
-  showSlides();
- 
-  // Hero Background Rotator
-  
-  let heroIndex = 0;
-
-  
-  setInterval(changeHeroBackground, 5000);
-  changeHeroBackground();
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  // === PLACEMENTS AUTO SCROLL ===
-
-
-// DOMContentLoaded ke andar call karo:
-document.addEventListener('DOMContentLoaded', () => {
-  // tumhara existing code: auth, courses, sliders, etc.
-  initPlacementsMarquee();
-  initScrollReveal();
-   initTestimonialSlider();
-   initFacultyMarquee();
-   
-});
-
-
-  // Note: course slider ka saara logic course-catalog.js me initCourseSlider() se chalega
-  </script>
-  <script src="js/config.js"></script>
-
-  <script src="js/course-catalog.js"></script>
-
-  
+   // --- INITIALIZE SCROLL EFFECTS (AOS) ---
+   AOS.init({
+      duration: 800, /* Duration of the animation */
+      easing: 'ease-in-out', /* Smoothing */
+      once: true, /* Animation happens only once */
+      offset: 100 /* Trigger a bit earlier */
+   });
+
+   // 1. THEME MANAGEMENT (Class Based - Best Practice)
+   class CodeLineLMSTheme {
+       constructor() {
+           this.toggleBtn = document.getElementById('themeToggle');
+           // Check if button exists to avoid errors on pages without toggle
+           if (this.toggleBtn) {
+               this.init();
+           }
+       }
+
+       init() {
+           const savedTheme = localStorage.getItem('codeline-theme');
+           const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+           const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+
+           document.documentElement.setAttribute('data-theme', theme);
+           this.updateToggleIcon(theme);
+
+           this.toggleBtn.addEventListener('click', () => this.toggleTheme());
+           window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+               if (!localStorage.getItem('codeline-theme')) {
+                   this.setTheme(e.matches ? 'dark' : 'light');
+               }
+           });
+       }
+
+       toggleTheme() {
+           const currentTheme = document.documentElement.getAttribute('data-theme');
+           const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+           this.setTheme(newTheme);
+       }
+
+       setTheme(theme) {
+           document.documentElement.setAttribute('data-theme', theme);
+           localStorage.setItem('codeline-theme', theme);
+           this.updateToggleIcon(theme);
+       }
+
+       updateToggleIcon(theme) {
+           const sunIcon = this.toggleBtn.querySelector('.fa-sun');
+           const moonIcon = this.toggleBtn.querySelector('.fa-moon');
+
+           if (theme === 'dark') {
+               sunIcon.classList.add('active-icon');
+               sunIcon.classList.remove('inactive-icon');
+               moonIcon.classList.add('inactive-icon');
+               moonIcon.classList.remove('active-icon');
+               sunIcon.style.display = 'none';
+               moonIcon.style.display = 'block';
+           } else {
+               sunIcon.classList.add('inactive-icon');
+               sunIcon.classList.remove('active-icon');
+               moonIcon.classList.add('active-icon');
+               moonIcon.classList.remove('inactive-icon');
+               sunIcon.style.display = 'block';
+               moonIcon.style.display = 'none';
+           }
+       }
+   }
+
+   // 2. MOBILE MENU TOGGLE
+   const hamburger = document.getElementById('hamburger');
+   const navMenu = document.getElementById('nav-menu');
+
+   if (hamburger && navMenu) {
+       hamburger.addEventListener('click', () => {
+           hamburger.classList.toggle('active');
+           navMenu.classList.toggle('active');
+       });
+
+       // Close menu on link click
+       document.querySelectorAll('nav ul li a').forEach(link => {
+           link.addEventListener('click', () => {
+               hamburger.classList.remove('active');
+               navMenu.classList.remove('active');
+           });
+       });
+   }
+
+   // 3. COURSE CATALOG SLIDER (Buttons)
+   const container = document.getElementById('course-catalog-container');
+   const nextBtn = document.getElementById('nextBtn');
+   const prevBtn = document.getElementById('prevBtn');
+
+   if (nextBtn && prevBtn && container) {
+       nextBtn.addEventListener('click', () => {
+           container.scrollLeft += 345; // Card width + gap
+       });
+
+       prevBtn.addEventListener('click', () => {
+           container.scrollLeft -= 345;
+       });
+   }
+
+   // 4. MARQUEE / INFINITE SCROLL SETUP
+   // Simply doubling the content for smooth loop animation for all tracks
+   function setupMarquee(selector) {
+       const track = document.querySelector(selector);
+       if (track) {
+           track.innerHTML += track.innerHTML;
+       }
+   }
+
+   // 5. DYNAMIC COURSE CATALOG GENERATION
+   const coursesData = [{
+           title: "ReactJS Masterclass",
+           info: "Intermediate • 12 Weeks • John Doe",
+           image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=800&auto=format&fit=crop",
+           status: "continue",
+           detailsUrl: "#",
+           enrollUrl: "#"
+       },
+       {
+           title: "Python for Data Science",
+           info: "Beginner • 8 Weeks • Jane Smith",
+           image: "https://images.unsplash.com/photo-1581092928929-e85b9b7e7a5d?q=80&w=800&auto=format&fit=crop",
+           status: "enroll",
+           detailsUrl: "#",
+           enrollUrl: "#"
+       },
+       {
+           title: "Introduction to Cybersecurity",
+           info: "Beginner • 6 Weeks • Alex Kim",
+           image: "https://images.unsplash.com/photo-1526498460520-4c2463309647?q=80&w=800&auto=format&fit=crop",
+           status: "enroll",
+           detailsUrl: "#",
+           enrollUrl: "#"
+       },
+       {
+           title: "Modern UI/UX Design",
+           info: "Intermediate • 10 Weeks • Sarah Lee",
+           image: "https://images.unsplash.com/photo-1558548177-3e11b0520d2a?q=80&w=800&auto=format&fit=crop",
+           status: "enroll",
+           detailsUrl: "#",
+           enrollUrl: "#"
+       },
+       {
+           title: "Advanced Java Spring Boot",
+           info: "Advanced • 14 Weeks • Michael Chen",
+           image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop",
+           status: "enroll",
+           detailsUrl: "#",
+           enrollUrl: "#"
+       },
+       {
+           title: "AWS Cloud Architect",
+           info: "Advanced • 10 Weeks • Amazon Certified",
+           image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop",
+           status: "enroll",
+           detailsUrl: "#",
+           enrollUrl: "#"
+       }
+   ];
+
+   function renderCourses() {
+       const courseContainer = document.getElementById('course-catalog-container');
+       if (!courseContainer) return;
+
+       courseContainer.innerHTML = coursesData.map(course => {
+           let actionButton = '';
+
+           if (course.status === 'continue') {
+               actionButton = `
+                   <a href="${course.enrollUrl}" class="btn-action btn-continue">CONTINUE LEARNING</a>
+                   <a href="${course.detailsUrl}" class="btn-action btn-view">DETAILS</a>
+               `;
+           } else {
+               actionButton = `
+                   <a href="${course.enrollUrl}" class="btn-action btn-enroll">ENROLL NOW</a>
+                   <a href="${course.detailsUrl}" class="btn-action btn-view">VIEW DETAILS</a>
+               `;
+           }
+
+           return `
+               <div class="course-card">
+                   <div class="course-image-container">
+                       <img src="${course.image}" alt="${course.title}" loading="lazy">
+                   </div>
+                   <div class="course-header">
+                       <h3>${course.title}</h3>
+                   </div>
+                   <div class="course-info">
+                       <p>${course.info}</p>
+                   </div>
+                   <div class="course-actions">
+                       ${actionButton}
+                   </div>
+               </div>
+           `;
+       }).join('');
+   }
+
+   // === INITIALIZATION ===
+   document.addEventListener('DOMContentLoaded', () => {
+       new CodeLineLMSTheme(); // Init Theme
+       renderCourses(); // Init Courses
+
+       // Init Marquees (Double content for CSS infinite loop)
+       setupMarquee('.t-track'); // Testimonials
+       setupMarquee('.f-track'); // Faculty
+       setupMarquee('.marquee-track'); // Placements
+   });
+ </script>
+ <script src="js/config.js"></script>
+
+ <script src="js/course-catalog.js"></script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
