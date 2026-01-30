@@ -1,5 +1,5 @@
 // js/dashboard.js - FIXED: Sirf ENROLLED courses hi dikhega
-var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPeH_oXus5h88Y1H08AoMRNgSIaaZB_sX5Xuu2MT1BAFBILF_DhB3yVEX9nW7v0ozbHw/exec";
+var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyUyX9QrGH5zBtS3-EvQs3kSlmzBTEmXWMmhiLSIIGQ1h8LDruLtkkF_-stKHexSonZog/exec";
 
 document.addEventListener('DOMContentLoaded', async () => {
   const userId = localStorage.getItem('lsm_user_id');

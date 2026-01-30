@@ -7,11 +7,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   
-  <!-- 🔥 YOUR GOOGLE SCRIPT URL -->
   <script>const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPeH_oXus5h88Y1H08AoMRNgSIaaZB_sX5Xuu2MT1BAFBILF_DhB3yVEX9nW7v0ozbHw/exec";</script>
   
   <style>
-    /* 🔥 DARK MODE VARIABLES - SIRF YE ADD KIYA */
+    /* 🔥 DARK MODE VARIABLES */
     :root {
       --primary-purple: #6f036a;
       --primary-dark: #3b1a91;
@@ -25,7 +24,6 @@
       --shadow-deep: 0 20px 45px rgba(15, 23, 42, 0.18);
     }
 
-    /* 🔥 DARK MODE */
     [data-theme="dark"] {
       --bg-color: #0f172a;
       --white: #1e293b;
@@ -36,7 +34,6 @@
       --shadow-deep: 0 20px 45px rgba(0, 0, 0, 0.6);
     }
 
-    /* 🔥 DARK MODE TOGGLE BUTTON (HAMBURGER ME) */
     #dark-mode-toggle {
       background: rgba(255,255,255,0.15);
       border: none;
@@ -55,11 +52,8 @@
       transform: rotate(15deg) scale(1.1);
     }
 
-    /* Baki sab same CSS */
     *{box-sizing:border-box;}
     body{font-family:'Poppins',sans-serif;margin:0;background:var(--bg-color);color:var(--text-dark);min-height:100vh;transition:background-color 0.3s,color 0.3s;}
-    
-    /* ... aage ka pura CSS same hai ... */
     
     .udemy-layout{display:flex;flex-direction:column;min-height:100vh;}
     .video-hero{position:relative;height:65vh;min-height:450px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);}
@@ -130,47 +124,6 @@
     .toast{position:fixed;top:20px;right:20px;background:var(--primary-purple);color:white;padding:1rem 1.5rem;border-radius:10px;z-index:1000;transform:translateX(400px);transition:all 0.3s;}
     .toast.show{transform:translateX(0);}
     
-    @media (max-width:768px){
-      .video-hero{height:50vh;}
-      .course-content{padding:1rem;}
-      .topics-sidebar{right:-100%;top:120px;width:90vw;max-height:70vh;}
-      .topics-sidebar.active{right:1rem;}
-      .video-controls{flex-direction:column;}
-    }
-
-    /* 🔥 TOPICS SIDEBAR FIX - Slide animation */
-    .topics-sidebar {
-      position: fixed;
-      right: -100%;
-      top: 100px;
-      width: 340px;
-      max-height: 80vh;
-      background: var(--card-bg);
-      border-radius: 20px 0 20px 20px;
-      padding: 2rem;
-      box-shadow: var(--shadow-deep);
-      overflow-y: auto;
-      z-index: 1000;
-      transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-    .topics-sidebar.active {
-      right: 2rem;
-    }
-
-    /* Mobile */
-    @media (max-width: 768px) {
-      .topics-sidebar {
-        right: -100%;
-        top: 120px;
-        width: 90vw;
-        max-height: 70vh;
-      }
-      .topics-sidebar.active {
-        right: 1rem;
-      }
-    }
-
     /* 🔥 VIDEO PAGE NAVBAR (separate) */
     .video-page-navbar {
       background: linear-gradient(135deg, var(--primary-purple), var(--primary-dark));
@@ -213,12 +166,6 @@
       transform: scale(1.05);
     }
 
-    /* Mobile */
-    @media (max-width: 768px) {
-      .video-page-navbar { padding: 1rem 1.2rem; }
-      .logo { font-size: 1.2rem; }
-    }
-
     /* 🔥 Hamburger Dropdown Menu */
     .hamburger-menu {
       position: fixed;
@@ -258,16 +205,60 @@
       border-left-color: var(--pista-green);
       transform: translateX(5px);
     }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .video-page-navbar { padding: 1rem 1.2rem; }
+      .logo { font-size: 1.2rem; }
+      .video-hero{height:50vh;}
+      .course-content{padding:1rem;}
+      .topics-sidebar{right:-100%;top:120px;width:90vw;max-height:70vh;}
+      .topics-sidebar.active{right:1rem;}
+      .video-controls{flex-direction:column;}
+    }
+
+    /* 🔥 COURSE COMPLETION ANIMATION */
+    #course-completion-card {
+        background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+        border: none;
+        padding: 30px;
+        border-radius: 20px;
+        text-align: center;
+        margin-top: 30px;
+        box-shadow: 0 10px 30px rgba(0,255,0,0.2);
+        animation: popUp 0.8s ease-out;
+    }
+    
+    @keyframes popUp {
+        0% { transform: scale(0.8); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    .btn-cert {
+        background: #fff;
+        color: #2ecc71;
+        font-weight: bold;
+        border: 2px solid #fff;
+        padding: 12px 25px;
+        border-radius: 50px;
+        margin-top: 15px;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .btn-cert:hover {
+        background: #2ecc71;
+        color: #fff;
+        transform: translateY(-3px);
+    }
   </style>
 </head>
 <body data-theme="light">
   <div class="udemy-layout">
-    <!-- 🔥 NAVBAR (video-hero SE PEHLE) - DARK MODE BUTTON ADD -->
     <div class="video-page-navbar">
       <div class="nav-container">
         <span class="logo">🎓 CODELINE AI</span>
         <div style="display:flex;align-items:center;gap:10px;">
-          <!-- 🔥 DARK MODE TOGGLE -->
           <button id="dark-mode-toggle" title="Toggle Dark/Light Mode">
             <i class="fas fa-moon"></i>
           </button>
@@ -278,28 +269,17 @@
       </div>
     </div>
 
-    <!-- 🔥 HAMBURGER DROPDOWN -->
     <div class="hamburger-menu" id="hamburger-menu">
-      <a href="index.html" class="menu-item">
-        <i class="fas fa-home"></i> Home
-      </a>
-      <a href="dashboard.html" class="menu-item">
-        <i class="fas fa-tachometer-alt"></i> Dashboard
-      </a>
-      <a href="profile.html" class="menu-item">
-        <i class="fas fa-user"></i> Profile
-      </a>
-      <a href="#" class="menu-item" id="topics-toggle">
-        <i class="fas fa-list"></i> Topics
-      </a>
+      <a href="index.html" class="menu-item"><i class="fas fa-home"></i> Home</a>
+      <a href="dashboard.html" class="menu-item"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="profile.html" class="menu-item"><i class="fas fa-user"></i> Profile</a>
+      <a href="#" class="menu-item" id="topics-toggle"><i class="fas fa-list"></i> Topics</a>
     </div>
 
-    <!-- VIDEO HERO -->
     <div class="video-hero">
       <iframe id="topic-video" src="" allowfullscreen></iframe>
     </div>
     
-    <!-- VIDEO CONTROLS -->
     <div class="video-controls">
       <button id="prev-topic" class="btn-secondary" disabled><i class="fas fa-step-backward"></i> Previous</button>
       <button id="next-topic" class="btn-primary" disabled>Next <i class="fas fa-step-forward"></i></button>
@@ -308,9 +288,7 @@
       </div>
     </div>
 
-    <!-- Baki sab exactly same hai -->
     <div class="course-content">
-      <!-- HEADER -->
       <div class="course-header">
         <div class="course-title-main">
          <h1 id="topic-title" class="loading">Loading Topic...</h1>
@@ -322,12 +300,23 @@
          </div>
         </div>
         <div class="btn-group">
-         <button id="mark-complete" class="btn-secondary">Mark Complete</button>
+         <button id="mark-complete" class="btn-secondary" onclick="markTopicComplete()">Mark Complete</button>
          <button class="btn-primary" id="topics-toggle-btn">📚 Topics</button>
         </div>
       </div>
 
-      <!-- TABS -->
+      <div id="course-completion-card" style="display: none;">
+          <h1 style="font-size: 50px;">🎉</h1>
+          <h2 style="color: #1e5128; font-weight: 800; margin: 10px 0;">CONGRATULATIONS!</h2>
+          <p style="font-size: 1.1rem; color: #1e5128;">You have successfully completed the entire course.</p>
+          <button id="btn-download-cert" class="btn-cert" onclick="downloadCertificate()">
+              <i class="fas fa-file-download"></i> Download Certificate
+          </button>
+          <p id="cert-loading-msg" style="display:none; color: #1e5128; margin-top: 10px; font-weight: bold;">
+              Creating your certificate... ⏳
+          </p>
+      </div>
+
       <div class="content-tabs">
         <div class="tab-item active" data-tab="details">📋 Details</div>
         <div class="tab-item" data-tab="notes">📝 Notes</div>
@@ -335,39 +324,24 @@
         <div class="tab-item" data-tab="compiler">⚙️ Compiler</div>
       </div>
 
-      <!-- DETAILS TAB -->
       <div id="details" class="tab-panel active">
         <div class="video-details">
          <div class="video-meta">
-           <div class="meta-item">
-             <h3>⏱️ Duration</h3>
-             <p id="video-duration" class="loading">Loading...</p>
-           </div>
-           <div class="meta-item">
-             <h3>📊 Level</h3>
-             <p id="topic-level" class="loading">Loading...</p>
-           </div>
-           <div class="meta-item">
-             <h3>🎯 Objectives</h3>
-             <p id="topic-objectives" class="loading">Loading...</p>
-           </div>
-           <div class="meta-item">
-             <h3>📈 Status</h3>
-             <p id="topic-status" class="loading">Loading...</p>
-           </div>
+           <div class="meta-item"><h3>⏱️ Duration</h3><p id="video-duration" class="loading">Loading...</p></div>
+           <div class="meta-item"><h3>📊 Level</h3><p id="topic-level" class="loading">Loading...</p></div>
+           <div class="meta-item"><h3>🎯 Objectives</h3><p id="topic-objectives" class="loading">Loading...</p></div>
+           <div class="meta-item"><h3>📈 Status</h3><p id="topic-status" class="loading">Loading...</p></div>
          </div>
          <div id="topic-description" class="loading">Loading details...</div>
         </div>
       </div>
 
-      <!-- NOTES TAB -->
       <div id="notes" class="tab-panel">
         <div class="video-details">
          <div id="topic-notes" class="topic-notes loading">Loading notes...</div>
         </div>
       </div>
 
-      <!-- 🔥 QUIZ TAB (PRIMARY) -->
       <div id="quiz" class="tab-panel">
         <div class="quiz-card">
          <div class="quiz-header">
@@ -385,49 +359,31 @@
              <button id="mcq-retest" class="btn-secondary" style="display:none;">Retake Quiz</button>
            </div>
            <div id="mcq-result" style="margin-top:2rem;"></div>
-           <div id="mcq-review"></div>
-         </div>
-        </div>
-
-        <!-- 🔥 FALLBACK TEXT ASSIGNMENT (Hidden by default) -->
-        <div id="assignment-section" class="quiz-card assignment-section">
-         <div class="quiz-header">
-           <h2><i class="fas fa-edit"></i> Assignment</h2>
-         </div>
-         <div id="assignment-question" class="assignment-question">Loading assignment...</div>
-         <textarea id="assignment-submission" placeholder="Write your detailed answer here..."></textarea>
-         <div class="assignment-actions">
-           <button id="submit-assignment" class="btn-primary">Submit Assignment</button>
          </div>
         </div>
       </div>
 
-      <!-- 🔥 COMPILER TAB -->
       <div id="compiler" class="tab-panel">
         <div class="compiler-card">
          <div class="compiler-header">
            <h2><i class="fas fa-code"></i> Online Compiler</h2>
-           <div style="color:var(--text-light);">Test your code instantly</div>
          </div>
          <div class="compiler-controls">
            <select id="compiler-language">
              <option value="js">JavaScript</option>
              <option value="python">Python 3</option>
-             <option value="cpp">C++</option>
              <option value="java">Java</option>
            </select>
          </div>
-         <textarea id="compiler-input" class="compiler-input" placeholder="// Write your code here&#10;console.log('Hello World!');"></textarea>
+         <textarea id="compiler-input" class="compiler-input" placeholder="// Write code here..."></textarea>
          <div style="display:flex;gap:1rem;">
-           <textarea id="compiler-stdin" class="compiler-input" style="height:60px;flex:1;" placeholder="Standard Input (optional)"></textarea>
-           <button id="compiler-run" class="btn-primary" style="flex-shrink:0;">▶️ Run Code</button>
+           <button id="compiler-run" class="btn-primary">▶️ Run Code</button>
          </div>
          <div id="compiler-output">Output will appear here...</div>
         </div>
       </div>
     </div>
 
-    <!-- TOPICS SIDEBAR -->
     <div class="topics-sidebar" id="topics-sidebar">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
         <h3 id="course-title-sidebar">📚 Course Topics</h3>
@@ -437,39 +393,10 @@
     </div>
   </div>
 
-  <!-- 🔥 SIRF DARK MODE JS ADD KIYA -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <script>
-    // 🔥 DARK MODE TOGGLE (sirf ye naya hai)
-    document.addEventListener('DOMContentLoaded', function() {
-      const darkModeToggle = document.getElementById('dark-mode-toggle');
-      const body = document.body;
-      const icon = darkModeToggle.querySelector('i');
-
-      function setTheme(theme) {
-        body.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-        if (theme === 'dark') {
-          icon.classList.replace('fa-moon', 'fa-sun');
-        } else {
-          icon.classList.replace('fa-sun', 'fa-moon');
-        }
-      }
-
-      const savedTheme = localStorage.getItem('theme') || 'light';
-      setTheme(savedTheme);
-
-      darkModeToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const currentTheme = body.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        setTheme(newTheme);
-      });
-    });
-  </script>
-
-  <!-- INLINE SCRIPTS (same) -->
-  <script>
-    // Tab + Sidebar functionality (same)
+    // Tab + Sidebar Logic
     document.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('.tab-item').forEach(tab => {
         tab.addEventListener('click', function() {
@@ -487,40 +414,38 @@
 
       window.closeTopics = () => document.getElementById('topics-sidebar').classList.remove('active');
       
-      document.addEventListener('click', (e) => {
-        if (!e.target.closest('#topics-toggle-btn') && !e.target.closest('.topics-sidebar')) {
-          document.getElementById('topics-sidebar').classList.remove('active');
-        }
+      // Dark Mode
+      const darkModeToggle = document.getElementById('dark-mode-toggle');
+      const body = document.body;
+      const icon = darkModeToggle.querySelector('i');
+      
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      body.setAttribute('data-theme', savedTheme);
+      icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+
+      darkModeToggle.addEventListener('click', () => {
+        const current = body.getAttribute('data-theme');
+        const newTheme = current === 'light' ? 'dark' : 'light';
+        body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
       });
 
-      // 🔥 Video navbar hamburger (same)
-      const videoHamburger = document.getElementById('video-hamburger');
-      const hamburgerMenu = document.getElementById('hamburger-menu');
-      const topicsSidebar = document.getElementById('topics-sidebar');
-      
-      if (videoHamburger && hamburgerMenu) {
-        videoHamburger.addEventListener('click', function(e) {
-          e.stopPropagation();
-          hamburgerMenu.classList.toggle('active');
-          console.log('Hamburger clicked!');
-        });
+      // Hamburger
+      const hamburger = document.getElementById('video-hamburger');
+      const menu = document.getElementById('hamburger-menu');
+      if(hamburger){
+          hamburger.addEventListener('click', (e) => {
+              e.stopPropagation();
+              menu.classList.toggle('active');
+          });
+          document.addEventListener('click', (e) => {
+              if(!menu.contains(e.target) && !hamburger.contains(e.target)) menu.classList.remove('active');
+          });
       }
-
-      document.getElementById('topics-toggle')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        hamburgerMenu.classList.remove('active');
-        topicsSidebar.classList.toggle('active');
-      });
-      
-      document.addEventListener('click', (e) => {
-        if (!videoHamburger?.contains(e.target) && !hamburgerMenu.contains(e.target)) {
-          hamburgerMenu.classList.remove('active');
-        }
-      });
     });
   </script>
 
-  <!-- MAIN JS -->
   <script src="js/course-topic.js"></script>
 </body>
 </html>

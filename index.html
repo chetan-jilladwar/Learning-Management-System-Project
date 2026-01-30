@@ -7,6 +7,7 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -28,13 +29,13 @@
   /* --- 1. CSS VARIABLES (THEME ENGINE) --- */
   :root {
     /* Brand Colors */
-    --primary: #9a0669;
+    --primary: #8a0b8a;
     --primary-dark: #4b0082;
-    --accent: #06b6d4;
+    --accent:  #8a0b8a;
     
     /* DARK MODE (Default) */
     --bg-body: #06060c;
-    --bg-nav: rgba(154, 6, 105, 0.85); /* Glassy Purple */
+    --bg-nav:  #8a0b8a; /* Glassy Purple */
     --bg-card: rgba(255, 255, 255, 0.03);
     --bg-card-hover: rgba(30, 30, 50, 1);
     --bg-footer: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%);
@@ -48,7 +49,7 @@
   /* LIGHT MODE OVERRIDES */
   [data-theme="light"] {
     --bg-body: #f8fafc;
-    --bg-nav: rgba(154, 6, 105, 0.85);
+    --bg-nav: #8a0b8a;
     --bg-card: #ffffff;
     --bg-card-hover: #f1f5f9;
     --bg-footer: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
@@ -76,12 +77,103 @@
     padding: 0 20px;
   }
 
+/* --- NEW TESTIMONIAL SLIDER STYLES --- */
+.testimonial-new-section {
+  padding: 100px 0;
+  background: var(--bg-body);
+  position: relative;
+}
+
+.testimonial-item {
+  text-align: center;
+  padding-bottom: 20px;
+  transition: 0.3s;
+  opacity: 0.6;
+  transform: scale(0.9);
+}
+
+.testimonial-item img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+  border: 3px solid var(--border-color);
+  transition: 0.3s;
+}
+
+.testimonial-item h5 {
+  font-size: 1.3rem;
+  color: var(--text-main);
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+
+.testimonial-item p.profession {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  margin-bottom: 25px;
+  font-style: italic;
+}
+
+/* Text Box styling */
+.testimonial-text {
+  background: var(--bg-card);
+  padding: 30px;
+  border-radius: 15px;
+  border: 1px solid var(--border-color);
+  color: var(--text-dim);
+  transition: 0.5s;
+}
+
+/* ACTIVE SLIDE Styling (Center Item) */
+.swiper-slide-active .testimonial-item {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.swiper-slide-active .testimonial-text {
+  background: var(--accent) !important; /* Teal Color */
+  color: #000 !important;
+  box-shadow: 0 10px 30px rgba(6, 182, 212, 0.4);
+  border-color: var(--accent);
+}
+
+.swiper-slide-active .testimonial-text p {
+  color: #faf5f5;
+  font-weight: 500;
+}
+
+.swiper-slide-active img {
+  border-color: var(--accent);
+  transform: scale(1.1);
+}
+
+/* Dots Styling */
+.swiper-pagination-bullet {
+  background-color: var(--text-dim);
+  opacity: 0.5;
+}
+.swiper-pagination-bullet-active {
+  background-color: var(--accent);
+  opacity: 1;
+  width: 20px;
+  border-radius: 10px;
+}
+.mySwiper {
+  padding-bottom: 60px !important;
+  padding-top: 30px !important;
+}
+
+
+
   /* --- 2. NAVBAR --- */
+ /* --- 2. NAVBAR (Original Size & Settings) --- */
   .navbar {
     position: fixed;
     top: 0; left: 0; width: 100%;
     z-index: 1000;
-    padding: 15px 0;
+    padding: 15px 0; /* Same Height as before */
     background: var(--bg-nav);
     backdrop-filter: blur(15px);
     border-bottom: 1px solid var(--border-color);
@@ -92,18 +184,35 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 15px;
   }
 
+  /* --- LOGO UPDATE (Image Support Added) --- */
   .logo {
-    font-size: 26px;
+    display: flex;        /* Image aur Text ko ek line me laane ke liye */
+    align-items: center;  /* Vertically center */
+    gap: 10px;            /* Image aur Text ke beech gap */
+    
+    font-size: 26px;      /* Same Font Size */
     font-weight: 900;
     color: var(--text-main);
     letter-spacing: 1px;
+    text-decoration: none;
   }
-  
-  [data-theme="light"] .logo { color:  #f8fafc; } 
-  [data-theme="light"] .logo span { color: #1e293b; }
 
+  /* Image Size Control (Taaki navbar ki height na bade) */
+  .logo-icon {
+    height: 35px; /* Font size (26px) ke hisaab se perfect height */
+    width: auto;
+    object-fit: contain;
+    border-radius: 5px;
+  }
+
+  /* Theme Colors (As per your code) */
+  [data-theme="light"] .logo { color: #f8fafc; } 
+  [data-theme="light"] .logo span { color:#f8fafc; }
+
+  /* --- MENU LINKS (Unchanged) --- */
   nav ul {
     display: flex;
     gap: 30px;
@@ -121,10 +230,9 @@
   [data-theme="light"] nav ul li a { color: #1e293b; }
   
   nav ul li a:hover, nav ul li a.active {
-    color: var(--bg-body); /* Contrast on hover */
+    color: var(--bg-body);
   }
-  [data-theme="light"] nav ul li a:hover { color: var(--primary); }
-
+  [data-theme="light"] nav ul li a:hover {  }
   /* Buttons */
   .btn-red {
     background: linear-gradient(135deg, #8a2be2, #4b0082);
@@ -407,16 +515,32 @@ dfdssdd
 .alumni-tooltip a { color: var(--accent); font-size: 13px; text-decoration: none; font-weight: bold; }
 
 /* 🔥 PLACEMENTS SECTION - DARK + LIGHT MODE (Faculty Style) */
+/* 🔥 PARALLAX PLACEMENTS SECTION */
 .placements-new-section {
-    padding: 80px 0;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+    padding: 120px 0; /* Thoda height badhaya parallax dikhane ke liye */
+    position: relative;
+    overflow: hidden;
+    
+    /* Parallax Background Image + Dark Overlay */
+    background: linear-gradient(rgba(15, 15, 35, 0.85), rgba(15, 15, 35, 0.95)), 
+                url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2000&auto=format&fit=crop');
+    
+    /* The Parallax Magic Line */
+    background-attachment: fixed; 
+    
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
-/* ☀️ LIGHT MODE */
+/* ☀️ LIGHT MODE PARALLAX (Light Overlay) */
 [data-theme="light"] .placements-new-section {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.85)), 
+                url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2000&auto=format&fit=crop');
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
 }
-
 /* DARK MODE CARDS */
 .alumni-card {
     flex: 0 0 220px;
@@ -449,285 +573,205 @@ dfdssdd
     background: rgba(0, 0, 0, 0.9);
     box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
 }
-  /* --- 8. COURSES --- */
-  .popular-courses-modern { padding: 80px 0; }
-  .section-heading-centered { text-align: center; margin-bottom: 50px; }
-  .section-heading-centered h2 { font-size: 40px; color: var(--text-main); }
-  .section-heading-centered h2 span { color: var(--primary); }
-  .section-heading-centered p { color: var(--text-dim); }
+ /* Course Cards */
+    .course-card {
+        background: rgba(255, 255, 255, 0.95) !important;
+        border: 1px solid var(--border-light);
+    }
+    
+    /* Testimonials */
+    .testimonial-card {
+        background: rgba(255, 255, 255, 0.9) !important;
+        border: 1px solid var(--border-light);
+    }
+    
+    /* Footer */
+    .modern-footer {
+        background: #f1f5f9 !important;
+        border-top: 1px solid var(--border-light);
+    }
 
-  .course-slider-wrapper-modern { position: relative; padding: 0 40px; }
-  
-  #course-catalog-container {
-    display: flex; gap: 25px; overflow-x: auto;
-    scroll-behavior: smooth; scrollbar-width: none;
-    padding: 20px 5px;
-    scroll-snap-type: x mandatory;
-  }
-  #course-catalog-container::-webkit-scrollbar { display: none; }
-
-  .course-card {
-    flex: 0 0 320px;
-    background: var(--bg-card);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    overflow: hidden;
-    scroll-snap-align: start;
-    transition: 0.4s;
-    box-shadow: var(--shadow);
-  }
-  
-  [data-theme="light"] .course-card { background: white; }
-
-  .course-card:hover {
-    border-color: var(--primary);
-    transform: translateY(-10px);
-  }
-
-  .course-image-container img { width: 100%; height: 200px; object-fit: cover; }
-  .course-header { padding: 20px; }
-  .course-header h3 { color: var(--text-main); font-size: 20px; }
-  .course-info { padding: 0 20px 20px; color: var(--text-dim); font-size: 14px; }
-  
-  .course-actions { display: flex; gap: 10px; padding: 15px; background: rgba(0,0,0,0.1); }
-  .btn-action { flex: 1; text-align: center; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 12px; }
-  .btn-enroll { background: var(--primary); color: white; }
-  .btn-view { background: rgba(138,43,226,0.1); color: var(--text-main); border: 1px solid var(--border-color); }
-
-  /* 🔥 ORIGINAL + BETTER COLORS */
-.faculty-marquee-section {
+   /* --- SECTION STYLING --- */
+.parallax-section {
     padding: 80px 0;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
-    overflow: hidden;
+    background-color: #fcfcfc; /* Light gray background */
 }
 
-.section-heading-centered {
-    text-align: center;
-    margin-bottom: 50px;
-}
+section-heading
 
-.section-heading-centered h2 span {
-    background: linear-gradient(135deg, #8b5cf6, #06b6d4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-/* Seamless Faculty Marquee */
-.f-marquee-container {
-    width: 100%;
-    overflow: hidden;
+/* --- SLIDER WRAPPER --- */
+.course-slider-wrapper {
     position: relative;
-    padding: 20px 0;
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
-.f-track {
+#course-catalog-container {
     display: flex;
-    width: max-content;
-    gap: 30px;
-    animation: facultyScroll 35s linear infinite;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+    padding: 20px 5px;
 }
 
-.f-track:hover {
-    animation-play-state: paused;
+#course-catalog-container::-webkit-scrollbar {
+    display: none;
 }
 
-/* 🔥 PROFESSIONAL FACULTY CARDS */
-.faculty-card {
-    width: 280px;
-    background: rgba(26, 26, 46, 0.9);        /* Deep Purple Glass */
-    backdrop-filter: blur(15px);
-    border-radius: 20px;
-    padding: 30px 20px;
-    text-align: center;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-    border: 1px solid rgba(139, 92, 246, 0.4);  /* Purple Border */
-    flex-shrink: 0;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.faculty-card:hover {
-    background: rgba(139, 92, 246, 0.15);     /* Purple Glow */
-    border-color: #8b5cf6;
-    transform: translateY(-12px);
-    box-shadow: 
-        0 25px 50px rgba(139, 92, 246, 0.3),
-        0 0 25px rgba(139, 92, 246, 0.2);
-}
-
-.faculty-img-container {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 20px;
-    border-radius: 50%;
+/* --- PROFESSIONAL CARD --- */
+.course-card {
+    flex: 0 0 85%; /* Mobile: 1.5 cards approx */
+    background-color: #ffffff;
+    border-radius: 15px;
     overflow: hidden;
-    border: 4px solid rgba(139, 92, 246, 0.6);  /* Purple Ring */
-    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+    scroll-snap-align: center;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 
-.faculty-img-container img {
+.course-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+    border-color: #9a0669; /* Theme color on hover */
+}
+
+.course-image-container img {
     width: 100%;
-    height: 100%;
+    height: 210px;
     object-fit: cover;
 }
 
-.faculty-card h4 {
-    color: #ffffff;
+/* --- TYPOGRAPHY (Fixing Text Visibility) --- */
+.course-header {
+    padding: 20px 20px 10px;
+}
+
+.course-header h3 {
+    color: #1a1a1a; /* Explicit Dark Color */
     font-size: 22px;
     font-weight: 700;
+    margin: 0;
+}
+
+.course-info {
+    padding: 0 20px 20px;
+    color: #555555; /* Visible Gray for text */
+    font-size: 15px;
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+/* --- BUTTONS --- */
+.course-actions {
+    display: flex;
+    gap: 10px;
+    padding: 15px 20px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #eeeeee;
+}
+
+.btn-action {
+    flex: 1;
+    text-align: center;
+    padding: 12px 5px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn-enroll {
+    background-color:#9a0669; /* Professional Blue */
+    color: #ffffff;
+}
+
+.btn-continue {
+    background-color: #9a0669;
+    color: #ffffff;
+    border: 1px solid #007bff;
+}
+
+.btn-action:hover {
+    filter: brightness(0.9);
+}
+
+/* --- RESPONSIVE BREAKPOINTS --- */
+
+/* For Tablets */
+@media (min-width: 768px) {
+    .course-card {
+        flex: 0 0 calc(50% - 10px); /* 2 Cards */
+    }
+}
+
+/* For Desktops */
+@media (min-width: 1024px) {
+    .course-card {
+        flex: 0 0 calc(33.333% - 14px); /* 3 Cards */
+    }
+    .slider-btn {
+        display: flex;
+    }
+}
+
+/* --- SLIDER NAVIGATION BUTTONS --- */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #9a0669;
+    color: #ffffff;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    display: none; /* Hidden on small screens */
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.prev-btn { left: -20px; }
+.next-btn { right: -20px; }
+
+.slider-btn:hover {
+    background-color: #222222;
+}
+  
+/* --- CENTERED HEADING FIX --- */
+.section-heading-centered {
+    text-align: center;       /* Text ko center karega */
+    max-width: 800px;         /* Zyada failne se rokega */
+    margin: 0 auto 50px auto; /* Block ko center karega aur niche gap dega */
+}
+
+.section-heading-centered h2 {
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--text-main);  /* Theme ke hisaab se color (White/Black) */
     margin-bottom: 10px;
 }
 
-.faculty-role {
-    color: #06b6d4;                              /* Cyan Accent */
-    font-weight: 600;
-    font-size: 14px;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+.section-heading-centered h2 span {
+    color: var(--primary);    /* "Courses" word ko Pink/Purple karega */
 }
 
-.faculty-social {
-    display: flex;
-    justify-content: center;
-    gap: 18px;
+.section-heading-centered p {
+    color: var(--text-dim);   /* Description ko dim color dega */
+    font-size: 16px;
 }
 
-.faculty-social a {
-    width: 45px;
-    height: 45px;
-    background: rgba(139, 92, 246, 0.2);
-    border: 1px solid rgba(139, 92, 246, 0.5);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #e0d7ff;
-    font-size: 18px;
-    transition: all 0.4s ease;
-}
-
-.faculty-social a:hover {
-    background: linear-gradient(135deg, #8b5cf6, #06b6d4);
-    border-color: #06b6d4;
-    color: white;
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 12px 30px rgba(139, 92, 246, 0.4);
-}
-
-/* Animation */
-@keyframes facultyScroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-/* ☀️ LIGHT MODE FACULTY COLORS ONLY */
-[data-theme="light"] .faculty-marquee-section {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-}
-
-[data-theme="light"] .faculty-card {
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(124, 58, 237, 0.25);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-}
-
-[data-theme="light"] .faculty-card:hover {
-    background: rgba(124, 58, 237, 0.08);
-    border-color: #7c3aed;
-    box-shadow: 
-        0 25px 50px rgba(124, 58, 237, 0.15),
-        0 0 25px rgba(124, 58, 237, 0.1);
-}
-
-[data-theme="light"] .faculty-img-container {
-    border: 4px solid rgba(124, 58, 237, 0.4);
-    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.15);
-}
-
-[data-theme="light"] .faculty-card:hover .faculty-img-container {
-    border-color: #0ea5e9;
-}
-
-[data-theme="light"] .faculty-card h4 {
-    color: #1e293b;
-}
-
-[data-theme="light"] .faculty-role {
-    color: #0ea5e9;
-}
-
-[data-theme="light"] .faculty-social a {
-    background: rgba(124, 58, 237, 0.12);
-    border: 1px solid rgba(124, 58, 237, 0.3);
-    color: #7c3aed;
-}
-
-[data-theme="light"] .faculty-social a:hover {
-    background: linear-gradient(135deg, #7c3aed, #0ea5e9);
-    border-color: #0ea5e9;
-}
-
-
-  /* --- 10. TESTIMONIALS --- */
-  /* 🔥 TESTIMONIALS - PERFECT DARK + LIGHT MODE */
-.testimonials-marquee-section {
-    padding: 100px 0;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
-    overflow: hidden;
-}
-
-/* ☀️ LIGHT MODE BACKGROUND */
-[data-theme="light"] .testimonials-marquee-section {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-}
-
-/* Marquee */
-.t-marquee-container {
-    display: flex;
-    overflow: hidden;
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-}
-
-.t-track {
-    display: flex;
-    gap: 40px;
-    animation: testimonial-loop 30s linear infinite;
-    padding: 30px 0;
-}
-
-.t-marquee-container:hover .t-track {
-    animation-play-state: paused;
-}
-
-@keyframes testimonial-loop {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
-/* 🔥 DARK MODE CARDS */
-.testimonial-card {
-    flex: 0 0 350px;
-    background:#9a0669;        /* Deep Purple Glass */
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(139, 92, 246, 0.4); /* Purple Border */
-    border-radius: 20px;
-    padding: 30px;
-    position: relative;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-}
-
-.testimonial-card:hover {
-    background: rgba(59, 10, 164, 0.15);     /* Purple Glow */
-    border-color: #8b5cf6;
-    transform: translateY(-10px);
-    box-shadow: 
-        0 25px 50px rgba(139, 92, 246, 0.3),
-        0 0 25px rgba(139, 92, 246, 0.2);
-}
-
+  
 .quote-icon {
     color: #8b5cf6;  /* Purple */
     font-size: 24px;
@@ -881,26 +925,162 @@ dfdssdd
   .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
   .hamburger.active span:nth-child(2) { opacity: 0; }
   .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+
+
+
+  /* --- IMPRESSIVE PRE-LOADER --- */
+#preloader {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-body);
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.loader-content {
+    text-align: center;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid rgba(154, 6, 105, 0.2);
+    border-top: 5px solid var(--primary); /* Pink/Purple */
+    border-radius: 50%;
+    animation: spin 1s linear infinite, pulse-glow 2s ease-in-out infinite;
+    margin: 0 auto 20px;
+}
+
+.loading-text {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--text-main);
+    animation: blink 1.5s infinite;
+}
+
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 10px var(--primary); } 50% { box-shadow: 0 0 25px var(--accent); } }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+
+/* ========= 4. INSTRUCTORS SECTION (Main Request) ========= */
+    .instructors-section { padding: 100px 5%; text-align: center; }
+    
+    /* Heading Style */
+    .section-head { margin-bottom: 60px; position: relative; display: inline-block; }
+    .section-head h4 {
+      color: var(--accent); font-size: 14px; letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 10px; font-weight: 600; display: block;
+    }
+    .section-head h2 { font-size: 42px; font-weight: 800; color: var(--text-main); }
+    
+    /* Decorative lines around heading (Like Reference) */
+    .section-head h4::before, .section-head h4::after {
+      content: ''; display: inline-block; width: 40px; height: 2px;
+      background: var(--primary); vertical-align: middle; margin: 0 10px;
+    }
+
+    /* Grid Layout */
+    .inst-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      max-width: 1300px; margin: 0 auto;
+    }
+
+    /* CARD DESIGN (Reference Style + Your Theme) */
+    .inst-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 0 0 20px 20px; /* Only round bottom */
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+    }
+
+    /* Hover Effect: Lift Up */
+    .inst-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(154, 6, 105, 0.15);
+      border-color: var(--primary);
+    }
+
+    /* Image Wrapper */
+    .inst-img-box {
+      width: 100%; height: 320px;
+      position: relative;
+      overflow: hidden;
+    }
+    .inst-img-box img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    /* Zoom Image on Hover */
+    .inst-card:hover .inst-img-box img { transform: scale(1.1); }
+
+    /* Social Icons Bar (Overlapping Bottom) */
+    .social-bar {
+      position: absolute; bottom: 20px; left: 0; right: 0;
+      display: flex; justify-content: center; gap: 10px;
+      z-index: 2;
+    }
+    
+    .social-icon {
+      width: 40px; height: 40px;
+      background: var(--primary); /* Pink Theme */
+      color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; transition: 0.3s;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    /* Square icons like reference, slightly rounded */
+    .social-icon:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+    }
+
+    /* Content */
+    .inst-content {
+      padding: 25px 20px;
+      background: var(--bg-card); /* Glass effect */
+      backdrop-filter: blur(10px);
+      position: relative;
+      z-index: 3;
+    }
+    
+    .inst-name { font-size: 20px; font-weight: 700; margin-bottom: 5px; color: var(--text-main); }
+    .inst-role { font-size: 14px; color: var(--accent); font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* ========= 5. FOOTER ========= */
+    .footer {
+      background: #020205; padding: 50px 10%; border-top: 1px solid var(--border-color);
+      text-align: center; color: var(--text-dim); font-size: 14px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-banner h1 { font-size: 2.5rem; }
+      .section-head h2 { font-size: 32px; }
+      .nav-links { display: none; } /* Hide menu for simplicity in demo */
+    }
   </style>
 </head>
 
 <body data-theme="dark">
 
-  <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
-      <i class="fas fa-sun" style="display: none;"></i>
-      <i class="fas fa-moon"></i>
-  </button>
-
   <nav class="navbar">
     <div class="container nav-flex">
-        <a href="#" class="logo">CODELINE <span>AI</span></a>
         
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
+        <a href="index.html" class="logo">
+            <img src="CodeLine Logo.jpg" alt="Logo" class="logo-icon">
+            <span>CODELINE <span class="highlight">AI</span></span>
+        </a>
+        
         <ul id="nav-menu">
             <li><a href="#" class="active">HOME</a></li>
             <li><a href="dashboard.html">DASHBOARD</a></li>
@@ -909,7 +1089,21 @@ dfdssdd
             <li class="mobile-only"><a href="#" class="btn-red">Login/Register</a></li>
         </ul>
 
-        <a href="#" class="btn-red desktop-only">Login/Register</a>
+        <div class="mobile-nav-right">
+            <a href="#" class="btn-red desktop-only">Login/Register</a>
+
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+                <i class="fas fa-sun" style="display: none;"></i>
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
     </div>
   </nav>
 
@@ -953,7 +1147,7 @@ dfdssdd
     <div class="container why-grid-container">
         <div class="why-image-single" data-aos="fade-right" data-aos-duration="1000">
             <div class="main-image-wrapper">
-                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800" alt="Learning at Codeline AI">
+                <img src="\Codeline Img.png" alt="Learning at Codeline AI">
             </div>
         </div>
 
@@ -1076,139 +1270,166 @@ dfdssdd
     </div>
   </section>
 
-  <section class="faculty-marquee-section">
-    <div class="container">
-        <div class="section-heading-centered">
-            <h2>Our Expert <span>Faculty</span></h2>
-        </div>
+  
 
-        <div class="f-marquee-container">
-            <div class="f-track">
-                <div class="faculty-card">
-                    <div class="faculty-img-container">
-                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400" alt="Ankush Singla">
-                    </div>
-                    <h4>Ankush Singla</h4>
-                    <p class="faculty-role">DSA Expert</p>
-                    <div class="faculty-social">
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
 
-                <div class="faculty-card">
-                    <div class="faculty-img-container">
-                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400" alt="Dr. Rahul Jain">
-                    </div>
-                    <h4>Dr. Rahul Jain</h4>
-                    <p class="faculty-role">Machine Learning</p>
-                    <div class="faculty-social">
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
 
-                <div class="faculty-card">
-                    <div class="faculty-img-container">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400" alt="Sandeep Maheswari">
-                    </div>
-                    <h4>Sandeep Maheswari</h4>
-                    <p class="faculty-role">Motivational Speaker</p>
-                    <div class="faculty-social">
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
 
-                <div class="faculty-card">
-                    <div class="faculty-img-container">
-                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400" alt="Ankush Singla">
-                    </div>
-                    <h4>Ankush Singla</h4>
-                    <p class="faculty-role">DSA Expert</p>
-                    <div class="faculty-social">
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
 
-                <div class="faculty-card">
-                    <div class="faculty-img-container">
-                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400" alt="Dr. Rahul Jain">
-                    </div>
-                    <h4>Dr. Rahul Jain</h4>
-                    <p class="faculty-role">Machine Learning</p>
-                    <div class="faculty-social">
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-
-                <div class="faculty-card">
-                    <div class="faculty-img-container">
-                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400" alt="Ankush Singla">
-                    </div>
-                    <h4>Ankush Singla</h4>
-                    <p class="faculty-role">DSA Expert</p>
-                    <div class="faculty-social">
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+  <section class="instructors-section">
+    
+    <div class="section-head" data-aos="fade-down">
+      <h4>Instructors</h4>
+      <h2>Meet Our Experts</h2>
     </div>
-</section>
-  <section class="testimonials-marquee-section">
-    <div class="container">
-        <div class="section-heading-centered">
-            <h2>What Our <span>Students Say</span></h2>
-            <p>Real stories from our students who transformed their careers.</p>
+
+    <div class="inst-grid">
+
+      <div class="inst-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="inst-img-box">
+          <img src="\CodeLineSir.jpeg" alt="Instructor">
+          <div class="social-bar">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/chandrakant22?igsh=MTFpMDl6ZjNmMnJ1Zg==" class="social-icon"><i class="fab fa-instagram"></i></a>
+          </div>
         </div>
-
-        <div class="t-marquee-container">
-            <div class="t-track">
-                <div class="testimonial-card">
-                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                    <p class="review-text">"Codeline AI ki wajah se mera basic se advanced tak ka safar bahut smooth raha. Mentors hamesha doubt solve karne ke liye available rehte hain."</p>
-                    <div class="student-info-row">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Student">
-                        <div>
-                            <h4>Karan Malhotra</h4>
-                            <span>Full Stack Developer</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                    <p class="review-text">"The industry projects are the best part. Maine 10 se zyada real-world projects banaye jo mere resume ke liye bahut helpful rahe."</p>
-                    <div class="student-info-row">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Student">
-                        <div>
-                            <h4>Sneha Kapoor</h4>
-                            <span>Data Analyst @ TCS</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                    <p class="review-text">"Best platform for beginners. Logic building par itna focus kisi aur course mein nahi dekha. Highly recommended!"</p>
-                    <div class="student-info-row">
-                        <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="Student">
-                        <div>
-                            <h4>Rahul Verma</h4>
-                            <span>SDE Intern</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+        <div class="inst-content">
+          <div class="inst-name">Chandrakant Sir</div>
+          <div class="inst-role">Java Specialist</div>
         </div>
+      </div>
+
+      <div class="inst-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="inst-img-box">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop" alt="Instructor">
+          <div class="social-bar">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="inst-content">
+          <div class="inst-name">Sneha Gupta</div>
+          <div class="inst-role">Python Expert</div>
+        </div>
+      </div>
+
+      <div class="inst-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="inst-img-box">
+          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=800&auto=format&fit=crop" alt="Instructor">
+          <div class="social-bar">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="inst-content">
+          <div class="inst-name">Amit Verma</div>
+          <div class="inst-role">Web Developer</div>
+        </div>
+      </div>
+
+      <div class="inst-card" data-aos="fade-up" data-aos-delay="400">
+        <div class="inst-img-box">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=800&auto=format&fit=crop" alt="Instructor">
+          <div class="social-bar">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="inst-content">
+          <div class="inst-name">Priya Singh</div>
+          <div class="inst-role">UI/UX Designer</div>
+        </div>
+      </div>
+
     </div>
+  </section>
+
+
+<section class="testimonial-new-section">
+  <div class="container">
+      <div class="section-heading-centered">
+          <h2>Our Students <span>Say!</span></h2>
+          <p>Real stories from our students.</p>
+      </div>
+
+      <div class="swiper mySwiper">
+          <div class="swiper-wrapper">
+              
+              <div class="swiper-slide">
+                  <div class="testimonial-item">
+                      <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="">
+                      <h5>Sarah Wilson</h5>
+                      <p class="profession">Web Designer</p>
+                      <div class="testimonial-text">
+                          <p>Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="swiper-slide">
+                  <div class="testimonial-item">
+                      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="">
+                      <h5>John Doe</h5>
+                      <p class="profession">Developer</p>
+                      <div class="testimonial-text">
+                          <p>Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="swiper-slide">
+                  <div class="testimonial-item">
+                      <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="">
+                      <h5>Mark Smith</h5>
+                      <p class="profession">Instructor</p>
+                      <div class="testimonial-text">
+                          <p>Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="swiper-slide">
+                  <div class="testimonial-item">
+                      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="">
+                      <h5>John Doe</h5>
+                      <p class="profession">Developer</p>
+                      <div class="testimonial-text">
+                          <p>Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="swiper-slide">
+                  <div class="testimonial-item">
+                      <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="">
+                      <h5>Julia Roberts</h5>
+                      <p class="profession">Artist</p>
+                      <div class="testimonial-text">
+                          <p>Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="swiper-slide">
+                  <div class="testimonial-item">
+                      <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="">
+                      <h5>Julia Roberts</h5>
+                      <p class="profession">Artist</p>
+                      <div class="testimonial-text">
+                          <p>Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
+                      </div>
+                  </div>
+              </div>
+
+          </div>
+          <div class="swiper-pagination"></div>
+      </div>
+  </div>
 </section>
+ 
   <section class="community-section">
     <div class="container">
         <div class="community-box">
@@ -1267,6 +1488,16 @@ dfdssdd
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
   <script>
+
+
+    // Remove Loader on Page Load
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        preloader.style.opacity = '0';
+        preloader.style.visibility = 'hidden';
+    }
+});
    // --- INITIALIZE SCROLL EFFECTS (AOS) ---
    AOS.init({
       duration: 800, /* Duration of the animation */
@@ -1467,6 +1698,8 @@ dfdssdd
        }).join('');
    }
 
+   
+
    // === INITIALIZATION ===
    document.addEventListener('DOMContentLoaded', () => {
        new CodeLineLMSTheme(); // Init Theme
@@ -1478,6 +1711,30 @@ dfdssdd
        setupMarquee('.marquee-track'); // Placements
    });
  </script>
+
+ <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  var swiper = new Swiper(".mySwiper", {
+      slidesPerView: 1,      // Mobile: 1 slide
+      spaceBetween: 25,
+      loop: true,            // Infinite loop
+      centeredSlides: true,  // Important: Active slide center mein rahega
+      autoplay: {
+          delay: 2500,
+          disableOnInteraction: false,
+      },
+      pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+      },
+      breakpoints: {
+          768: { slidesPerView: 2 }, // Tablet
+          992: { slidesPerView: 3 }, // Desktop
+      },
+  });
+</script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
  <script src="js/config.js"></script>
 
  <script src="js/course-catalog.js"></script>

@@ -2,7 +2,7 @@
 
 // Apps Script API URL (इसे अपने तैनात URL से बदलें)
 // NOTE: मैंने आपके द्वारा प्रदान किए गए URL का उपयोग किया है।
-const API_URL = "https://script.google.com/macros/s/AKfycbwPeH_oXus5h88Y1H08AoMRNgSIaaZB_sX5Xuu2MT1BAFBILF_DhB3yVEX9nW7v0ozbHw/exec"; 
+const API_URL = "https://script.google.com/macros/s/AKfycbyUyX9QrGH5zBtS3-EvQs3kSlmzBTEmXWMmhiLSIIGQ1h8LDruLtkkF_-stKHexSonZog/exec"; 
 
 // --- Shared API Call Function (Duplicated for context, ideally centralized) ---
 async function callApi(action, params = {}, method = 'GET') {

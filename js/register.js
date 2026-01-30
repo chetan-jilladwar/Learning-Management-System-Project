@@ -1,125 +1,135 @@
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPeH_oXus5h88Y1H08AoMRNgSIaaZB_sX5Xuu2MT1BAFBILF_DhB3yVEX9nW7v0ozbHw/exec";
+var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyUyX9QrGH5zBtS3-EvQs3kSlmzBTEmXWMmhiLSIIGQ1h8LDruLtkkF_-stKHexSonZog/exec";
 
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('register-form');
-    const submitBtn = document.getElementById('submit-btn');
-    const messageEl = document.getElementById('message');
+document.addEventListener('DOMContentLoaded', async () => {
+    const userId = localStorage.getItem('lsm_user_id');
+    const loader = document.getElementById('profile-loader');
+    const content = document.getElementById('profile-content');
 
-    if (form) {
-        form.addEventListener('submit', handleRegister);
-    }
-
-    // Global functions
-    window.handleRegister = handleRegister;
-});
-
-async function handleRegister(e) {
-    e.preventDefault();
-
-    const form = e.target;
-    const submitBtn = document.getElementById('submit-btn');
-    const messageEl = document.getElementById('message');
-
-    // 1. ✅ VALIDATION
-    const formData = {
-        action: 'register',
-        name: form.name.value.trim(),
-        email: form.email.value.trim(),
-        phone: form.phone.value.trim(),
-        password: form.password.value.trim()
-    };
-
-    const errors = validateRegister(formData);
-    if (errors.length > 0) {
-        showMessage(errors[0], 'error', messageEl);
+    // 1. Auth Check
+    if (!userId) {
+        if(loader) loader.style.display = 'none';
+        // Redirect logic optional
+        // window.location.href = 'index.html';
         return;
     }
 
-    // 2. Loading state
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Registering...';
-    showMessage('Creating your account...', 'loading', messageEl);
-
     try {
-        // ⭐ 3. CORS-FREE: URLSearchParams + POST (No JSON body)
-        const params = new URLSearchParams(formData);
-        const response = await fetch(`${GOOGLE_SCRIPT_URL}?${params}`, {
-            method: 'POST'
-            // No headers, no JSON body = No CORS preflight!
-        });
+        // Show Loader
+        if(loader) loader.style.display = 'block';
+        if(content) content.style.display = 'none';
 
-        const data = await response.json();
+        // 2. Fetch User Data
+        // (Agar backend ready nahi hai to hum fallback use karenge)
+        let userData = {
+            Name: localStorage.getItem('lsm_user_name') || 'Student',
+            Email: userId,
+            Phone: localStorage.getItem('lsm_user_phone') || '',
+            JoinDate: new Date().toLocaleDateString() 
+        };
 
-        if (data.status === 'success' && data.userId) {
-            // 4. SUCCESS: Auto-login + Enroll
-            form.reset();
-            showMessage('Registration successful! Redirecting...', 'success', messageEl);
-            
-            localStorage.setItem('lsm_user_id', data.userId);
-            
-            // Auto-enroll if pending course
-            setTimeout(() => autoEnrollAndRedirect(data.userId), 1000);
-            
-        } else {
-            throw new Error(data.message || 'Registration failed');
+        // Try fetching from API (Optional)
+        try {
+            const url = `${GOOGLE_SCRIPT_URL}?action=getUser&userId=${encodeURIComponent(userId)}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            if (data.status === 'success' && data.data) {
+                userData = data.data;
+            }
+        } catch (e) {
+            console.log("Using local data fallback");
         }
+
+        // 3. Populate Form (Safely)
+        populateForm(userData);
+
+        // Hide Loader
+        if(loader) loader.style.display = 'none';
+        if(content) content.style.display = 'block';
 
     } catch (error) {
-        console.error('Registration error:', error);
-        showMessage(error.message || 'Registration failed. Try again.', 'error', messageEl);
-    } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Register';
+        console.error("Profile Error:", error);
+        if(loader) loader.style.display = 'none';
     }
-}
 
-async function autoEnrollAndRedirect(userId) {
-    const pendingCourseId = localStorage.getItem('pendingEnrollCourseId');
+    // 4. Handle Save Button
+    const form = document.getElementById('profile-form');
+    if(form) {
+        form.addEventListener('submit', handleSave);
+    }
+});
+
+function populateForm(user) {
+    // Helper function to safely set value
+    const setVal = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val || '';
+    };
+
+    // Helper function to safely set text content
+    const setText = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val || '';
+    };
+
+    // Set Input Values (Matching HTML IDs)
+    setVal('name-input', user.Name);
+    setVal('email-input', user.Email);
+    setVal('phone-input', user.Phone);
+    setVal('date-input', user.JoinDate);
     
-    if (pendingCourseId) {
-        try {
-            // ⭐ CORS-FREE Enroll
-            const enrollParams = new URLSearchParams({
-                action: 'enrollCourse',
-                userId: userId,
-                courseId: pendingCourseId
-            });
+    // Set Header Text
+    setText('display-name', user.Name || 'Student');
+    
+    // Set Avatar Initials
+    const name = user.Name || 'Student';
+    const initials = name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+    setText('avatar-initials', initials);
+}
 
-            const enrollResponse = await fetch(`${GOOGLE_SCRIPT_URL}?${enrollParams}`, {
-                method: 'POST'
-            });
+async function handleSave(e) {
+    e.preventDefault();
+    const btn = document.getElementById('save-btn');
+    if (!btn) return;
 
-            const enrollData = await enrollResponse.json();
-            
-            localStorage.removeItem('pendingEnrollCourseId');
-            
-            if (enrollData.status === 'success') {
-                window.location.href = `course-topic.html?courseId=${pendingCourseId}&topicIndex=1`;
-            } else {
-                window.location.href = 'login.html';
-            }
-        } catch (error) {
-            console.error('Enrollment error:', error);
-            window.location.href = 'login.html';
+    const originalText = btn.innerHTML;
+    
+    // Animation: Loading
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+    btn.disabled = true;
+
+    // Simulate Network Request
+    await new Promise(r => setTimeout(r, 1500));
+
+    // Animation: Success
+    btn.innerHTML = '<i class="fas fa-check"></i> Saved!';
+    btn.style.background = 'var(--success)'; // Green color
+    
+    // Save to LocalStorage
+    const newNameEl = document.getElementById('name-input');
+    const newPhoneEl = document.getElementById('phone-input');
+    
+    if (newNameEl) {
+        const newName = newNameEl.value;
+        localStorage.setItem('lsm_user_name', newName);
+        
+        // Update display immediately
+        const displayEl = document.getElementById('display-name');
+        if(displayEl) displayEl.textContent = newName;
+        
+        const avatarEl = document.getElementById('avatar-initials');
+        if(avatarEl) {
+            avatarEl.textContent = newName.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
         }
-    } else {
-        window.location.href = 'login.html';
     }
-}
-
-// VALIDATION
-function validateRegister(data) {
-    if (!data.name || data.name.length < 2) return ['Name must be 2+ characters'];
-    if (!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return ['Enter valid email'];
-    if (!data.phone || !/^\d{10}$/.test(data.phone)) return ['Enter valid 10-digit phone'];
-    if (data.password.length < 6) return ['Password must be 6+ characters'];
-    return [];
-}
-
-// UI HELPERS
-function showMessage(text, type, messageEl) {
-    if (messageEl) {
-        messageEl.textContent = text;
-        messageEl.className = type; // error, success, loading
+    
+    if (newPhoneEl) {
+        localStorage.setItem('lsm_user_phone', newPhoneEl.value);
     }
+
+    // Reset Button Style
+    setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.style.background = ''; 
+        btn.disabled = false;
+    }, 2000);
 }

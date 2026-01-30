@@ -1,421 +1,320 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Us - LMS Platform</title>
-
-  <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - CODELINE AI</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
   <style>
+    /* ========= 1. THEME VARIABLES ========= */
+    :root {
+      --primary: #9a0669;
+      --primary-dark: #4b0082;
+      --accent: #06b6d4;
+      
+      --bg-body: #06060c;
+      --bg-nav: rgba(6, 6, 12, 0.95);
+      --bg-card: rgba(255, 255, 255, 0.05);
+      
+      --text-main: #ffffff;
+      --text-dim: #94a3b8;
+      --border-color: rgba(138, 43, 226, 0.2);
+    }
+
+    [data-theme="light"] {
+      --bg-body: #f1f5f9;
+      --bg-nav: rgba(255, 255, 255, 0.95);
+      --bg-card: #ffffff;
+      
+      --text-main: #1e293b;
+      --text-dim: #64748b;
+      --border-color: rgba(0, 0, 0, 0.1);
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: "Inter", sans-serif;
-      line-height: 1.7;
-      color: #0f172a;
-      background: #f8fafc;
-    }
-    a { text-decoration: none; color: inherit; }
+    body { font-family: 'Poppins', sans-serif; background: var(--bg-body); color: var(--text-main); overflow-x: hidden; transition: 0.3s; }
+    a { text-decoration: none; color: inherit; transition: 0.3s; }
+    ul { list-style: none; }
 
-    /* Header */
-    .header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: #fff;
-      padding: 110px 20px 80px;
-      text-align: center;
-    }
-    .header-inner { max-width: 900px; margin: 0 auto; }
-    .header h1 {
-      font-size: clamp(2.4rem, 4vw, 3.5rem);
-      font-weight: 700;
-      margin-bottom: 1rem;
-    }
-    .header p {
-      font-size: 1.1rem;
-      opacity: 0.9;
-      max-width: 650px;
-      margin: 0 auto;
+    /* ========= 2. NAVBAR WITH TOGGLE ========= */
+    .navbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 15px 5%; position: fixed; top: 0; width: 100%;
+      background: var(--bg-nav); backdrop-filter: blur(10px);
+      z-index: 1000; border-bottom: 1px solid var(--border-color);
+      transition: 0.3s;
     }
 
-    section { padding: 80px 20px; }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .section-title {
-      text-align: center;
-      font-size: 2.2rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-      color: #111827;
-    }
-    .section-sub {
-      text-align: center;
-      color: #6b7280;
-      max-width: 600px;
-      margin: 0 auto 40px;
-      font-size: 0.98rem;
-    }
+    .logo { font-size: 24px; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
+    .logo span { color: var(--primary); }
 
-    /* Stats */
-    .stats { background: #f9fafb; }
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 24px;
-    }
-    .stat-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 24px 20px;
-      text-align: center;
-      box-shadow: 0 12px 40px rgba(15, 23, 42, 0.06);
-    }
-    .stat-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      margin: 0 auto 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(99, 102, 241, 0.1);
-      color: #4f46e5;
-      font-size: 22px;
-    }
-    .stat-number {
-      font-size: 2.1rem;
-      font-weight: 700;
-      color: #111827;
-      margin-bottom: 4px;
-    }
-    .stat-label { color: #6b7280; font-size: 0.95rem; }
+    .nav-links { display: flex; gap: 30px; align-items: center; }
+    .nav-links a { font-size: 15px; font-weight: 500; color: var(--text-dim); position: relative; }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+    
+    .nav-right { display: flex; align-items: center; gap: 15px; }
 
-    /* Mission */
-    .mission-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-      gap: 40px;
-      align-items: center;
+    /* Search Box */
+    .search-box {
+      display: flex; align-items: center; background: var(--bg-card);
+      padding: 8px 15px; border-radius: 50px; border: 1px solid var(--border-color);
     }
-    .mission-text h2 {
-      font-size: 2.1rem;
-      margin-bottom: 12px;
-    }
-    .mission-text p {
-      color: #4b5563;
-      font-size: 0.98rem;
-      margin-bottom: 12px;
-    }
-    .mission-points {
-      margin-top: 16px;
-      list-style: none;
-    }
-    .mission-points li {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 8px;
-      color: #374151;
-      font-size: 0.96rem;
-    }
-    .mission-points i { color: #10b981; }
-    .mission-img-wrap { position: relative; }
-    .mission-img {
-      width: 100%;
-      border-radius: 20px;
-      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.18);
-      object-fit: cover;
-      max-height: 360px;
-    }
+    .search-box input { background: transparent; border: none; color: var(--text-main); outline: none; font-size: 14px; }
+    .search-box i { color: var(--accent); cursor: pointer; }
 
-    /* Team */
-    .team {
-      background: linear-gradient(135deg, #eef2ff 0%, #e5e7eb 100%);
+    /* Theme Toggle Button */
+    .theme-btn {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      color: var(--text-main); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: 0.3s;
     }
-    .team-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-      margin-top: 20px;
-    }
-    .team-card {
-      background: #fff;
-      border-radius: 18px;
-      padding: 28px 20px;
-      text-align: center;
-      box-shadow: 0 10px 32px rgba(15, 23, 42, 0.12);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-    .team-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.18);
-    }
-    .team-avatar {
-  width: 120px;      /* pehle 78px tha, isse bada hoga */
-  height: 120px;
-  border-radius: 50%;
-  margin: 0 auto 16px;
-  overflow: hidden;
-  background: #e5e7eb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.team-avatar img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-}
+    .theme-btn:hover { background: var(--primary); color: white; border-color: var(--primary); transform: rotate(15deg); }
 
-
-    .team-name { font-weight: 600; margin-bottom: 4px; }
-    .team-role {
-      color: #6b7280;
-      font-size: 1.05rem;
-      margin-bottom: 6px;
-    }
-    .team-meta {
-      color: #4b5563;
-      font-size: 0.9rem;
-    }
-
-    /* Values */
-    .values { background: #ffffff; }
-    .values-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 24px;
-      margin-top: 20px;
-    }
-    .value-card {
-      background: #f9fafb;
-      border-radius: 16px;
-      padding: 22px 20px;
-      text-align: center;
-      border: 1px solid #e5e7eb;
-    }
-    .value-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 18px;
-      margin: 0 auto 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #4f46e5, #6366f1);
-      color: #fff;
-      font-size: 24px;
-    }
-    .value-title { font-weight: 600; margin-bottom: 6px; }
-    .value-text { color: #6b7280; font-size: 0.95rem; }
-
-    /* CTA */
-    .cta {
-      background: #0f172a;
-      color: #e5e7eb;
-      text-align: center;
-      padding: 70px 20px 80px;
-    }
-    .cta h2 {
-      font-size: 2.1rem;
-      margin-bottom: 10px;
-      color: #f9fafb;
-    }
-    .cta p {
-      color: #9ca3af;
-      max-width: 480px;
-      margin: 0 auto 24px;
-      font-size: 0.98rem;
-    }
-    .cta-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 11px 26px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #4f46e5, #7c3aed);
-      color: #fff;
-      font-weight: 500;
-      font-size: 0.98rem;
-      box-shadow: 0 12px 35px rgba(79, 70, 229, 0.4);
-    }
-    .cta-btn i { font-size: 0.98rem; }
-
-    /* Responsive */
+    .menu-btn { display: none; font-size: 24px; color: var(--text-main); cursor: pointer; }
+    
     @media (max-width: 900px) {
-      .mission-grid { grid-template-columns: 1fr; }
-      .mission-img-wrap { order: -1; margin-bottom: 12px; }
+      .nav-links {
+        display: none; position: absolute; top: 70px; left: 0; width: 100%;
+        background: var(--bg-nav); flex-direction: column; padding: 20px; text-align: center;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .nav-links.active { display: flex; }
+      .search-box { display: none; } 
+      .menu-btn { display: block; }
     }
+
+    /* ========= 3. HERO SECTION ========= */
+    .hero-banner {
+      height: 60vh;
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1600&auto=format&fit=crop');
+      background-size: cover; background-position: center;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; margin-top: 70px;
+    }
+    .hero-banner h1 { font-size: 4rem; font-weight: 700; color: white; margin-bottom: 10px; }
+    .breadcrumb { font-size: 1rem; color: #ccc; letter-spacing: 1px; text-transform: uppercase; }
+    .breadcrumb span { color: var(--primary); margin: 0 5px; }
+
+    /* ========= 4. ABOUT CONTENT ========= */
+    .about-section {
+      padding: 80px 10%; display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+      align-items: center; position: relative;
+    }
+    
+    .about-text h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 20px; line-height: 1.2; }
+    .about-text h2 span { color: var(--primary); }
+    .about-text p { color: var(--text-dim); margin-bottom: 20px; line-height: 1.6; font-size: 1rem; }
+    
+    .about-images { position: relative; height: 400px; }
+    .img-back {
+      width: 70%; height: 90%; object-fit: cover; position: absolute; top: 0; left: 0;
+      border-radius: 10px; opacity: 0.8; border: 1px solid var(--border-color);
+    }
+    .img-front {
+      width: 60%; height: 70%; object-fit: cover; position: absolute; bottom: 0; right: 0;
+      border-radius: 10px; border: 8px solid var(--bg-body); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .play-btn {
+      position: absolute; top: 40%; left: 30%; width: 60px; height: 60px; background: white;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      color: var(--primary); font-size: 20px; cursor: pointer; box-shadow: 0 0 20px rgba(255,255,255,0.4);
+      transition: 0.3s;
+    }
+    .play-btn:hover { transform: scale(1.1); }
+
+    @media (max-width: 900px) {
+      .about-section { grid-template-columns: 1fr; }
+      .about-images { height: 350px; margin-top: 30px; }
+    }
+
+    /* ========= 5. STATS STRIP ========= */
+    .stats-strip {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      padding: 60px 10%; margin: 50px 0;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 30px; text-align: center; color: white;
+    }
+    .stat-num { font-size: 3rem; font-weight: 700; margin-bottom: 5px; }
+    .stat-label { font-size: 1rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* ========= 6. TESTIMONIALS ========= */
+    .testimonials { padding: 80px 10%; text-align: center; }
+    .sec-title { font-size: 2.5rem; margin-bottom: 50px; }
+    
+    .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .testi-card {
+      background: var(--bg-card); padding: 30px; border-radius: 15px; text-align: left;
+      border: 1px solid var(--border-color); transition: 0.3s; position: relative;
+    }
+    .testi-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+    .testi-card i { font-size: 30px; color: var(--accent); margin-bottom: 15px; }
+    .testi-text { color: var(--text-dim); font-style: italic; margin-bottom: 20px; }
+    .user-info { display: flex; align-items: center; gap: 15px; }
+    .user-img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+    
+    /* ========= 7. FOOTER ========= */
+    .footer {
+      background: #020205; padding: 50px 10%; border-top: 1px solid var(--border-color);
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px;
+    }
+    .footer h3 { color: white; margin-bottom: 20px; }
+    .footer p, .footer a { color: var(--text-dim); margin-bottom: 10px; display: block; font-size: 14px; }
+    .footer a:hover { color: var(--primary); }
+    .copyright { text-align: center; padding: 20px; background: black; color: var(--text-dim); font-size: 13px; }
+
   </style>
 </head>
-<body>
+<body data-theme="dark">
 
-  <!-- HERO -->
-  <header class="header">
-    <div class="header-inner">
-      <h1>About Us - CODELINE AI</h1>
-      <p>
-        We build simple, powerful tools that help students learn faster and stay
-        consistent. From quizzes to progress tracking, everything is designed for you.
-      </p>
+  <nav class="navbar">
+    <div class="logo">
+      <span>🎓</span> CODELINE AI
     </div>
-  </header>
 
-  <!-- STATS -->
-  <section class="stats">
-    <div class="container">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-icon"><i class="fas fa-users"></i></div>
-          <div class="stat-number">5K+</div>
-          <div class="stat-label">Active Learners</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon"><i class="fas fa-book-open"></i></div>
-          <div class="stat-number">120+</div>
-          <div class="stat-label">Structured Topics</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon"><i class="fas fa-clock"></i></div>
-          <div class="stat-number">24/7</div>
-          <div class="stat-label">Anytime Access</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon"><i class="fas fa-star"></i></div>
-          <div class="stat-number">4.9</div>
-          <div class="stat-label">Student Rating</div>
-        </div>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="my-courses.html">Courses</a></li>
+      <li><a href="#">Staff</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <div class="search-box">
+        <input type="text" placeholder="Search...">
+        <i class="fas fa-search"></i>
       </div>
+
+      <button class="theme-btn" id="theme-toggle">
+        <i class="fas fa-sun"></i>
+      </button>
+
+      <div class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+    </div>
+  </nav>
+
+  <section class="hero-banner" data-aos="fade-in">
+    <h1>About Us</h1>
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> <span>&gt;</span> About Us
     </div>
   </section>
 
-  <!-- MISSION -->
-  <section>
-    <div class="container mission-grid">
-      <div class="mission-text">
-        <h2>Our Mission</h2>
-        <p>
-          Make learning easy, structured and enjoyable for every student, no matter
-          where they are starting from.
-        </p>
-        <p>
-          Your course, assignment and quiz system is built to remove confusion and
-          keep learners focused on the next right step.
-        </p>
-        <ul class="mission-points">
-          <li><i class="fas fa-check-circle"></i> Clear topic‑wise progress</li>
-          <li><i class="fas fa-check-circle"></i> Auto‑checked quizzes & instant feedback</li>
-          <li><i class="fas fa-check-circle"></i> Simple dashboard for students and admins</li>
-        </ul>
-      </div>
-      <div class="mission-img-wrap">
-        <img
-          class="mission-img"
-          src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1000&q=80"
-          alt="Students learning online"
-        />
-      </div>
+  <section class="about-section">
+    <div class="about-text" data-aos="fade-right">
+      <h2>Fox University Established <br><span>Since 1960</span></h2>
+      <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word.</p>
+      <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+      <p>Separated they live in. A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+    </div>
+    
+    <div class="about-images" data-aos="fade-left">
+      <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800&auto=format&fit=crop" class="img-back" alt="University">
+      <div class="play-btn"><i class="fas fa-play"></i></div>
+      <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=600&auto=format&fit=crop" class="img-front" alt="Students">
     </div>
   </section>
 
-  <!-- TEAM -->
-  <section class="team">
-    <div class="container">
-      <h2 class="section-title">Meet Our Team</h2>
-      <p class="section-sub">
-        A small, focused team that cares about clean code, smooth UX and real learning outcomes.
-      </p>
+  <section class="stats-strip" data-aos="fade-up">
+    <div><div class="stat-num">18</div><div class="stat-label">Certified Teachers</div></div>
+    <div><div class="stat-num">401</div><div class="stat-label">Students</div></div>
+    <div><div class="stat-num">30</div><div class="stat-label">Courses</div></div>
+    <div><div class="stat-num">50</div><div class="stat-label">Awards Won</div></div>
+  </section>
 
-      <div class="team-grid">
-        <div class="team-card">
-          <div class="team-avatar">
-            <!-- apni image ka path yahan lagao -->
-            <img src="https://mohammedimranblog.wordpress.com/wp-content/uploads/2015/10/284574-shahid-kapoor.jpg" alt="Founder" />
-          </div>
-          <div class="team-name">Founder / Architect</div>
-          <div class="team-role">Product & System Design</div>
-          <div class="team-meta">
-            Designs the overall LMS flow – courses, topics, assignments and progress logic.
-          </div>
-        </div>
-
-        <div class="team-card">
-          <div class="team-avatar">
-            <img src="images/developer.jpg" alt="Developer" />
-          </div>
-          <div class="team-name">Full‑Stack Developer</div>
-          <div class="team-role">Frontend + Apps Script</div>
-          <div class="team-meta">
-            Builds the dashboard, quizzes, course pages and Google Sheets backend.
-          </div>
-        </div>
-
-        <div class="team-card">
-          <div class="team-avatar">
-            <img src="images/content.jpg" alt="Content Lead" />
-          </div>
-          <div class="team-name">Content Lead</div>
-          <div class="team-role">Courses & Assessments</div>
-          <div class="team-meta">
-            Structures topics, questions and assignments so students learn step by step.
-          </div>
+  <section class="testimonials">
+    <h2 class="sec-title" data-aos="zoom-in">Student Says About Us</h2>
+    <div class="testi-grid">
+      
+      <div class="testi-card" data-aos="fade-up" data-aos-delay="100">
+        <i class="fas fa-quote-left"></i>
+        <p class="testi-text">"Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts."</p>
+        <div class="user-info">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" class="user-img">
+          <div><h4>Henry Dee</h4><span style="font-size: 12px; color: var(--accent);">Web Developer</span></div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- VALUES -->
-  <section class="values">
-    <div class="container">
-      <h2 class="section-title">Our Core Values</h2>
-      <p class="section-sub">
-        These principles guide how we design features and make decisions for the platform.
-      </p>
-
-      <div class="values-grid">
-        <div class="value-card">
-          <div class="value-icon"><i class="fas fa-compass"></i></div>
-          <div class="value-title">Clarity</div>
-          <div class="value-text">
-            Students should always know which topic comes next and what is required.
-          </div>
-        </div>
-
-        <div class="value-card">
-          <div class="value-icon"><i class="fas fa-bolt"></i></div>
-          <div class="value-title">Simplicity</div>
-          <div class="value-text">
-            Clean UI, minimal clicks, no confusion – just focus on learning.
-          </div>
-        </div>
-
-        <div class="value-card">
-          <div class="value-icon"><i class="fas fa-shield-alt"></i></div>
-          <div class="value-title">Reliability</div>
-          <div class="value-text">
-            Topic locking, submissions and progress tracking must work every time.
-          </div>
+      <div class="testi-card" data-aos="fade-up" data-aos-delay="200">
+        <i class="fas fa-quote-left"></i>
+        <p class="testi-text">"Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean."</p>
+        <div class="user-info">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" class="user-img">
+          <div><h4>Sarah Smith</h4><span style="font-size: 12px; color: var(--accent);">Data Scientist</span></div>
         </div>
       </div>
+
+      <div class="testi-card" data-aos="fade-up" data-aos-delay="300">
+        <i class="fas fa-quote-left"></i>
+        <p class="testi-text">"A small river named Duden flows by their place and supplies it with the necessary regelialia."</p>
+        <div class="user-info">
+          <img src="https://randomuser.me/api/portraits/men/86.jpg" class="user-img">
+          <div><h4>Mark Huff</h4><span style="font-size: 12px; color: var(--accent);">Student</span></div>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="cta">
-    <div class="container">
-      <h2>Ready to continue your journey?</h2>
-      <p>Go back to your dashboard and pick up exactly where you left off.</p>
-      <a href="index.html" class="cta-btn">
-        <i class="fas fa-arrow-right"></i>
-        Go to Dashboard
-      </a>
+  <footer class="footer">
+    <div>
+      <h3>Have a Question?</h3>
+      <p><i class="fas fa-map-marker-alt"></i> 203 Fake St. Mountain View, San Francisco, California, USA</p>
+      <p><i class="fas fa-phone"></i> +2 392 3929 210</p>
+      <p><i class="fas fa-envelope"></i> info@codelineai.com</p>
     </div>
-  </section>
+    <div>
+      <h3>Links</h3>
+      <a href="#">Home</a><a href="#">About</a><a href="#">Services</a><a href="#">Deparments</a><a href="#">Contact</a>
+    </div>
+    <div>
+      <h3>Subscribe Us!</h3>
+      <div class="search-box" style="margin-top: 10px;">
+        <input type="email" placeholder="Enter email address" style="width: 100%;">
+        <button style="background: var(--primary); color: white; border: none; padding: 5px 15px; border-radius: 20px; cursor: pointer;">Subscribe</button>
+      </div>
+    </div>
+  </footer>
+  
+  <div class="copyright">
+    Copyright © 2026 All rights reserved | This template is made with ❤️ by CodeLine AI
+  </div>
 
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+
+    // Menu Logic
+    function toggleMenu() {
+      document.getElementById('nav-links').classList.toggle('active');
+    }
+
+    // Theme Toggle Logic
+    const themeBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+    
+    // Check saved theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    body.setAttribute('data-theme', savedTheme);
+    updateIcon(savedTheme);
+
+    themeBtn.addEventListener('click', () => {
+      const current = body.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      body.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateIcon(next);
+    });
+
+    function updateIcon(theme) {
+      themeBtn.innerHTML = theme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    }
+  </script>
 </body>
 </html>

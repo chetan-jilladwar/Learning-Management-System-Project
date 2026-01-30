@@ -4,527 +4,220 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Progress - CODELINE AI</title>
-
-  <link rel="stylesheet" href="css/main.css"/>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
   <style>
-    /* ===== THEME (same as dashboard / my‑courses) ===== */
+    /* ========= 1. UNIFIED THEME (Matching My Courses) ========= */
     :root {
-      --primary-purple: #6f036a;
-      --primary-dark: #3b1a91;
-      --pista-green: #badc58;
-
-      --bg-color: #f6f7fb;
-      --white: #ffffff;
-      --card-bg: var(--white);
-      --text-dark: #111827;
-      --text-light: #6b7280;
-
-      --shadow-light: 0 8px 20px rgba(15, 23, 42, 0.08);
-      --shadow-deep: 0 20px 45px rgba(15, 23, 42, 0.18);
-
-      --sidebar-gradient-start: rgba(111, 3, 106, 0.98);
-      --sidebar-gradient-end: #6d135d;
-      --sidebar-text: var(--white);
-      --bar-bg: rgba(148,163,184,0.35);
+      --primary: #9a0669;        /* Deep Pink */
+      --primary-dark: #4b0082;   /* Indigo */
+      --accent: #06b6d4;         /* Cyan */
+      --success: #00d26a;        /* Green */
+      
+      /* Dark Mode (Default) */
+      --bg-body: #06060c;
+      --bg-sidebar: rgba(6, 6, 12, 0.85);
+      --bg-card: rgba(255, 255, 255, 0.03);
+      --bg-card-hover: rgba(255, 255, 255, 0.07);
+      --border-color: rgba(138, 43, 226, 0.2);
+      --text-main: #ffffff;
+      --text-dim: #94a3b8;
+      
+      --shadow: 0 10px 30px rgba(0,0,0,0.5);
+      --sidebar-width: 280px;
     }
 
-    [data-theme="dark"] {
-      --primary-purple: #c084fc;
-      --primary-dark: #60a5fa;
-      --pista-green: #22c55e;
-
-      --bg-color: #050816;
-      --white: #020617;
-      --card-bg: #020617;
-      --text-dark: #e5e7eb;
-      --text-light: #9ca3af;
-
-      --shadow-light: 0 10px 30px rgba(0,0,0,0.55);
-      --shadow-deep: 0 24px 60px rgba(0,0,0,0.85);
-
-      --sidebar-gradient-start: #3a1c71;
-      --sidebar-gradient-end: #2a0845;
-      --sidebar-text: #e5e7ff;
-      --bar-bg: rgba(148,163,184,0.25);
+    [data-theme="light"] {
+      --bg-body: #f1f5f9;
+      --bg-sidebar: rgba(255, 255, 255, 0.95);
+      --bg-card: #ffffff;
+      --bg-card-hover: #ffffff;
+      --border-color: rgba(0, 0, 0, 0.08);
+      --text-main: #1e293b;
+      --text-dim: #64748b;
+      --shadow: 0 15px 40px rgba(0,0,0,0.08);
     }
 
-    *{box-sizing:border-box;}
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
 
-    body{
-      font-family:'Poppins',sans-serif;
-      margin:0;
-      background: radial-gradient(circle at top, rgba(186,220,88,0.18), transparent 55%), var(--bg-color);
-      color:var(--text-dark);
-      scroll-behavior:smooth;
-      transition:background 0.3s ease,color 0.3s ease;
-      overflow-x:hidden;
-      min-height:100vh;
-      display:flex;
+    /* ========= 2. LAYOUT & SIDEBAR ========= */
+    .dashboard-wrapper { display: flex; width: 100%; min-height: 100vh; }
+    
+    .sidebar {
+      width: var(--sidebar-width);
+      position: fixed; top: 0; left: 0; height: 100vh;
+      background: var(--bg-sidebar);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border-color);
+      z-index: 1000;
+      padding: 30px 20px;
+      transition: transform 0.3s ease;
     }
+    .logo-area { font-size: 24px; font-weight: 800; margin-bottom: 5px; color: var(--text-main); }
+    .logo-area span { color: var(--primary); }
+    .sidebar-sub { font-size: 12px; color: var(--text-dim); margin-bottom: 40px; letter-spacing: 1px; text-transform: uppercase; }
+    
+    .sidebar-nav ul { display: flex; flex-direction: column; gap: 8px; }
+    .sidebar-nav a {
+      display: flex; align-items: center; gap: 15px;
+      padding: 12px 18px; border-radius: 12px;
+      color: var(--text-dim); font-weight: 500; font-size: 15px;
+      transition: 0.3s;
+    }
+    .sidebar-nav a:hover, .sidebar-nav li.active a {
+      background: linear-gradient(90deg, rgba(154,6,105,0.1), transparent);
+      color: var(--primary);
+      transform: translateX(5px);
+    }
+    .sidebar-footer { position: absolute; bottom: 30px; left: 20px; color: var(--text-dim); font-size: 13px; }
+    .sidebar-footer strong { display: block; color: var(--text-main); font-size: 15px; }
 
-    .dashboard-wrapper{
-      display:flex;
-      width:100%;
-      min-height:100vh;
-      flex-direction:column;
+    /* Mobile Sidebar */
+    @media (max-width: 992px) {
+       .sidebar { transform: translateX(-100%); }
+       .sidebar.mobile-open { transform: translateX(0); }
     }
+    .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 900; opacity: 0; visibility: hidden; transition: 0.3s; }
+    .sidebar-overlay.active { opacity: 1; visibility: visible; }
 
-    /* ===== SIDEBAR (same as other pages) ===== */
-    .sidebar{
-      position:fixed;
-      inset:0 auto 0 0;
-      width:280px;
-      background:linear-gradient(180deg,var(--sidebar-gradient-start),var(--sidebar-gradient-end));
-      color:var(--sidebar-text);
-      z-index:1000;
-      transform:translateX(-100%);
-      transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);
-      padding:1.75rem 1.3rem;
-      box-shadow:8px 0 30px rgba(0,0,0,0.4);
-      display:flex;
-      flex-direction:column;
-      gap:1.5rem;
+    /* ========= 3. MAIN CONTENT ========= */
+    .main-content {
+      flex: 1; margin-left: var(--sidebar-width);
+      padding: 30px 40px;
+      background: radial-gradient(circle at top right, rgba(154,6,105,0.08), transparent 50%);
     }
-    .sidebar.mobile-open{transform:translateX(0);}
+    @media (max-width: 992px) { .main-content { margin-left: 0; padding: 20px; } }
 
-    .logo-area{
-      font-size:1.65rem;
-      font-weight:700;
-      display:flex;
-      align-items:center;
-      gap:0.5rem;
-      letter-spacing:0.5px;
+    .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+    .dashboard-header h1 { font-size: 28px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+    
+    .header-actions { display: flex; gap: 15px; }
+    .action-btn {
+      width: 45px; height: 45px; border-radius: 50%;
+      border: 1px solid var(--border-color); background: var(--bg-card);
+      color: var(--text-main); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: 0.3s;
     }
-    .logo-area span{font-size:1.1rem;opacity:0.9;}
-    .sidebar-sub{font-size:0.8rem;opacity:0.8;margin-top:0.25rem;}
+    .action-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+    .mobile-menu-btn { display: none; }
+    @media (max-width: 992px) { .mobile-menu-btn { display: flex; } }
 
-    .sidebar-nav{flex:1;}
-    .sidebar-nav ul{
-      list-style:none;
-      padding:0;
-      margin:0;
-      display:flex;
-      flex-direction:column;
-      gap:0.3rem;
+    /* ========= 4. OVERALL STATS CARD (Hero) ========= */
+    .stats-hero {
+      background: linear-gradient(135deg, rgba(154,6,105,0.9), rgba(75,0,130,0.9));
+      border-radius: 24px;
+      padding: 30px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(154, 6, 105, 0.3);
+      margin-bottom: 40px;
     }
-    .sidebar-nav li{border-radius:12px;overflow:hidden;}
-
-    .sidebar-nav a{
-      color:var(--sidebar-text);
-      text-decoration:none;
-      font-weight:500;
-      display:flex;
-      align-items:center;
-      gap:12px;
-      padding:0.85rem 1rem;
-      font-size:0.95rem;
-      position:relative;
-      transition:background 0.25s ease,transform 0.2s ease;
+    .stats-hero::before {
+      content: ''; position: absolute; top: -50%; right: -10%; width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(255,255,255,0.2), transparent 70%);
+      border-radius: 50%;
     }
-    .sidebar-nav a i{font-size:1.05rem;width:22px;text-align:center;}
-
-    .sidebar-nav a::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:radial-gradient(circle at 0 0,rgba(255,255,255,0.18),transparent 55%);
-      opacity:0;
-      transition:opacity 0.25s ease;
+    .hero-flex { display: flex; justify-content: space-between; align-items: flex-end; position: relative; z-index: 2; }
+    .hero-info h2 { font-size: 16px; opacity: 0.9; font-weight: 500; margin-bottom: 5px; }
+    .hero-info .big-percent { font-size: 48px; font-weight: 800; line-height: 1.1; }
+    .hero-info p { font-size: 14px; opacity: 0.8; margin-top: 5px; }
+    
+    .big-progress-track {
+      width: 100%; height: 12px; background: rgba(255,255,255,0.2);
+      border-radius: 20px; margin-top: 20px; overflow: hidden;
     }
-    .sidebar-nav a:hover{
-      transform:translateX(2px);
-      background:rgba(255,255,255,0.10);
-    }
-    .sidebar-nav a:hover::after{opacity:1;}
-
-    .sidebar-nav .active a{
-      background:var(--card-bg);
-      color: #f6f7fb;
-      box-shadow:0 12px 30px rgba(237, 238, 239, 0.35);
-    }
-
-    .sidebar-footer{
-      font-size:0.8rem;
-      opacity:0.8;
-    }
-
-    .sidebar-overlay{
-      position:fixed;
-      inset:0;
-      background:rgba(15,23,42,0.60);
-      z-index:900;
-      opacity:0;
-      visibility:hidden;
-      transition:opacity 0.3s ease,visibility 0.3s ease;
-    }
-    .sidebar-overlay.active{
-      opacity:1;
-      visibility:visible;
+    .big-progress-fill {
+      height: 100%; background: #00d26a; /* Green */
+      width: 0%; border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0, 210, 106, 0.6);
+      transition: width 1.5s ease;
     }
 
-    /* ===== MAIN CONTENT ===== */
-    .main-content{
-      flex:1;
-      width:100%;
-      max-width:1200px;
-      margin:0 auto;
-      padding:1.4rem 1.4rem 2.4rem;
+    /* ========= 5. COURSE PROGRESS GRID ========= */
+    .progress-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 25px;
     }
 
-    .dashboard-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:1rem;
-      margin-bottom:1.8rem;
+    .progress-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 25px;
+      position: relative;
+      overflow: hidden;
+      transition: 0.3s;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    .progress-card:hover { transform: translateY(-5px); border-color: var(--primary); background: var(--bg-card-hover); }
+
+    .p-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+    .p-icon {
+      width: 50px; height: 50px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; color: white;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .p-badge {
+      font-size: 11px; padding: 4px 10px; border-radius: 20px;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      color: var(--text-dim);
     }
 
-    .dashboard-header h1{
-      margin:0;
-      font-size:clamp(1.6rem,4vw,2.25rem);
-      font-weight:700;
-      color:var(--primary-dark);
-      display:flex;
-      align-items:center;
-      gap:0.5rem;
-    }
-    .dashboard-header h1 span.emoji{font-size:1.7rem;}
+    .p-title { font-size: 18px; font-weight: 700; margin-bottom: 5px; }
+    .p-stats { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-dim); margin-bottom: 10px; }
+    .p-stats span.highlight { color: var(--text-main); font-weight: 600; }
 
-    .header-actions{
-      display:flex;
-      align-items:center;
-      gap:0.75rem;
-    }
+    .mini-track { height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
+    .mini-fill { height: 100%; border-radius: 10px; transition: width 1s ease; }
 
-    .mobile-menu-btn{
-      background:var(--card-bg);
-      border:1px solid rgba(148,163,184,0.7);
-      color:var(--primary-dark);
-      font-size:1.2rem;
-      cursor:pointer;
-      padding:10px;
-      border-radius:10px;
-      transition:all 0.25s ease;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      min-width:42px;
-      min-height:42px;
+    .btn-action {
+      display: block; width: 100%; padding: 10px;
+      text-align: center; border-radius: 10px;
+      font-size: 14px; font-weight: 600;
+      background: rgba(154, 6, 105, 0.1); color: var(--text-main);
+      border: 1px solid var(--border-color);
+      transition: 0.3s;
     }
-    .mobile-menu-btn:hover{
-      background:var(--primary-purple);
-      color:#fff;
-      transform:translateY(-1px);
-      border-color:transparent;
-    }
+    .btn-action:hover { background: var(--primary); border-color: var(--primary); color: white; }
 
-    #dark-mode-toggle{
-      background:var(--card-bg);
-      border:1px solid rgba(148,163,184,0.7);
-      color:var(--primary-dark);
-      font-size:1.1rem;
-      cursor:pointer;
-      padding:9px 11px;
-      border-radius:999px;
-      transition:all 0.25s ease;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      min-width:40px;
-      min-height:40px;
+    /* Loader */
+    .spinner-border {
+      width: 40px; height: 40px; border: 4px solid rgba(154,6,105,0.2);
+      border-top: 4px solid var(--primary); border-radius: 50%;
+      animation: spin 1s linear infinite; margin: 0 auto;
     }
-    #dark-mode-toggle:hover{
-      background:var(--primary-purple);
-      color:#fff;
-      border-color:transparent;
-      transform:rotate(12deg) scale(1.03);
-    }
-    [data-theme="dark"] #dark-mode-toggle{
-      background:var(--bg-color);
-      color:var(--text-dark);
-    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
 
-    /* ===== OVERALL PROGRESS CARD ===== */
-    .overall-progress-card{
-      background:linear-gradient(135deg,var(--primary-purple),var(--primary-dark));
-      color:#fff;
-      padding:clamp(1.6rem,5vw,2.4rem);
-      border-radius:20px;
-      box-shadow:var(--shadow-deep);
-      margin-bottom:2rem;
-      position:relative;
-      overflow:hidden;
-      text-align:left;
-    }
-    .overall-progress-card::after{
-      content:"";
-      position:absolute;
-      inset:-30% auto auto -10%;
-      width:220px;
-      height:220px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,0.35);
-      opacity:0.25;
-    }
-    .overall-progress-card h2{
-      margin:0 0 0.4rem;
-      font-size:1rem;
-      text-transform:uppercase;
-      letter-spacing:0.09em;
-      color:var(--pista-green);
-    }
-    #overall-progress-text{
-      margin:0.2rem 0 0.9rem;
-      font-size:clamp(1.5rem,5vw,2.3rem);
-      font-weight:700;
-    }
-    .overall-subtext{
-      font-size:0.9rem;
-      opacity:0.9;
-    }
-
-    .overall-progress-bar-container{
-      margin-top:1.1rem;
-      background:rgba(255,255,255,0.18);
-      border-radius:999px;
-      overflow:hidden;
-      height:clamp(18px,4vw,22px);
-      box-shadow:inset 0 2px 4px rgba(0,0,0,0.15);
-    }
-    .overall-progress-bar{
-      height:100%;
-      background:linear-gradient(90deg,var(--pista-green),#facc15);
-      transition:width 1s ease-out;
-      display:flex;
-      align-items:center;
-      justify-content:flex-end;
-      padding-right:12px;
-      font-weight:700;
-      font-size:0.9rem;
-      color:var(--primary-dark);
-      min-width:52px;
-    }
-    [data-theme="dark"] .overall-progress-bar{
-      background:linear-gradient(90deg,var(--pista-green),#22c55e);
-      color:var(--card-bg);
-    }
-
-    /* ===== COURSES PROGRESS GRID ===== */
-    .courses-grid{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:1.4rem;
-    }
-
-    .course-card{
-      background:var(--card-bg);
-      border-radius:18px;
-      padding:1.5rem 1.4rem 1.6rem;
-      box-shadow:var(--shadow-light);
-      transition:transform 0.25s ease,box-shadow 0.25s ease;
-      position:relative;
-      overflow:hidden;
-    }
-    .course-card::before{
-      content:"";
-      position:absolute;
-      inset:-40% 40% auto auto;
-      background:radial-gradient(circle at top right,rgba(186,220,88,0.35),transparent 55%);
-      opacity:0.7;
-      pointer-events:none;
-    }
-    .course-card:hover{
-      transform:translateY(-5px);
-      box-shadow:var(--shadow-deep);
-    }
-
-    .course-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:0.8rem;
-      margin-bottom:0.8rem;
-    }
-    .course-card h3{
-      margin:0 0 0.3rem;
-      font-size:1.05rem;
-      color:var(--primary-dark);
-      font-weight:600;
-    }
-    .course-id{
-      font-size:0.78rem;
-      color:var(--text-light);
-      background:rgba(148,163,184,0.16);
-      padding:4px 8px;
-      border-radius:999px;
-      font-weight:600;
-      white-space:nowrap;
-    }
-    [data-theme="dark"] .course-id{
-      background:rgba(148,163,184,0.25);
-    }
-
-    .progress-stats{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      font-size:0.86rem;
-      margin:0.5rem 0 0.7rem;
-    }
-    .topic-count{
-      color:var(--text-light);
-      font-weight:500;
-    }
-    .progress-percent{
-      font-size:1.2rem;
-      font-weight:700;
-      color:var(--primary-purple);
-    }
-
-    .progress-bar-container{
-      background:var(--bar-bg);
-      border-radius:999px;
-      overflow:hidden;
-      height:10px;
-      margin-bottom:1.1rem;
-    }
-    .progress-bar-fill{
-      height:100%;
-      border-radius:999px;
-      background:linear-gradient(90deg,var(--primary-purple),var(--primary-dark));
-      transition:width 1s ease-out;
-    }
-
-    .course-actions{
-      display:flex;
-      gap:10px;
-      padding-top:0.9rem;
-      border-top:1px dashed rgba(148,163,184,0.4);
-    }
-    [data-theme="dark"] .course-actions{
-      border-top:1px dashed rgba(148,163,184,0.5);
-    }
-
-    .btn{
-      padding:10px 14px;
-      border-radius:10px;
-      text-decoration:none;
-      font-weight:600;
-      cursor:pointer;
-      transition:all 0.25s ease;
-      font-size:0.86rem;
-      flex:1;
-      text-align:center;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:6px;
-    }
-    .btn-primary{
-      background:var(--primary-purple);
-      color:#fff;
-      box-shadow:0 4px 15px rgba(111,3,106,0.35);
-    }
-    .btn-primary:hover{
-      background:var(--primary-dark);
-      transform:translateY(-2px);
-      box-shadow:0 8px 22px rgba(111,3,106,0.45);
-    }
-    .btn-outline{
-      background:transparent;
-      color:var(--primary-purple);
-      border:2px solid var(--primary-purple);
-    }
-    .btn-outline:hover{
-      background:var(--primary-purple);
-      color:#fff;
-      transform:translateY(-2px);
-    }
-
-    /* ===== LOADER / EMPTY STATES ===== */
-    #loading-message-container{
-      min-height:160px;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      flex-direction:column;
-      gap:1rem;
-      text-align:center;
-      color:var(--text-light);
-    }
-
-    .loader-ring{
-      width:54px;
-      height:54px;
-      border-radius:50%;
-      border:4px solid rgba(148,163,184,0.35);
-      border-top-color:var(--primary-purple);
-      animation:spin 0.9s linear infinite;
-    }
-    .loading-subtext{
-      font-size:0.9rem;
-    }
-    @keyframes spin{
-      to{transform:rotate(360deg);}
-    }
-
-    .empty-state-container{
-      min-height:180px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:0.6rem;
-      text-align:center;
-      color:var(--text-light);
-      font-size:0.9rem;
-    }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width:768px){
-      .courses-grid{margin-top:0.4rem;}
-      .course-header{flex-direction:column;align-items:flex-start;}
-      .course-actions{flex-direction:column;}
-    }
-
-    @media (min-width:769px){
-      .dashboard-wrapper{flex-direction:row;}
-      .sidebar{
-        position:sticky;
-        inset:0;
-        width:250px;
-        transform:none;
-      }
-      .sidebar-overlay{display:none;}
-      .main-content{padding:2rem 2.4rem 2.6rem;}
-      .courses-grid{
-        grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
-        gap:1.6rem;
-      }
-      .mobile-menu-btn{display:none;}
-    }
-
-    @media (min-width:1200px){
-      .main-content{padding:2.4rem 3rem 3rem;}
-    }
   </style>
 </head>
-<body data-theme="light">
+<body data-theme="dark">
+
   <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
   <div class="dashboard-wrapper">
-    <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
       <div>
-        <div class="logo-area">
-          <span>🎓</span> CODELINE AI
-        </div>
+        <div class="logo-area"><span>🎓</span> CODELINE AI</div>
         <div class="sidebar-sub">Student Learning Portal</div>
       </div>
-
       <nav class="sidebar-nav">
         <ul>
           <li><a href="dashboard.html"><i class="fas fa-house"></i><span>Dashboard</span></a></li>
@@ -536,100 +229,77 @@
           <li><a href="index.html"><i class="fas fa-arrow-left"></i><span>Back to Home</span></a></li>
         </ul>
       </nav>
-
       <div class="sidebar-footer">
         <span>Logged in as</span><br/>
         <strong id="sidebar-user-name">Student</strong>
       </div>
     </aside>
 
-    <!-- MAIN -->
     <main class="main-content">
-      <header class="dashboard-header">
-        <h1><span class="emoji">📈</span> My Learning Progress</h1>
+      <header class="dashboard-header" data-aos="fade-down">
+        <h1><span class="emoji">📈</span> Learning Progress</h1>
         <div class="header-actions">
-          <button class="mobile-menu-btn" id="mobile-menu-btn" title="Open Menu">
-            <i class="fas fa-bars"></i>
-          </button>
-          <button id="dark-mode-toggle" title="Toggle Dark/Light Mode">
-            <i class="fas fa-moon"></i>
-          </button>
+          <button class="action-btn mobile-menu-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+          <button class="action-btn" id="dark-mode-toggle"><i class="fas fa-sun"></i></button>
         </div>
       </header>
 
-      <section class="overall-progress-card">
-        <h2>Overall Learning Status</h2>
-        <p id="overall-progress-text">Calculating...</p>
-        <p class="overall-subtext" id="overall-progress-subtext">We’ll show your combined progress across all active courses.</p>
-        <div class="overall-progress-bar-container">
-          <div id="overall-progress-bar" class="overall-progress-bar" style="width:0;"></div>
-        </div>
-      </section>
-
-      <!-- Loader / states -->
-      <div id="loading-message-container">
-        <div class="loader-ring"></div>
-        <div class="loading-subtext">Fetching your course progress...</div>
+      <div id="course-loader" style="text-align: center; margin-top: 100px;">
+        <div class="spinner-border"></div>
+        <p style="margin-top: 20px; color: var(--text-dim);">Analyzing your growth...</p>
       </div>
 
-      <div class="courses-grid" id="progress-list">
-        <!-- progress.js will render course progress cards here -->
-      </div>
+      <div id="progress-content" style="display: none;" data-aos="fade-up">
+        
+        <section class="stats-hero">
+          <div class="hero-flex">
+            <div class="hero-info">
+              <h2>Overall Completion</h2>
+              <div class="big-percent" id="overall-percent">0%</div>
+              <p>Keep pushing! You are doing great.</p>
+            </div>
+            <div style="font-size: 50px; opacity: 0.3;"><i class="fas fa-trophy"></i></div>
+          </div>
+          <div class="big-progress-track">
+            <div class="big-progress-fill" id="overall-bar" style="width: 0%;"></div>
+          </div>
+        </section>
 
-      <div class="empty-state-container" id="empty-state" style="display:none;">
-        <i class="fas fa-folder-open" style="font-size:2.2rem;"></i>
-        <span>No progress data yet.</span>
-        <span>Enroll in a course and start a topic to see your learning stats here.</span>
+        <div class="progress-grid" id="progress-list">
+          </div>
+
       </div>
     </main>
   </div>
 
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    // Sidebar mobile controls
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    AOS.init({ duration: 800, once: true });
+
+    // Sidebar & Dark Mode Logic
+    const mobileBtn = document.getElementById('mobile-menu-btn');
     const sidebar = document.getElementById('sidebar');
-    const sidebarOverlay = document.getElementById('sidebar-overlay');
-
-    function toggleSidebar(){
-      const open = sidebar.classList.toggle('mobile-open');
-      sidebarOverlay.classList.toggle('active', open);
-      document.body.style.overflow = open ? 'hidden' : '';
+    const overlay = document.getElementById('sidebar-overlay');
+    
+    function toggleSidebar() {
+      const isOpen = sidebar.classList.toggle('mobile-open');
+      overlay.classList.toggle('active', isOpen);
     }
-    function closeSidebar(){
-      sidebar.classList.remove('mobile-open');
-      sidebarOverlay.classList.remove('active');
-      document.body.style.overflow = '';
+    if(mobileBtn) mobileBtn.addEventListener('click', toggleSidebar);
+    if(overlay) overlay.addEventListener('click', toggleSidebar);
+
+    // Dark Mode
+    const themeBtn = document.getElementById('dark-mode-toggle');
+    let currentTheme = localStorage.getItem('theme') || 'dark';
+    document.body.setAttribute('data-theme', currentTheme);
+    if(themeBtn) {
+        themeBtn.addEventListener('click', () => {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', currentTheme);
+            localStorage.setItem('theme', currentTheme);
+            themeBtn.querySelector('i').className = currentTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        });
     }
-    mobileMenuBtn?.addEventListener('click', toggleSidebar);
-    sidebarOverlay?.addEventListener('click', closeSidebar);
-    document.querySelectorAll('.sidebar-nav a').forEach(a=>{
-      a.addEventListener('click', closeSidebar);
-    });
-
-    // Dark mode (same as other pages)
-    const darkModeToggle = document.getElementById('dark-mode-toggle');
-    const rootEl = document.documentElement;
-
-    function applyTheme(theme){
-      rootEl.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-      const icon = darkModeToggle?.querySelector('i');
-      if(icon){
-        icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-      }
-    }
-
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    applyTheme(savedTheme);
-
-    darkModeToggle?.addEventListener('click', () => {
-      const current = rootEl.getAttribute('data-theme') || 'light';
-      applyTheme(current === 'light' ? 'dark' : 'light');
-    });
-
-    // Optionally: progress.js me jab data load ho jaye to loader hide karo:
-    // document.getElementById('loading-message-container').style.display = 'none';
-    // aur agar koi course nahi ho to empty-state ko show kar sakte ho.
   </script>
 
   <script src="js/config.js"></script>
