@@ -1,5 +1,5 @@
 // Apps Script API URL (इसे अपने तैनात URL से बदलें)
-const API_URL = "https://script.google.com/macros/s/AKfycbyUyX9QrGH5zBtS3-EvQs3kSlmzBTEmXWMmhiLSIIGQ1h8LDruLtkkF_-stKHexSonZog/exec"; 
+const API_URL = "https://script.google.com/macros/s/AKfycbxAUni6GS7Eoe6IVad0K9OakqOCD2wAT62UVQIV16rQxURt5IZU1TAaJJSsv_4Zj2h_VA/exec"; 
 
 /**
  * API को कॉल करता है और JSON डेटा को पार्स करता है।

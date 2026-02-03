@@ -4,332 +4,237 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Course Detail - CODELINE AI</title>
-
+  
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
   <style>
-    /* ===== SAME THEME AS ALL OTHER PAGES ===== */
+    /* ========= 1. UNIFIED THEME (Matching My Courses) ========= */
     :root {
-      --primary-purple: #6f036a;
-      --primary-dark: #3b1a91;
-      --pista-green: #badc58;
-
-      --bg-color: #f6f7fb;
-      --white: #ffffff;
-      --card-bg: var(--white);
-      --text-dark: #111827;
-      --text-light: #6b7280;
-
-      --shadow-light: 0 8px 20px rgba(15, 23, 42, 0.08);
-      --shadow-deep: 0 20px 45px rgba(15, 23, 42, 0.18);
-
-      --sidebar-gradient-start: rgba(111, 3, 106, 0.98);
-      --sidebar-gradient-end: #6d135d;
-      --sidebar-text: var(--white);
+      --primary: #9a0669;        /* Deep Pink */
+      --primary-dark: #4b0082;   /* Indigo */
+      --accent: #06b6d4;         /* Cyan */
+      --success: #00d26a;        /* Green */
+      
+      /* Dark Mode (Default) */
+      --bg-body: #06060c;
+      --bg-sidebar: rgba(6, 6, 12, 0.85);
+      --bg-card: rgba(255, 255, 255, 0.03);
+      --bg-card-hover: rgba(255, 255, 255, 0.07);
+      --border-color: rgba(138, 43, 226, 0.2);
+      --text-main: #ffffff;
+      --text-dim: #94a3b8;
+      
+      --shadow: 0 10px 30px rgba(0,0,0,0.5);
+      --sidebar-width: 280px;
     }
 
-    [data-theme="dark"] {
-      --primary-purple: #c084fc;
-      --primary-dark: #60a5fa;
-      --pista-green: #22c55e;
-
-      --bg-color: #050816;
-      --white: #020617;
-      --card-bg: #020617;
-      --text-dark: #e5e7eb;
-      --text-light: #9ca3af;
-
-      --shadow-light: 0 10px 30px rgba(0,0,0,0.55);
-      --shadow-deep: 0 24px 60px rgba(0,0,0,0.85);
-
-      --sidebar-gradient-start: #3a1c71;
-      --sidebar-gradient-end: #2a0845;
-      --sidebar-text: #e5e7ff;
+    [data-theme="light"] {
+      --bg-body: #f1f5f9;
+      --bg-sidebar: rgba(255, 255, 255, 0.95);
+      --bg-card: #ffffff;
+      --bg-card-hover: #ffffff;
+      --border-color: rgba(0, 0, 0, 0.08);
+      --text-main: #1e293b;
+      --text-dim: #64748b;
+      --shadow: 0 15px 40px rgba(0,0,0,0.08);
     }
 
-    *{box-sizing:border-box;}
-
-    body{
-      font-family:'Poppins',sans-serif;
-      margin:0;
-      background: radial-gradient(circle at top, rgba(186,220,88,0.18), transparent 55%), var(--bg-color);
-      color:var(--text-dark);
-      scroll-behavior:smooth;
-      transition:background 0.3s ease,color 0.3s ease;
-      overflow-x:hidden;
-      min-height:100vh;
-      display:flex;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      min-height: 100vh;
+      overflow-x: hidden;
     }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
 
-    .dashboard-wrapper{
-      display:flex;
-      width:100%;
-      min-height:100vh;
-      flex-direction:column;
+    /* ========= 2. LAYOUT & SIDEBAR ========= */
+    .dashboard-wrapper { display: flex; width: 100%; min-height: 100vh; }
+    
+    .sidebar {
+      width: var(--sidebar-width);
+      position: fixed; top: 0; left: 0; height: 100vh;
+      background: var(--bg-sidebar);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border-color);
+      z-index: 1000;
+      padding: 30px 20px;
+      transition: transform 0.3s ease;
     }
+    .logo-area { font-size: 24px; font-weight: 800; margin-bottom: 5px; color: var(--text-main); }
+    .logo-area span { color: var(--primary); }
+    .sidebar-sub { font-size: 12px; color: var(--text-dim); margin-bottom: 40px; letter-spacing: 1px; text-transform: uppercase; }
+    
+    .sidebar-nav ul { display: flex; flex-direction: column; gap: 8px; }
+    .sidebar-nav a {
+      display: flex; align-items: center; gap: 15px;
+      padding: 12px 18px; border-radius: 12px;
+      color: var(--text-dim); font-weight: 500; font-size: 15px;
+      transition: 0.3s;
+    }
+    .sidebar-nav a:hover, .sidebar-nav li.active a {
+      background: linear-gradient(90deg, rgba(154,6,105,0.1), transparent);
+      color: var(--primary);
+      transform: translateX(5px);
+    }
+    .sidebar-footer { position: absolute; bottom: 30px; left: 20px; color: var(--text-dim); font-size: 13px; }
+    .sidebar-footer strong { display: block; color: var(--text-main); font-size: 15px; }
 
-    /* ===== SIDEBAR (IDENTICAL) ===== */
-    .sidebar{
-      position:fixed;
-      inset:0 auto 0 0;
-      width:280px;
-      background:linear-gradient(180deg,var(--sidebar-gradient-start),var(--sidebar-gradient-end));
-      color:var(--sidebar-text);
-      z-index:1000;
-      transform:translateX(-100%);
-      transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);
-      padding:1.75rem 1.3rem;
-      box-shadow:8px 0 30px rgba(0,0,0,0.4);
-      display:flex;
-      flex-direction:column;
-      gap:1.5rem;
+    /* Mobile Sidebar */
+    @media (max-width: 992px) {
+       .sidebar { transform: translateX(-100%); }
+       .sidebar.mobile-open { transform: translateX(0); }
     }
-    .sidebar.mobile-open{transform:translateX(0);}
+    .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 900; opacity: 0; visibility: hidden; transition: 0.3s; }
+    .sidebar-overlay.active { opacity: 1; visibility: visible; }
 
-    .logo-area{
-      font-size:1.65rem;
-      font-weight:700;
-      display:flex;
-      align-items:center;
-      gap:0.5rem;
-      letter-spacing:0.5px;
+    /* ========= 3. MAIN CONTENT ========= */
+    .main-content {
+      flex: 1; margin-left: var(--sidebar-width);
+      padding: 30px 40px;
+      background: radial-gradient(circle at top right, rgba(154,6,105,0.08), transparent 50%);
     }
-    .logo-area span{font-size:1.1rem;opacity:0.9;}
-    .sidebar-sub{font-size:0.8rem;opacity:0.8;margin-top:0.25rem;}
+    @media (max-width: 992px) { .main-content { margin-left: 0; padding: 20px; } }
 
-    .sidebar-nav{flex:1;}
-    .sidebar-nav ul{
-      list-style:none;
-      padding:0;margin:0;
-      display:flex;flex-direction:column;
-      gap:0.3rem;
+    .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+    .dashboard-header h1 { font-size: 24px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+    
+    .header-actions { display: flex; gap: 15px; }
+    .action-btn {
+      width: 45px; height: 45px; border-radius: 50%;
+      border: 1px solid var(--border-color); background: var(--bg-card);
+      color: var(--text-main); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: 0.3s;
     }
-    .sidebar-nav li{border-radius:12px;overflow:hidden;}
+    .action-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+    .mobile-menu-btn { display: none; }
+    @media (max-width: 992px) { .mobile-menu-btn { display: flex; } }
 
-    .sidebar-nav a{
-      color:var(--sidebar-text);
-      text-decoration:none;
-      font-weight:500;
-      display:flex;align-items:center;
-      gap:12px;padding:0.85rem 1rem;
-      font-size:0.95rem;position:relative;
-      transition:background 0.25s ease,transform 0.2s ease;
+    /* ========= 4. COURSE HERO CARD ========= */
+    .course-hero {
+        background: linear-gradient(135deg, rgba(154,6,105,0.8), rgba(75,0,130,0.8));
+        border-radius: 24px;
+        padding: 40px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        margin-bottom: 30px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.1);
     }
-    .sidebar-nav a i{font-size:1.05rem;width:22px;text-align:center;}
-
-    .sidebar-nav a::after{
-      content:"";position:absolute;inset:0;
-      background:radial-gradient(circle at 0 0,rgba(255,255,255,0.18),transparent 55%);
-      opacity:0;transition:opacity 0.25s ease;
-    }
-    .sidebar-nav a:hover{
-      transform:translateX(2px);
-      background:rgba(255,255,255,0.10);
-    }
-    .sidebar-nav a:hover::after{opacity:1;}
-
-    .sidebar-nav .active a{
-      background:var(--card-bg);
-      color:var(--primary-purple);
-      box-shadow:0 12px 30px rgba(15,23,42,0.35);
-    }
-
-    .sidebar-overlay{
-      position:fixed;inset:0;
-      background:rgba(15,23,42,0.60);
-      z-index:900;opacity:0;visibility:hidden;
-      transition:opacity 0.3s ease,visibility 0.3s ease;
-    }
-    .sidebar-overlay.active{opacity:1;visibility:visible;}
-
-    /* ===== MAIN CONTENT ===== */
-    .main-content{
-      flex:1;width:100%;
-      max-width:1400px;margin:0 auto;
-      padding:1.4rem 1.4rem 2.4rem;
+    .course-hero::before {
+        content: ''; position: absolute; top: -50%; right: -10%; width: 400px; height: 400px;
+        background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
+        border-radius: 50%;
     }
 
-    .dashboard-header{
-      display:flex;justify-content:space-between;
-      align-items:flex-start;flex-direction:column;
-      gap:1rem;margin-bottom:1.8rem;
-    }
-    .course-header-main{
-      display:flex;flex-direction:column;gap:0.4rem;
-    }
-    .dashboard-header h1{
-      margin:0;font-size:clamp(1.8rem,5vw,2.6rem);
-      font-weight:700;color:var(--primary-dark);
-    }
-    .course-meta{
-      display:flex;align-items:center;gap:1.2rem;
-      flex-wrap:wrap;font-size:0.95rem;
-    }
-    .course-meta span{color:var(--text-light);display:flex;align-items:center;gap:0.4rem;}
+    .hero-content h1 { font-size: clamp(24px, 4vw, 36px); font-weight: 700; margin-bottom: 15px; }
+    .course-meta { display: flex; gap: 20px; flex-wrap: wrap; opacity: 0.9; font-size: 14px; margin-bottom: 25px; }
+    .course-meta span { display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.2); padding: 6px 14px; border-radius: 20px; }
 
-    .header-actions{
-      display:flex;align-items:center;gap:0.75rem;
-    }
-    .mobile-menu-btn{
-      background:var(--card-bg);border:1px solid rgba(148,163,184,0.7);
-      color:var(--primary-dark);font-size:1.2rem;cursor:pointer;
-      padding:10px;border-radius:10px;transition:all 0.25s ease;
-      display:flex;align-items:center;justify-content:center;
-      min-width:42px;min-height:42px;
-    }
-    .mobile-menu-btn:hover{
-      background:var(--primary-purple);color:#fff;
-      transform:translateY(-1px);border-color:transparent;
-    }
-    #dark-mode-toggle{
-      background:var(--card-bg);border:1px solid rgba(148,163,184,0.7);
-      color:var(--primary-dark);font-size:1.1rem;cursor:pointer;
-      padding:9px 11px;border-radius:999px;transition:all 0.25s ease;
-      display:flex;align-items:center;justify-content:center;
-      min-width:40px;min-height:40px;
-    }
-    #dark-mode-toggle:hover{
-      background:var(--primary-purple);color:#fff;border-color:transparent;
-      transform:rotate(12deg) scale(1.03);
-    }
+    /* Progress Bar */
+    #progress-container { margin-top: 20px; max-width: 500px; }
+    .p-bar-track { height: 8px; background: rgba(255,255,255,0.2); border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
+    .p-bar-fill { height: 100%; background: var(--accent); width: 0%; transition: width 1s ease; box-shadow: 0 0 10px var(--accent); }
+    .p-text { font-size: 13px; display: flex; justify-content: space-between; opacity: 0.9; }
 
-    /* ===== COURSE TABS ===== */
-    .course-tabs{
-      display:flex;gap:0.8rem;margin:1.8rem 0;flex-wrap:wrap;
+    /* Certificate Banner */
+    .cert-banner {
+        margin-top: 25px;
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        padding: 15px 20px; border-radius: 15px;
+        display: none; align-items: center; gap: 15px;
+        animation: fadeIn 0.5s ease;
     }
-    .tab-link{
-      padding:0.9rem 1.6rem;border-radius:12px;
-      background:rgba(148,163,184,0.12);color:var(--text-dark);
-      text-decoration:none;font-weight:600;font-size:0.92rem;
-      transition:all 0.3s ease;position:relative;
-      border:2px solid transparent;
+    .cert-btn {
+        background: var(--success); color: white; border: none; padding: 10px 20px;
+        font-weight: 600; border-radius: 30px; cursor: pointer; margin-left: auto;
+        transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px;
     }
-    .tab-link:hover{
-      background:var(--primary-purple);color:#fff;
-      transform:translateY(-2px);box-shadow:var(--shadow-light);
-    }
-    .tab-link.active{
-      background:linear-gradient(135deg,var(--primary-purple),var(--primary-dark));
-      color:#fff;border-color:var(--pista-green);
-      box-shadow:var(--shadow-deep);
-    }
+    .cert-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,210,106,0.4); }
 
-    /* ===== TAB CONTENT ===== */
-    .tab-content-wrapper{
-      background:var(--card-bg);border-radius:20px;
-      padding:2.2rem;box-shadow:var(--shadow-light);
-      position:relative;overflow:hidden;
+    /* ========= 5. TABS & CONTENT ========= */
+    .tabs { display: flex; gap: 15px; margin-bottom: 25px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; overflow-x: auto; }
+    .tab-btn {
+        background: transparent; border: none; color: var(--text-dim);
+        font-size: 15px; font-weight: 500; cursor: pointer; padding: 10px 15px;
+        border-radius: 8px; transition: 0.3s; white-space: nowrap;
     }
-    .tab-content-wrapper::before{
-      content:"";position:absolute;inset:-40% 40% auto auto;
-      background:radial-gradient(circle at top right,rgba(186,220,88,0.25),transparent 55%);
-      opacity:0.5;pointer-events:none;
-    }
-    .tab-pane{display:none;}
-    .tab-pane.active{display:block;}
+    .tab-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.05); }
+    .tab-btn.active { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(154,6,105,0.3); }
 
-    .tab-pane h2{
-      margin:0 0 1.4rem;font-size:1.3rem;
-      color:var(--primary-dark);font-weight:600;
-      display:flex;align-items:center;gap:8px;
+    .section-card {
+        background: var(--bg-card); border: 1px solid var(--border-color);
+        border-radius: 20px; padding: 30px; box-shadow: var(--shadow);
+        display: none; animation: slideUp 0.4s ease;
     }
-    .tab-pane h2::after{
-      content:"";height:3px;width:36px;border-radius:999px;
-      background:linear-gradient(90deg,var(--pista-green),var(--primary-purple));
-    }
+    .section-card.active { display: block; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    .course-description{
-      font-size:1rem;line-height:1.7;color:var(--text-dark);
-      margin-bottom:1.8rem;
-    }
-    .course-meta-details{
-      display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-      gap:1.2rem;margin-bottom:2rem;
-    }
-    .meta-detail{
-      background:rgba(148,163,184,0.12);padding:1.2rem;
-      border-radius:14px;border-left:4px solid var(--pista-green);
-    }
-    .meta-detail h4{margin:0 0 0.4rem;color:var(--primary-purple);font-size:0.95rem;}
-    .meta-detail p{margin:0;font-weight:600;font-size:1.1rem;color:var(--text-dark);}
+    .section-title { font-size: 18px; font-weight: 600; margin-bottom: 20px; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
+    .section-title i { color: var(--accent); }
 
-    .curriculum-list{
-      list-style:none;padding:0;margin:0;
+    /* Topics List */
+    .topic-list { list-style: none; }
+    .topic-item {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 15px; border-bottom: 1px solid var(--border-color);
+        transition: 0.2s;
     }
-    .curriculum-item{
-      padding:1.1rem;border-radius:14px;
-      margin-bottom:0.9rem;background:var(--card-bg);
-      border:1px solid rgba(148,163,184,0.2);
-      transition:all 0.3s ease;display:flex;
-      justify-content:space-between;align-items:center;
-    }
-    .curriculum-item:hover{
-      transform:translateY(-2px);box-shadow:var(--shadow-light);
-      border-color:var(--pista-green);
-    }
-    .curriculum-title{
-      font-weight:600;color:var(--text-dark);font-size:1rem;
-    }
-    .curriculum-status{
-      padding:0.4rem 1rem;border-radius:999px;font-size:0.85rem;
-      font-weight:600;
-    }
-    .status-completed{background:var(--pista-green);color:var(--primary-purple);}
-    .status-pending{background:var(--primary-purple);color:#fff;}
+    .topic-item:last-child { border-bottom: none; }
+    .topic-item:hover { background: var(--bg-card-hover); }
 
-    .btn-primary{
-      background:linear-gradient(135deg,var(--primary-purple),var(--primary-dark));
-      color:#fff;border:none;padding:1rem 2rem;
-      border-radius:14px;font-weight:600;font-size:1rem;
-      cursor:pointer;transition:all 0.3s ease;
-      display:inline-flex;align-items:center;gap:8px;
-      box-shadow:0 8px 25px rgba(111,3,106,0.4);
-      text-decoration:none;
+    .t-left { display: flex; gap: 15px; align-items: center; }
+    .t-num { 
+        width: 35px; height: 35px; background: rgba(154,6,105,0.1); color: var(--primary);
+        border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px;
     }
-    .btn-primary:hover{
-      transform:translateY(-3px);box-shadow:var(--shadow-deep);
-      background:linear-gradient(135deg,var(--primary-dark),var(--primary-purple));
-    }
+    .completed .t-num { background: var(--success); color: white; }
+    .t-info h4 { font-size: 15px; font-weight: 500; color: var(--text-main); margin-bottom: 3px; }
+    .t-info span { font-size: 12px; color: var(--text-dim); }
 
-    /* ===== RESPONSIVE ===== */
-    @media (max-width:768px){
-      .course-tabs{justify-content:center;}
-      .course-meta{justify-content:center;}
-      .course-header-main{text-align:center;}
+    /* Action Button */
+    .action-area { margin-top: 30px; }
+    .main-btn {
+        width: 100%; max-width: 250px; padding: 14px; border-radius: 12px;
+        background: var(--primary); color: white; font-weight: 600; text-align: center;
+        display: flex; align-items: center; justify-content: center; gap: 10px;
+        transition: 0.3s; cursor: pointer; border: none; font-size: 15px;
+        box-shadow: 0 8px 20px rgba(154,6,105,0.3); text-decoration: none;
     }
+    .main-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(154,6,105,0.5); }
 
-    @media (min-width:769px){
-      .dashboard-wrapper{flex-direction:row;}
-      .sidebar{position:sticky;inset:0;width:250px;transform:none;}
-      .sidebar-overlay{display:none;}
-      .main-content{padding:2rem 2.4rem 2.8rem;}
-      .mobile-menu-btn{display:none;}
-      .dashboard-header{flex-direction:row;align-items:center;}
-    }
+    /* Loader */
+    .spinner-border { width: 40px; height: 40px; border: 4px solid rgba(154,6,105,0.2); border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto; }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
 
-    @media (min-width:1200px){
-      .main-content{padding:2.4rem 3rem 3.2rem;}
-    }
   </style>
+  
+  <script>const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPeH_oXus5h88Y1H08AoMRNgSIaaZB_sX5Xuu2MT1BAFBILF_DhB3yVEX9nW7v0ozbHw/exec";</script>
 </head>
-<body data-theme="light">
+
+<body data-theme="dark">
+
   <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
   <div class="dashboard-wrapper">
-    <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
       <div>
-        <div class="logo-area">
-          <span>🎓</span> CODELINE AI
-        </div>
+        <div class="logo-area"><span>🎓</span> CODELINE AI</div>
         <div class="sidebar-sub">Student Learning Portal</div>
       </div>
-
       <nav class="sidebar-nav">
         <ul>
           <li><a href="dashboard.html"><i class="fas fa-house"></i><span>Dashboard</span></a></li>
-          <li class="active"><a href="my-courses.html"><i class="fas fa-layer-group"></i><span>My Courses</span></a></li>
+          <li><a href="my-courses.html"><i class="fas fa-layer-group"></i><span>My Courses</span></a></li>
           <li><a href="progress.html"><i class="fas fa-chart-line"></i><span>Progress</span></a></li>
           <li><a href="fees.html"><i class="fas fa-wallet"></i><span>Fees</span></a></li>
           <li><a href="profile.html"><i class="fas fa-user-gear"></i><span>Profile</span></a></li>
@@ -337,165 +242,118 @@
           <li><a href="index.html"><i class="fas fa-arrow-left"></i><span>Back to Home</span></a></li>
         </ul>
       </nav>
-
       <div class="sidebar-footer">
         <span>Logged in as</span><br/>
         <strong id="sidebar-user-name">Student</strong>
       </div>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <main class="main-content">
-      <header class="dashboard-header">
-        <div class="course-header-main">
-          <h1 id="course-title">Loading Course Details...</h1>
-          <div class="course-meta">
-            <span><i class="fas fa-user-tie"></i> <span id="course-instructor">Instructor Name</span></span>
-            <span><i class="fas fa-clock"></i> <span id="course-duration">12 Weeks</span></span>
-            <span><i class="fas fa-chart-line"></i> <span id="course-progress">45% Complete</span></span>
-          </div>
-        </div>
-
+      <header class="dashboard-header" data-aos="fade-down">
+        <h1><span style="font-size:28px;">📖</span> Course Details</h1>
         <div class="header-actions">
-          <button class="mobile-menu-btn" id="mobile-menu-btn" title="Open Menu">
-            <i class="fas fa-bars"></i>
-          </button>
-          <button id="dark-mode-toggle" title="Toggle Dark/Light Mode">
-            <i class="fas fa-moon"></i>
-          </button>
+          <button class="action-btn mobile-menu-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+          <button class="action-btn" id="dark-mode-toggle"><i class="fas fa-sun"></i></button>
         </div>
       </header>
 
-      <!-- TABS -->
-      <nav class="course-tabs">
-        <a href="#overview" class="tab-link active" data-tab="overview"><i class="fas fa-info-circle"></i> Overview</a>
-        <a href="#curriculum" class="tab-link" data-tab="curriculum"><i class="fas fa-list"></i> Curriculum</a>
-        <a href="#assignments" class="tab-link" data-tab="assignments"><i class="fas fa-tasks"></i> Assignments</a>
-        <a href="#discussion" class="tab-link" data-tab="discussion"><i class="fas fa-comments"></i> Discussion</a>
-      </nav>
+      <section class="course-hero" data-aos="fade-up">
+          <div class="hero-content">
+              <h1 id="course-title">Loading Course...</h1>
+              <div class="course-meta">
+                  <span><i class="fas fa-chalkboard-teacher"></i> <span id="course-instructor">...</span></span>
+                  <span><i class="fas fa-clock"></i> <span id="course-duration">...</span></span>
+                  <span><i class="fas fa-layer-group"></i> <span id="total-topics-count">0 Topics</span></span>
+              </div>
 
-      <!-- TAB CONTENT -->
-      <div class="tab-content-wrapper">
-        <div id="overview" class="tab-pane active">
-          <h2><i class="fas fa-info-circle"></i> Course Overview</h2>
-          <p id="course-description" class="course-description">
-            Loading course description...
-          </p>
-          <div class="course-meta-details">
-            <div class="meta-detail">
-              <h4>Duration</h4>
-              <p id="overview-duration">12 Weeks</p>
-            </div>
-            <div class="meta-detail">
-              <h4>Level</h4>
-              <p>Intermediate</p>
-            </div>
-            <div class="meta-detail">
-              <h4>Certificate</h4>
-              <p>Available</p>
-            </div>
+              <div id="progress-container" style="display:none;">
+                  <div class="p-bar-track">
+                      <div class="p-bar-fill" id="progress-fill"></div>
+                  </div>
+                  <div class="p-text">
+                      <span id="progress-text">0% Completed</span>
+                      <span id="topics-done-text">0/0 Done</span>
+                  </div>
+              </div>
+
+              <div id="cert-banner" class="cert-banner">
+                  <i class="fas fa-trophy" style="font-size: 24px; color: #ffd700;"></i>
+                  <div style="flex:1;">
+                      <strong style="display:block; font-size:15px;">Course Completed!</strong>
+                      <span style="font-size:13px; opacity:0.8;">You've earned a certificate.</span>
+                  </div>
+                  <button class="cert-btn" id="download-cert-btn">
+                      Download PDF <i class="fas fa-download"></i>
+                  </button>
+                  <div id="cert-loading" style="display:none; font-size:12px;">Generating...</div>
+              </div>
           </div>
-          <a href="course-topic.html" class="btn-primary">
-            <i class="fas fa-play-circle"></i> Start/Continue Learning
-          </a>
-        </div>
+      </section>
 
-        <div id="curriculum" class="tab-pane">
-          <h2><i class="fas fa-list"></i> Course Curriculum</h2>
-          <ul class="curriculum-list" id="curriculum-content">
-            <!-- Dynamic content -->
-            <li class="curriculum-item">
-              <span class="curriculum-title">1. Core Java Basics</span>
-              <span class="curriculum-status status-completed">✅ Completed</span>
-            </li>
-            <li class="curriculum-item">
-              <span class="curriculum-title">2. JDBC Connection</span>
-              <span class="curriculum-status status-pending">⏳ Pending</span>
-            </li>
-            <li class="curriculum-item">
-              <span class="curriculum-title">3. Spring Boot Fundamentals</span>
-              <span class="curriculum-status status-pending">⏳ Pending</span>
-            </li>
-          </ul>
-        </div>
-
-        <div id="assignments" class="tab-pane">
-          <h2><i class="fas fa-tasks"></i> Assignments & Tests</h2>
-          <p style="color:var(--text-light);font-size:1rem;">
-            No active assignments yet for this course. Check back later for quizzes and projects.
-          </p>
-        </div>
-
-        <div id="discussion" class="tab-pane">
-          <h2><i class="fas fa-comments"></i> Discussion Forum</h2>
-          <p style="color:var(--text-light);font-size:1rem;">
-            Join the discussion! Ask questions and help fellow learners.
-          </p>
-        </div>
+      <div class="tabs" data-aos="fade-up" data-aos-delay="100">
+          <button class="tab-btn active" onclick="switchTab('overview')">Overview</button>
+          <button class="tab-btn" onclick="switchTab('curriculum')">Curriculum</button>
       </div>
+
+      <div id="overview" class="section-card active">
+          <div class="section-title"><i class="fas fa-info-circle"></i> Description</div>
+          <p id="course-description" style="line-height:1.8; color:var(--text-dim); margin-bottom:20px;">
+              Loading description...
+          </p>
+          
+          <div class="action-area">
+              <a href="#" id="main-action-btn" class="main-btn">Enroll Now</a>
+          </div>
+      </div>
+
+      <div id="curriculum" class="section-card">
+          <div class="section-title"><i class="fas fa-list-ul"></i> Course Topics</div>
+          <ul class="topic-list" id="topic-list">
+              <li style="padding:20px; text-align:center; color:var(--text-dim);">Loading topics...</li>
+          </ul>
+      </div>
+
     </main>
   </div>
 
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    // Mobile sidebar + dark mode (same as all pages)
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    AOS.init({ duration: 800, once: true });
+
+    // Sidebar & Dark Mode Logic
+    const mobileBtn = document.getElementById('mobile-menu-btn');
     const sidebar = document.getElementById('sidebar');
-    const sidebarOverlay = document.getElementById('sidebar-overlay');
-
-    function toggleSidebar(){
-      const open = sidebar.classList.toggle('mobile-open');
-      sidebarOverlay.classList.toggle('active', open);
-      document.body.style.overflow = open ? 'hidden' : '';
+    const overlay = document.getElementById('sidebar-overlay');
+    
+    function toggleSidebar() {
+      const isOpen = sidebar.classList.toggle('mobile-open');
+      overlay.classList.toggle('active', isOpen);
     }
-    function closeSidebar(){
-      sidebar.classList.remove('mobile-open');
-      sidebarOverlay.classList.remove('active');
-      document.body.style.overflow = '';
-    }
+    if(mobileBtn) mobileBtn.addEventListener('click', toggleSidebar);
+    if(overlay) overlay.addEventListener('click', toggleSidebar);
 
-    mobileMenuBtn?.addEventListener('click', toggleSidebar);
-    sidebarOverlay?.addEventListener('click', closeSidebar);
-    document.querySelectorAll('.sidebar-nav a').forEach(link=>{
-      link.addEventListener('click', closeSidebar);
-    });
-
-    // Dark mode
-    const darkModeToggle = document.getElementById('dark-mode-toggle');
-    const rootEl = document.documentElement;
-
-    function applyTheme(theme){
-      rootEl.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-      const icon = darkModeToggle?.querySelector('i');
-      if(icon) icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    // Dark Mode
+    const themeBtn = document.getElementById('dark-mode-toggle');
+    let currentTheme = localStorage.getItem('theme') || 'dark';
+    document.body.setAttribute('data-theme', currentTheme);
+    if(themeBtn) {
+        themeBtn.addEventListener('click', () => {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', currentTheme);
+            localStorage.setItem('theme', currentTheme);
+            themeBtn.querySelector('i').className = currentTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        });
     }
 
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    applyTheme(savedTheme);
-
-    darkModeToggle?.addEventListener('click', () => {
-      const current = rootEl.getAttribute('data-theme') || 'light';
-      applyTheme(current === 'light' ? 'dark' : 'light');
-    });
-
-    // Tab functionality
-    document.querySelectorAll('.tab-link').forEach(tab => {
-      tab.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetTab = tab.getAttribute('data-tab');
-        
-        // Update active tab
-        document.querySelectorAll('.tab-link').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-        
-        tab.classList.add('active');
-        document.getElementById(targetTab).classList.add('active');
-      });
-    });
+    // Tab Switcher
+    function switchTab(tabId) {
+        document.querySelectorAll('.section-card').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.target.classList.add('active');
+    }
   </script>
 
-  <script src="js/config.js"></script>
-  <script src="js/auth-check.js"></script>
   <script src="js/course-detail.js"></script>
 </body>
 </html>

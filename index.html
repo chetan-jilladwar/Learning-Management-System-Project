@@ -28,38 +28,44 @@
 
   /* --- 1. CSS VARIABLES (THEME ENGINE) --- */
   :root {
-    /* Brand Colors */
-    --primary: #8a0b8a;
-    --primary-dark: #4b0082;
-    --accent:  #8a0b8a;
-    
-    /* DARK MODE (Default) */
-    --bg-body: #06060c;
-    --bg-nav:  #8a0b8a; /* Glassy Purple */
-    --bg-card: rgba(255, 255, 255, 0.03);
-    --bg-card-hover: rgba(30, 30, 50, 1);
-    --bg-footer: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%);
-    
-    --text-main: #ffffff;
-    --text-dim: #b0b0c0;
-    --border-color: rgba(138, 43, 226, 0.2);
-    --shadow: 0 10px 30px rgba(0,0,0,0.3);
-  }
+  /* Brand Colors */
+  --primary:#790c72;
+  --primary-dark: #4b0082;
+  --accent:  #790c72;
+  
+  /* DARK MODE (Default) */
+  --bg-body: #06060c;
+  --bg-nav:  #790c72; 
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --bg-card-hover: rgba(30, 30, 50, 1);
+  --bg-footer: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%);
+  
+  --text-main: #ffffff;
+  --text-dim: #b0b0c0;
+  --border-color: rgba(138, 43, 226, 0.2);
+  --shadow: 0 10px 30px rgba(0,0,0,0.3);
+
+  /* 👇 CORRECT DARK COLOR (Instructors) */
+  --bg-instructors: #1a0b14; 
+}
 
   /* LIGHT MODE OVERRIDES */
   [data-theme="light"] {
-    --bg-body: #f8fafc;
-    --bg-nav: #8a0b8a;
-    --bg-card: #ffffff;
-    --bg-card-hover: #f1f5f9;
-    --bg-footer: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-    
-    --text-main: #1e293b;
-    --text-dim: #64748b;
-    --border-color: rgba(0, 0, 0, 0.1);
-    --shadow: 0 10px 30px rgba(0,0,0,0.08);
-  }
+  --bg-body: #f8fafc;
+  --bg-nav: #790c72;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f5f9;
+  --bg-footer: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  
+  --text-main: #1e293b;
+  --text-dim: #64748b;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --shadow: 0 10px 30px rgba(0,0,0,0.08);
 
+  /* 👇 CORRECT LIGHT COLOR (Instructors) */
+  --bg-instructors: #d9e4eb; 
+
+}
   /* Global Styles */
   body {
     background-color: var(--bg-body);
@@ -173,19 +179,22 @@
     position: fixed;
     top: 0; left: 0; width: 100%;
     z-index: 1000;
-    padding: 15px 0; /* Same Height as before */
+    padding: 15px 0;
     background: var(--bg-nav);
     backdrop-filter: blur(15px);
     border-bottom: 1px solid var(--border-color);
     transition: background 0.3s ease;
-  }
-
+}
   .nav-flex {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 15px;
-  }
+}
+.nav-right-side {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Items ke beech ka gap */
+}
 
   /* --- LOGO UPDATE (Image Support Added) --- */
   .logo {
@@ -220,17 +229,17 @@
   }
 
   nav ul li a {
-    color: var(--text-main);
+    color: #ffffff;
     font-weight: 600;
     font-size: 16px;
     text-transform: uppercase;
     transition: 0.3s;
   }
   
-  [data-theme="light"] nav ul li a { color: #1e293b; }
+  [data-theme="light"] nav ul li a { color: #d5dae1; }
   
   nav ul li a:hover, nav ul li a.active {
-    color: var(--bg-body);
+    color: #000000;;
   }
   [data-theme="light"] nav ul li a:hover {  }
   /* Buttons */
@@ -258,33 +267,115 @@
 
   /* --- 3. THEME TOGGLE (Responsive) --- */
   .theme-toggle {
-    position: fixed;
-    top: 25px;
-    right: 25px;
-    z-index: 10001;
-    width: 50px;
-    height: 50px;
+    /* 1. Position Fixed hataya taaki line mein rahe */
+    position: relative; 
+    top: auto; 
+    right: auto;
+    z-index: 10; /* Z-index adjust kiya */
+
+    /* 2. Size Chhota kiya (50px se 40px) taaki Navbar na faile */
+    width: 40px;
+    height: 40px;
+    
+    /* 3. Baki Styling Same (Colors/Fonts/Radius) */
     border-radius: 50%;
     background: var(--bg-card);
     backdrop-filter: blur(10px);
-    border: 2px solid var(--border-color);
+    border: 1px solid var(--border-color); /* Border thoda patla kiya sleek look ke liye */
     color: var(--text-main);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 18px; /* Icon size thoda adjust kiya button ke hisaab se */
     transition: all 0.3s;
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  }
-  
-  [data-theme="light"] .theme-toggle {
+    margin: 0; /* Extra margin hataya */
+}
+
+/* Hover Effect Same */
+.theme-toggle:hover {
+    transform: scale(1.1);
+    background: var(--primary);
+    color: white;
+}
+
+/* Light Mode Support Same */
+[data-theme="light"] .theme-toggle {
     background: white;
     color: var(--primary);
     border-color: var(--primary);
-  }
+}
 
   .theme-toggle:hover { transform: scale(1.1); }
+
+  /* --- MOBILE RESPONSIVE CSS (992px se kam screen ke liye) --- */
+@media (max-width: 992px) {
+    
+    /* 1. Navbar Side Padding (Thoda space side mein) */
+    .nav-flex { 
+        padding: 0 15px; 
+    }
+
+    /* 2. Hide Desktop Elements */
+    .desktop-only { 
+        display: none; 
+    }
+    
+    /* 3. Show Mobile Specific Elements */
+    .mobile-only { 
+        display: block; 
+        margin-top: 20px; /* Menu ke andar button ke upar gap */
+    }
+
+    /* 4. Right Side Wrapper (Toggle + Hamburger Alignment) */
+    .nav-right-side {
+        display: flex;
+        align-items: center;
+        gap: 15px; /* Moon icon aur Hamburger ke beech gap */
+    }
+
+    /* 5. Theme Toggle Mobile Size Fix */
+    .theme-toggle {
+        width: 38px;  /* Mobile par thoda chhota sleek look ke liye */
+        height: 38px;
+        font-size: 17px;
+        /* Position relative hi rahega jo desktop code se aa raha hai */
+    }
+
+    /* 6. Hamburger Menu Visible */
+    .hamburger { 
+        display: flex; 
+        width: 30px; 
+        height: 24px;
+        justify-content: space-between;
+    }
+
+    /* 7. Mobile Menu Drawer (Slide out menu) */
+    nav ul {
+        position: fixed; 
+        top: 0; 
+        right: -100%; /* Default hidden */
+        width: 75%; 
+        height: 100vh;
+        background: var(--bg-body);
+        flex-direction: column; 
+        padding-top: 80px; /* Top se gap taaki close button/logo na chhupe */
+        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+        border-left: 1px solid var(--border-color);
+        box-shadow: -10px 0 40px rgba(0,0,0,0.5);
+        z-index: 999; /* Navbar se neeche lekin content se upar */
+    }
+    
+    nav ul.active { 
+        right: 0; /* Slide in */
+    }
+
+    /* 8. Hamburger Animation */
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+}
 
   /* --- 4. HERO SECTION --- */
   .hero-section {
@@ -311,7 +402,7 @@
   }
   
   [data-theme="light"] .overlay {
-     background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, rgba(255, 255, 255, 0.8) 100%);
+     background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, rgba(108, 104, 104, 0.8) 100%);
   }
 
   .hero-content h1 {
@@ -535,7 +626,7 @@ dfdssdd
 
 /* ☀️ LIGHT MODE PARALLAX (Light Overlay) */
 [data-theme="light"] .placements-new-section {
-    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.85)), 
+    background: linear-gradient(rgba(255, 255, 255, 0.474), rgba(255, 255, 255, 0.496)), 
                 url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2000&auto=format&fit=crop');
     background-attachment: fixed;
     background-position: center;
@@ -621,9 +712,14 @@ section-heading
     display: none;
 }
 
-/* --- PROFESSIONAL CARD --- */
+/* ========= COURSE CARD SIZING (FIXED) ========= */
+
+/* 1. Default (Mobile View) - Sirf 1 Card dikhega (100% Width) */
 .course-card {
-    flex: 0 0 85%; /* Mobile: 1.5 cards approx */
+    flex: 0 0 100%; 
+    max-width: 100%;
+    
+    /* Baki styling same rahegi */
     background-color: #ffffff;
     border-radius: 15px;
     overflow: hidden;
@@ -635,10 +731,26 @@ section-heading
     flex-direction: column;
 }
 
+/* 2. Tablet View (> 768px) - 2 Cards dikhenge */
+@media (min-width: 768px) {
+    .course-card {
+        flex: 0 0 calc(50% - 15px); /* Gap adjust karke 2 cards */
+        max-width: calc(50% - 15px);
+    }
+}
+
+/* 3. Laptop/Desktop View (> 1024px) - 3 Cards dikhenge (Original Style) */
+@media (min-width: 1024px) {
+    .course-card {
+        flex: 0 0 calc(33.333% - 20px); /* Gap adjust karke 3 cards */
+        max-width: calc(33.333% - 20px);
+    }
+}
+
 .course-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
-    border-color: #9a0669; /* Theme color on hover */
+    border-color: #790c72; /* Theme color on hover */
 }
 
 .course-image-container img {
@@ -688,12 +800,12 @@ section-heading
 }
 
 .btn-enroll {
-    background-color:#9a0669; /* Professional Blue */
+    background-color:#790c72; /* Professional Blue */
     color: #ffffff;
 }
 
 .btn-continue {
-    background-color: #9a0669;
+    background-color:#790c72;
     color: #ffffff;
     border: 1px solid #007bff;
 }
@@ -704,50 +816,73 @@ section-heading
 
 /* --- RESPONSIVE BREAKPOINTS --- */
 
-/* For Tablets */
-@media (min-width: 768px) {
+/* --- 1. MOBILE VIEW FIX (Card Cut Issue) --- */
+@media (max-width: 768px) {
     .course-card {
-        flex: 0 0 calc(50% - 10px); /* 2 Cards */
+        /* Mobile par card poora 100% dikhega, adha nahi kateg */
+        flex: 0 0 100%; 
+        max-width: 100%; 
+        margin-right: 0; /* Extra gap hataya */
+        scroll-snap-align: center; /* Card beech mein rukega */
+    }
+
+    #course-catalog-container {
+        /* Smooth scrolling aur snapping enable karein */
+        scroll-snap-type: x mandatory;
+        padding-bottom: 20px; /* Scrollbar ke liye thoda gap */
     }
 }
 
-/* For Desktops */
-@media (min-width: 1024px) {
-    .course-card {
-        flex: 0 0 calc(33.333% - 14px); /* 3 Cards */
-    }
-    .slider-btn {
-        display: flex;
-    }
+/* --- 2. SCROLL BUTTONS STYLING --- */
+/* --- SLIDER BUTTONS STYLING (Mobile & Desktop) --- */
+.course-slider-wrapper-modern {
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
-/* --- SLIDER NAVIGATION BUTTONS --- */
 .slider-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: #9a0669;
-    color: #ffffff;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    background: var(--primary); /* Theme Color */
+    color: white;
     border: none;
+    border-radius: 50%;
     cursor: pointer;
     z-index: 10;
-    display: none; /* Hidden on small screens */
+    display: flex; 
     align-items: center;
     justify-content: center;
-    font-size: 18px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: 0.3s;
 }
 
+.slider-btn:hover {
+    background: #222;
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* --- Desktop Positioning (Bahar nikla hua) --- */
 .prev-btn { left: -20px; }
 .next-btn { right: -20px; }
 
-.slider-btn:hover {
-    background-color: #222222;
+/* --- Mobile Adjustments (Buttons Visible) --- */
+@media (max-width: 768px) {
+    .slider-btn {
+        display: flex !important; /* Mobile par dikhao */
+        width: 35px;  /* Size thoda chhota */
+        height: 35px;
+        font-size: 14px;
+        background: rgba(0, 0, 0, 0.6); /* Thoda transparent taaki content dikhe */
+    }
+    
+    /* Mobile par buttons screen ke andar rahenge */
+    .prev-btn { left: 5px; } 
+    .next-btn { right: 5px; }
 }
-  
 /* --- CENTERED HEADING FIX --- */
 .section-heading-centered {
     text-align: center;       /* Text ko center karega */
@@ -810,41 +945,161 @@ section-heading
 }
 
   /* --- 11. COMMUNITY --- */
-  .community-section {
-    padding: 120px 0;
-    background: var(--bg-footer);
-    position: relative; overflow: hidden;
-  }
-  
-  .community-box { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-  .community-content h2 { font-size: 48px; font-weight: 800; color: var(--text-main); margin-bottom: 20px; }
-  .community-content h2 span { color: var(--primary); }
-  .community-content p { color: var(--text-dim); font-size: 18px; line-height: 1.7; margin-bottom: 40px; }
-  
-  .community-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  
-  .comm-card {
-    display: flex; align-items: center; gap: 20px; padding: 25px;
-    border-radius: 24px; text-decoration: none;
-    border: 1px solid var(--border-color);
-    background: var(--bg-card);
-    backdrop-filter: blur(20px);
-    transition: 0.3s;
-  }
-  
-  [data-theme="light"] .comm-card { background: white; }
-  .comm-card:hover { transform: translateY(-5px); border-color: var(--primary); }
-  
-  .comm-card i { font-size: 32px; padding: 15px; border-radius: 15px; color: white; }
-  .comm-card.discord i { background: #5865f2; }
-  .comm-card.telegram i { background: #0088cc; }
-  .comm-card.whatsapp i { background: #25d366; }
-  
-  .comm-card h4 { color: var(--text-main); font-size: 18px; font-weight: 700; margin: 0; }
-  .comm-card span { color: var(--primary); font-size: 12px; font-weight: 500; }
-  
-  .community-image img { width: 100%; border-radius: 24px; box-shadow: var(--shadow); }
+  /* --- ADVANCED COMMUNITY SECTION --- */
+/* ========= IMPRESSIVE PROFESSIONAL COMMUNITY ========= */
+.community-pro-section {
+    padding: 100px 0;
+    /* 👇 Background synced with Instructors */
+    background: var(--bg-instructors); 
+    position: relative;
+    border-top: 1px solid var(--border-color);
+}
 
+/* Header Styling */
+.comm-pro-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 60px;
+}
+
+.pill-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(138, 43, 226, 0.1);
+    color: var(--primary);
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.comm-pro-header h2 {
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 15px;
+}
+
+.comm-pro-header .highlight {
+    color: var(--primary);
+    position: relative;
+    display: inline-block;
+}
+
+/* Underline effect under 'Community' */
+.comm-pro-header .highlight::after {
+    content: ''; position: absolute; bottom: 5px; left: 0; width: 100%; height: 8px;
+    background: var(--primary); opacity: 0.2; z-index: -1; transform: skewX(-20deg);
+}
+
+.comm-pro-header p {
+    color: var(--text-dim);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Grid Layout */
+.comm-pro-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px; margin: 0 auto; padding: 0 20px;
+}
+
+/* CARD DESIGN (Corporate & Clean) */
+/* CARD DESIGN (Corporate & Clean) */
+.pro-card {
+    /* 👇 Card ka Background Color Yahan Change Karein */
+    background: #18181b; /* Dark Grey (Professional) */
+    
+    border: 1px solid var(--border-color);
+    padding: 35px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Platform Brand Colors */
+.pro-card.discord  { --brand: #5865F2; }
+.pro-card.telegram { --brand: #0088cc; }
+.pro-card.whatsapp { --brand: #25D366; }
+
+/* Hover Effects */
+.pro-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--brand); /* Border becomes brand color */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+/* Icon Box */
+.pro-icon {
+    width: 60px; height: 60px;
+    background: rgba(138, 43, 226, 0.05);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    color: var(--text-main);
+    transition: 0.4s;
+    border: 1px solid var(--border-color);
+}
+
+/* Icon Hover State */
+.pro-card:hover .pro-icon {
+    background: var(--brand);
+    color: white;
+    border-color: var(--brand);
+    transform: scale(1.1);
+}
+
+/* Text Content */
+.pro-content { flex: 1; }
+
+.pro-content h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 5px;
+}
+
+.pro-content p {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin: 0;
+}
+
+/* Arrow Button */
+.action-arrow {
+    width: 35px; height: 35px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--border-color);
+    transition: 0.3s;
+}
+
+.pro-card:hover .action-arrow {
+    color: var(--brand);
+    transform: translateX(5px);
+}
+
+/* Light Mode Overrides (Explicit) */
+/* Light Mode Overrides */
+[data-theme="light"] .pro-card {
+    /* 👇 Light Mode Card Color */
+    background: #ffffff; 
+    
+    border-color: #e5e7eb; /* Light Grey Border */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+[data-theme="light"] .pro-icon {
+    background: #f1f5f9;
+}
   /* --- 12. FOOTER --- */
   .main-footer {
     background: var(--bg-footer);
@@ -910,8 +1165,7 @@ section-heading
     nav ul.active { right: 0; }
 
     /* Theme Toggle Position Mobile */
-    .theme-toggle { top: 75px; right: 15px; width: 45px; height: 45px; font-size: 18px; }
-    
+
     .why-grid-container, .community-box, .footer-top { grid-template-columns: 1fr; text-align: center; }
     .community-grid { grid-template-columns: 1fr; }
     .why-image-single { order: 2; }
@@ -968,7 +1222,7 @@ section-heading
 
 
 /* ========= 4. INSTRUCTORS SECTION (Main Request) ========= */
-    .instructors-section { padding: 100px 5%; text-align: center; }
+    .instructors-section { padding: 100px 5%; text-align: center; background: var(--bg-instructors); }
     
     /* Heading Style */
     .section-head { margin-bottom: 60px; position: relative; display: inline-block; }
@@ -1068,45 +1322,234 @@ section-heading
       .section-head h2 { font-size: 32px; }
       .nav-links { display: none; } /* Hide menu for simplicity in demo */
     }
+
+    /* --- ADVERTISEMENT SECTION STYLES --- */
+/* --- FULL WIDTH AD SECTION CSS --- */
+.ad-section {
+    padding-top: 60px; /* Upar gap rakha hai heading ke liye */
+    padding-bottom: 0;
+    position: relative;
+    overflow: hidden; /* Scrollbar na aaye isliye */
+    
+}
+
+.ad-banner {
+    position: relative;
+    width: 100%;       /* 🔥 Pura Width */
+    height: 500px;     /* Height thodi badha di taaki impressive lage */
+    border-radius: 0;  /* 🔥 Corners square kar diye (No Gap) */
+    overflow: hidden;
+    margin: 0;         /* Margin hata diya */
+}
+
+.ad-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Image stretch nahi hogi, crop hogi */
+    transition: transform 0.6s ease;
+}
+
+.ad-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* Gradient thoda strong kiya taaki text dikhe */
+    background: linear-gradient(90deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.1) 100%);
+    z-index: 1;
+}
+
+/* Hover Effect */
+.ad-banner:hover img {
+    transform: scale(1.05);
+}
+
+/* Content Positioning (Ab screen ke kinare na chipke) */
+.ad-content {
+    position: absolute;
+    top: 50%;
+    left: 8%;  /* 🔥 Left se thoda andar rakha hai taaki text readable ho */
+    transform: translateY(-50%);
+    z-index: 2;
+    max-width: 600px;
+}
+
+.ad-badge {
+    background: var(--primary);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 4px; /* Thoda square look */
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.ad-content h3 {
+    font-size: 48px; /* Font size badhaya */
+    font-weight: 800;
+    color: white;
+    margin-bottom: 15px;
+    line-height: 1.1;
+}
+
+.ad-content p {
+    color: #e0e0e0;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+/* Button Update */
+.btn-ad {
+    padding: 14px 35px;
+    background: white;
+    color: black;
+    border-radius: 0; /* Square button for modern look */
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-ad:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* Pagination Dots Fix */
+.ad-section .swiper-pagination {
+    bottom: 20px !important;
+    text-align: right;
+    padding-right: 50px;
+}
+
+.ad-section .swiper-pagination-bullet {
+    background: white;
+    opacity: 0.5;
+    width: 12px; height: 12px;
+}
+.ad-section .swiper-pagination-bullet-active {
+    background: var(--primary);
+    opacity: 1;
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+    .ad-banner { height: 400px; }
+    .ad-content { left: 5%; right: 5%; text-align: center; width: 90%; }
+    .ad-content h3 { font-size: 32px; }
+    .ad-overlay { background: rgba(0,0,0,0.75); } 
+    .ad-section .swiper-pagination { text-align: center; padding-right: 0; }
+    .btn-ad { width: 100%; justify-content: center; }
+}
+
+/* --- SCROLLING TICKER STRIP --- */
+.ticker-container {
+    width: 100%;
+    background: #FFC107; /* Bright Yellow for Attention */
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 10px 0;
+    position: relative;
+    z-index: 5;
+    border-bottom: 2px solid #bbb;
+}
+
+/* Light Mode Support */
+[data-theme="light"] .ticker-container {
+    background: #222222; /* Dark strip on light mode */
+    color: #fff;
+}
+[data-theme="light"] .ticker-item {
+    color: #fff;
+}
+
+.ticker-wrapper {
+    display: inline-block;
+    padding-left: 100%; /* Start from right off-screen */
+    animation: ticker-scroll 30s linear infinite;
+
+    /* 🔥 YEH LINES ADD KAREIN BLUR HATANE KE LIYE 🔥 */
+    will-change: transform;              /* Browser ko batata hai ki animation aane wala hai */
+    backface-visibility: hidden;         /* Text ko sharp rakhta hai */
+    -webkit-backface-visibility: hidden; /* Safari/Chrome ke liye fix */
+    transform: translateZ(0);            /* GPU (Graphics Card) ko force karta hai use karne ke liye */
+    -webkit-font-smoothing: antialiased; /* Font ko crisp banata hai */
+}
+
+.ticker-item {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #000; /* Black text on Yellow */
+    margin-right: 50px; /* Item ke beech gap */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ticker-item i {
+    color: #d32f2f; /* Red Icon */
+    margin-right: 5px;
+}
+
+/* Animation Keyframes */
+@keyframes ticker-scroll {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+/* Hover par rokne ke liye (Optional) */
+.ticker-container:hover .ticker-wrapper {
+    animation-play-state: paused;
+}
   </style>
 </head>
 
 <body data-theme="dark">
 
   <nav class="navbar">
-    <div class="container nav-flex">
-        
-        <a href="index.html" class="logo">
-            <img src="CodeLine Logo.jpg" alt="Logo" class="logo-icon">
-            <span>CODELINE <span class="highlight">AI</span></span>
-        </a>
-        
-        <ul id="nav-menu">
-            <li><a href="#" class="active">HOME</a></li>
-            <li><a href="dashboard.html">DASHBOARD</a></li>
-            <li><a href="aboutus.html">ABOUT</a></li>
-            <li><a href="placement.html">PLACEMENTS</a></li>
-            <li class="mobile-only"><a href="#" class="btn-red">Login/Register</a></li>
-        </ul>
+  <div class="container nav-flex">
+      
+      <a href="index.html" class="logo">
+          <img src="CodeLine Logo.jpg" alt="Logo" class="logo-icon">
+          <span>CODELINE <span class="highlight">AI</span></span>
+      </a>
+      
+      <ul id="nav-menu">
+          <li><a href="#" class="active">HOME</a></li>
+          <li><a href="dashboard.html">DASHBOARD</a></li>
+          <li><a href="aboutus.html">ABOUT</a></li>
+          <li><a href="placement.html">PLACEMENTS</a></li>
+          <li><a href="instructors.html">INSTRUCTOR</a></li>
+          <li class="mobile-only"><a href="login.html" class="btn-red">Login/Register</a></li>
+      </ul>
 
-        <div class="mobile-nav-right">
-            <a href="#" class="btn-red desktop-only">Login/Register</a>
+      <div class="nav-right-side">
+          
+          <a href="login.html" class="btn-red desktop-only">Login/Register</a>
 
-            <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
-                <i class="fas fa-sun" style="display: none;"></i>
-                <i class="fas fa-moon"></i>
-            </button>
+          <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+              <i class="fas fa-sun" style="display: none;"></i>
+              <i class="fas fa-moon"></i>
+          </button>
 
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
+          <div class="hamburger" id="hamburger">
+              <span></span>
+              <span></span>
+              <span></span>
+          </div>
 
-    </div>
-  </nav>
+      </div>
 
+  </div>
+</nav>
   <section class="hero-section">
     <video autoplay muted loop playsinline id="hero-video">
       <source src="https://www.pexels.com/download/video/3209298.mp4" type="video/mp4">
@@ -1142,9 +1585,31 @@ section-heading
       </div>
     </div>
   </section>
-
-  <section class="why-section-new">
+<div class="ticker-container">
+    <div class="ticker-wrapper">
+        <div class="ticker-item">
+            <i class="fas fa-fire"></i> FLASH SALE: Use Code <strong>CODE50</strong> for 50% OFF!
+        </div>
+        <div class="ticker-item">
+            <i class="fas fa-bullhorn"></i> New <strong>ReactJS Masterclass</strong> Batch starting from Monday!
+        </div>
+        <div class="ticker-item">
+            <i class="fas fa-trophy"></i> <strong>Aman Verma</strong> just got placed at Amazon! 🎉
+        </div>
+        <div class="ticker-item">
+            <i class="fas fa-laptop-code"></i> Free Webinar on <strong>AI & Future Jobs</strong> this Sunday.
+        </div>
+        <div class="ticker-item">
+            <i class="fas fa-fire"></i> FLASH SALE: Use Code <strong>CODE50</strong> for 50% OFF!
+        </div>
+        <div class="ticker-item">
+            <i class="fas fa-bullhorn"></i> New <strong>ReactJS Masterclass</strong> Batch starting from Monday!
+        </div>
+    </div>
+</div>
+ <section class="why-section-new">
     <div class="container why-grid-container">
+        
         <div class="why-image-single" data-aos="fade-right" data-aos-duration="1000">
             <div class="main-image-wrapper">
                 <img src="\Codeline Img.png" alt="Learning at Codeline AI">
@@ -1153,23 +1618,22 @@ section-heading
 
         <div class="why-content-right" data-aos="fade-left" data-aos-duration="1000">
             <h2>Why <span>CODELINE AI</span> Learning Platform?</h2>
-            <p>Aapki tech journey ko naya mod dene ke liye humne banaya hai ek aisa environment jahan sirf theory nahi, practical execution par focus hota hai. Get industry-recognized certificates and work on real-world industry projects with top mentors.</p>
             
-            <p>We're developing an innovative bootstrap-powered UI Kit tool designed specifically for developers, engineers, and digital agencies.</p>
+            <p>We don't just teach you how to code; we prepare you for your future career. At CodeLine AI, we have crafted an ecosystem where practical application takes precedence over theory. Our curriculum is designed by industry experts to transform you from a beginner into a job-ready professional.</p>
+            
+            <p>Join a community of ambitious learners, work on live projects, and get mentored by experts from top tech companies to bridge the gap between academic theory and industry reality.</p>
 
             <div class="why-features-list">
-                <div class="feature-item"><i class="fas fa-check-circle"></i> Wide Range of Courses</div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i> Cost-Effective</div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i> Global Networking</div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i> Get Certificate</div>
+                <div class="feature-item"><i class="fas fa-check-circle"></i> Industry-Relevant Curriculum</div>
+                <div class="feature-item"><i class="fas fa-check-circle"></i> Affordable Excellence</div>
+                <div class="feature-item"><i class="fas fa-check-circle"></i> Lifetime Community Access</div>
+                <div class="feature-item"><i class="fas fa-check-circle"></i> Recognized Certification</div>
             </div>
 
-            <a href="#" class="btn-red-large">Create an Account</a>
+            <a href="#" class="btn-red-large">Start Your Journey</a>
         </div>
     </div>
-  </section>
-
-
+  </section>yy
 <section class="placements-new-section" id="placements">
     <div class="container">
         <div class="section-heading" style="text-align: center; margin-bottom: 50px;">
@@ -1265,17 +1729,80 @@ section-heading
             <p>Top-rated classes selected just for you</p>
         </div>
         <div class="course-slider-wrapper-modern" data-aos="fade-up" data-aos-delay="200">
-            <div id="course-catalog-container"></div>
-        </div>
+    
+    <button class="slider-btn prev-btn" id="prevBtn">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <div id="course-catalog-container"></div>
+
+    <button class="slider-btn next-btn" id="nextBtn">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+
+</div>
     </div>
   </section>
 
   
 
 
+<section class="ad-section">
+  
+  <div class="container">
+    <div class="section-heading-centered" data-aos="fade-up">
+        <h2>Exclusive <span>Offers</span></h2>
+        <p>Grab these limited-time deals on our premium courses.</p>
+    </div>
+  </div>
 
+  <div class="swiper adSwiper" data-aos="fade-in">
+    <div class="swiper-wrapper">
 
+      <div class="swiper-slide">
+        <div class="ad-banner">
+          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1920&auto=format&fit=crop" alt="Offer 1">
+          <div class="ad-content">
+            <span class="ad-badge">Limited Time</span>
+            <h3>Get 50% OFF on Web Dev</h3>
+            <p>Master Full Stack Development with live projects.</p>
+            <a href="#" class="btn-ad">Claim Now <i class="fas fa-arrow-right"></i></a>
+          </div>
+          <div class="ad-overlay"></div>
+        </div>
+      </div>
 
+      <div class="swiper-slide">
+        <div class="ad-banner">
+          <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1920&auto=format&fit=crop" alt="Offer 2">
+          <div class="ad-content">
+            <span class="ad-badge" style="background: #0ea5e9;">New Launch</span>
+            <h3>AI & Machine Learning</h3>
+            <p>Enroll early and get free cloud credits.</p>
+            <a href="#" class="btn-ad">Explore <i class="fas fa-arrow-right"></i></a>
+          </div>
+          <div class="ad-overlay"></div>
+        </div>
+      </div>
+
+       <div class="swiper-slide">
+        <div class="ad-banner">
+          <img src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?q=80&w=1920&auto=format&fit=crop" alt="Offer 3">
+          <div class="ad-content">
+            <span class="ad-badge" style="background: #eab308; color: black;">Bootcamp</span>
+            <h3>Coding Marathon 2026</h3>
+            <p>Join the biggest coding challenge today.</p>
+            <a href="#" class="btn-ad">Register Free <i class="fas fa-arrow-right"></i></a>
+          </div>
+          <div class="ad-overlay"></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+
+</section>
   <section class="instructors-section">
     
     <div class="section-head" data-aos="fade-down">
@@ -1430,25 +1957,47 @@ section-heading
   </div>
 </section>
  
-  <section class="community-section">
-    <div class="container">
-        <div class="community-box">
-            <div class="community-content" data-aos="fade-right">
-                <h2>Join Our <span>Community</span></h2>
-                <p>10,000+ students are already learning together. Get exclusive access to free resources.</p>
-                <div class="community-grid">
-                    <a href="#" class="comm-card discord" data-aos="zoom-in" data-aos-delay="0"><i class="fab fa-discord"></i><div><h4>Discord</h4><span>5k+</span></div></a>
-                    <a href="#" class="comm-card telegram" data-aos="zoom-in" data-aos-delay="150"><i class="fab fa-telegram-plane"></i><div><h4>Telegram</h4><span>3k+</span></div></a>
-                    <a href="#" class="comm-card whatsapp" data-aos="zoom-in" data-aos-delay="300"><i class="fab fa-whatsapp"></i><div><h4>WhatsApp</h4><span>Join</span></div></a>
-                </div>
-            </div>
-            <div class="community-image" data-aos="fade-left" data-aos-delay="200">
-                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800" alt="Community">
-            </div>
-        </div>
+  <section class="community-pro-section">
+  <div class="container">
+    
+    <div class="comm-pro-header">
+      <div class="pill-badge">Stay Connected</div>
+      <h2>Join Our Global <span class="highlight">Community</span></h2>
+      <p>Connect with mentors, get code reviews, and network with top developers worldwide.</p>
     </div>
-  </section>
 
+    <div class="comm-pro-grid">
+      
+      <a href="#" class="pro-card discord">
+        <div class="pro-icon"><i class="fab fa-discord"></i></div>
+        <div class="pro-content">
+          <h3>Discord Server</h3>
+          <p>Live Coding Sessions & 24/7 Support</p>
+        </div>
+        <div class="action-arrow"><i class="fas fa-arrow-right"></i></div>
+      </a>
+
+      <a href="#" class="pro-card telegram">
+        <div class="pro-icon"><i class="fab fa-telegram-plane"></i></div>
+        <div class="pro-content">
+          <h3>Telegram Channel</h3>
+          <p>Daily Notes, Quizzes & Updates</p>
+        </div>
+        <div class="action-arrow"><i class="fas fa-arrow-right"></i></div>
+      </a>
+
+      <a href="#" class="pro-card whatsapp">
+        <div class="pro-icon"><i class="fab fa-whatsapp"></i></div>
+        <div class="pro-content">
+          <h3>WhatsApp Group</h3>
+          <p>Direct Alerts & Community Chat</p>
+        </div>
+        <div class="action-arrow"><i class="fas fa-arrow-right"></i></div>
+      </a>
+
+    </div>
+  </div>
+</section>
   <footer class="main-footer">
     <div class="container" data-aos="fade-up">
         <div class="footer-top">
@@ -1489,7 +2038,31 @@ section-heading
 
   <script>
 
+// --- SCROLL BUTTONS LOGIC ---
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('course-catalog-container');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
 
+    if (container && nextBtn && prevBtn) {
+        
+        // Next Button Click
+        nextBtn.addEventListener('click', () => {
+            container.scrollBy({
+                left: 350, // Ek card jitna aage badhega
+                behavior: 'smooth'
+            });
+        });
+
+        // Prev Button Click
+        prevBtn.addEventListener('click', () => {
+            container.scrollBy({
+                left: -350, // Ek card jitna peeche aayega
+                behavior: 'smooth'
+            });
+        });
+    }
+});
     // Remove Loader on Page Load
 window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
@@ -1733,6 +2306,24 @@ window.addEventListener('load', () => {
           992: { slidesPerView: 3 }, // Desktop
       },
   });
+
+  // --- ADVERTISEMENT SWIPER ---
+var adSwiper = new Swiper(".adSwiper", {
+    slidesPerView: 1,
+    spaceBetween: 30,
+    loop: true,
+    effect: "fade", // Fade effect for classy transition (Optional: remove line for slide)
+    fadeEffect: { crossFade: true },
+    autoplay: {
+        delay: 4000, // 4 seconds per slide
+        disableOnInteraction: false,
+    },
+    pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+        dynamicBullets: true,
+    },
+});
 </script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
  <script src="js/config.js"></script>

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Instructors - CODELINE AI</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    /* --- CODELINE AI - INSTRUCTORS THEME --- */
+    html { scroll-behavior: smooth; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+    /* --- CSS VARIABLES (Consistent) --- */
+    :root {
+      --primary: #8a0b8a;        /* Brand Purple */
+      --primary-dark: #4b0082;
+      --accent: #8a0b8a;
+      
+      --bg-body: #06060c;
+      --bg-nav: #8a0b8a;         /* FIXED: Consistent Navbar Color */
+      --bg-card: rgba(255, 255, 255, 0.03);
+      --bg-card-hover: rgba(30, 30, 50, 1);
+      --bg-footer: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%);
+      
+      --text-main: #ffffff;
+      --text-dim: #b0b0c0;
+      --border-color: rgba(138, 43, 226, 0.2);
+      --shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    [data-theme="light"] {
+      --bg-body: #f8fafc;
+      --bg-nav: #8a0b8a;         /* Navbar stays colored */
+      --bg-card: #ffffff;
+      --bg-card-hover: #f1f5f9;
+      --bg-footer: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      --text-main: #1e293b;
+      --text-dim: #64748b;
+      --border-color: rgba(0, 0, 0, 0.1);
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+    /* ========= 2. ADVANCED LOGO LOADER (TECH-HEX) - DASHBOARD STYLE ========= */
+    #preloader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #050507; /* Deep Tech Dark */
+      z-index: 99999;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    .loader-content { position: relative; width: 140px; height: 140px; display: flex; justify-content: center; align-items: center; }
+
+    /* Rotating Arcs */
+    .arc {
+      position: absolute; width: 100%; height: 100%;
+      border-radius: 50%; border: 3px solid transparent;
+    }
+    .arc-1 { 
+      border-top-color: #06b6d4; /* Cyan accent hardcoded for visibility */
+      box-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+      animation: spin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite; 
+    }
+    .arc-2 { 
+      width: 70%; height: 70%; 
+      border-bottom-color: var(--primary); 
+      box-shadow: 0 0 10px rgba(154, 6, 105, 0.4);
+      animation: spin 3s linear infinite reverse; 
+    }
+
+    /* Central Logo Hexagon */
+    .hex-core {
+      position: absolute; width: 44px; height: 50px;
+      background: linear-gradient(135deg, var(--primary), #5b00ff);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      display: flex; justify-content: center; align-items: center;
+      animation: pulse 2s ease-in-out infinite;
+      box-shadow: 0 0 20px var(--primary);
+    }
+    .hex-core::after {
+      content: ''; width: 32px; height: 38px;
+      background: #050507; /* Match bg */
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      position: absolute;
+    }
+    
+    .hex-dot { 
+      position: absolute; width: 10px; height: 10px; 
+      background: #fff; border-radius: 50%; z-index: 5; 
+      box-shadow: 0 0 10px #fff, 0 0 20px #06b6d4; 
+      animation: flicker 1s infinite alternate;
+    }
+
+    /* Text */
+    .loading-brand {
+      margin-top: 25px; font-family: 'Poppins', sans-serif;
+      font-size: 16px; letter-spacing: 5px; font-weight: 700;
+      color: var(--text-dim); text-transform: uppercase;
+      animation: fadeText 2s infinite;
+    }
+    .loading-brand span { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+
+    /* Keyframes */
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes pulse { 0%, 100% { transform: scale(1); filter: brightness(1); } 50% { transform: scale(1.1); filter: brightness(1.3); } }
+    @keyframes flicker { 0% { opacity: 0.5; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); } }
+    @keyframes fadeText { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+    /* --- NAVBAR (Consistent) --- */
+    .navbar {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+      padding: 15px 0; background: var(--bg-nav);
+      backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color);
+    }
+    .nav-flex { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+    
+    .logo { 
+      display: flex; align-items: center; gap: 10px; 
+      font-size: 26px; font-weight: 900; color: #fff; letter-spacing: 1px; 
+    }
+    .logo-icon { height: 35px; width: auto; object-fit: contain; border-radius: 5px; }
+    /* Force white text in light mode for navbar */
+    [data-theme="light"] .logo { color: #fff; }
+
+    nav ul { display: flex; gap: 30px; align-items: center; }
+    nav ul li a { 
+      color: #fff; 
+      font-weight: 600; font-size: 16px; text-transform: uppercase; transition: 0.3s; 
+    }
+    nav ul li a:hover, nav ul li a.active { color: var(--bg-body); }
+
+    .btn-red { 
+      background: linear-gradient(135deg, #8a2be2, #4b0082); 
+      color: white; padding: 10px 25px; border-radius: 50px; 
+      font-weight: 600; font-size: 14px; transition: 0.4s; border: none; 
+    }
+    
+    /* Theme Toggle & Hamburger Layout */
+    .nav-right-controls { display: flex; align-items: center; gap: 20px; }
+
+    .theme-toggle { 
+        width: 40px; height: 40px; border-radius: 50%; 
+        background: rgba(255, 255, 255, 0.1); 
+        border: 1px solid rgba(255, 255, 255, 0.2); 
+        color: #fff; cursor: pointer; 
+        display: flex; align-items: center; justify-content: center; 
+        font-size: 18px; transition: all 0.3s; 
+    }
+    .theme-toggle:hover { background: rgba(255, 255, 255, 0.2); }
+
+    /* --- HERO SECTION --- */
+    .hero-section {
+      position: relative; height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center;
+      background: linear-gradient(rgba(15, 15, 35, 0.8), rgba(15, 15, 35, 0.9)), url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2000&auto=format&fit=crop');
+      background-size: cover; background-position: center; background-attachment: fixed;
+    }
+    .hero-content h1 { font-size: 50px; font-weight: 800; margin-bottom: 15px; color: #ffffff; }
+    .hero-content h1 span { color: var(--primary); }
+    .hero-content p { font-size: 18px; color: #e0e0e0; max-width: 700px; margin: 0 auto; }
+
+    /* --- INSTRUCTOR STATS --- */
+    .stats-container {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;
+        margin-top: -50px; margin-bottom: 80px; position: relative; z-index: 10;
+    }
+    .stat-card {
+        background: var(--bg-card); backdrop-filter: blur(15px); border: 1px solid var(--border-color);
+        padding: 30px; border-radius: 20px; text-align: center; box-shadow: var(--shadow);
+        transition: transform 0.3s;
+    }
+    .stat-card:hover { transform: translateY(-10px); border-color: var(--primary); background: var(--bg-card-hover); }
+    .stat-number { font-size: 36px; font-weight: 800; color: var(--primary); display: block; margin-bottom: 5px; }
+    .stat-label { font-size: 14px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+
+    /* --- INSTRUCTOR GRID --- */
+    .instructors-section { padding-bottom: 100px; }
+    .section-heading-centered { text-align: center; max-width: 800px; margin: 0 auto 60px; }
+    .section-heading-centered h2 { font-size: 40px; font-weight: 700; color: var(--text-main); margin-bottom: 10px; }
+    .section-heading-centered h2 span { color: var(--primary); }
+    .section-heading-centered p { color: var(--text-dim); font-size: 16px; }
+
+    .instructor-grid {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;
+    }
+
+    .instructor-card {
+        background: var(--bg-card); border-radius: 20px; overflow: hidden; border: 1px solid var(--border-color);
+        transition: all 0.4s ease; position: relative;
+    }
+    [data-theme="light"] .instructor-card { background: #fff; }
+
+    .instructor-card:hover {
+        transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); border-color: var(--primary);
+    }
+
+    .inst-image {
+        height: 320px; width: 100%; position: relative; overflow: hidden;
+    }
+    .inst-image img {
+        width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s;
+    }
+    .instructor-card:hover .inst-image img { transform: scale(1.1); }
+
+    .inst-overlay {
+        position: absolute; bottom: -60px; left: 0; width: 100%; height: 60px;
+        background: rgba(138, 11, 138, 0.9); /* Primary color opacity */
+        display: flex; justify-content: center; align-items: center; gap: 20px;
+        transition: bottom 0.4s ease;
+    }
+    .instructor-card:hover .inst-overlay { bottom: 0; }
+    .inst-overlay a { color: white; font-size: 18px; transition: 0.3s; }
+    .inst-overlay a:hover { transform: scale(1.2); }
+
+    .inst-info { padding: 25px; text-align: center; }
+    .inst-name { font-size: 22px; font-weight: 700; color: var(--text-main); margin-bottom: 5px; }
+    .inst-role { font-size: 14px; color: var(--primary); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; display: block; }
+    .inst-bio { font-size: 14px; color: var(--text-dim); line-height: 1.6; margin-bottom: 20px; }
+
+    .skill-tags { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .skill-tag {
+        font-size: 11px; padding: 5px 12px; background: rgba(138, 11, 138, 0.1);
+        color: var(--text-main); border: 1px solid var(--border-color); border-radius: 20px;
+    }
+
+    /* --- JOIN CTA --- */
+    .join-cta {
+        padding: 80px 0; margin: 80px 0; border-radius: 30px; text-align: center;
+        background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+        position: relative; overflow: hidden; color: white;
+    }
+    .join-cta::before {
+        content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: url('https://www.transparenttextures.com/patterns/cubes.png'); opacity: 0.1;
+    }
+    .cta-content { position: relative; z-index: 2; }
+    .cta-content h2 { font-size: 36px; margin-bottom: 15px; }
+    .cta-content p { font-size: 16px; margin-bottom: 30px; opacity: 0.9; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .btn-white {
+        background: white; color: var(--primary); padding: 15px 40px; border-radius: 50px;
+        font-weight: 700; font-size: 16px; transition: 0.3s; display: inline-block;
+    }
+    .btn-white:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+    /* --- FOOTER (Reused) --- */
+    .main-footer { background: var(--bg-footer); border-top: 1px solid var(--border-color); padding: 80px 0 30px; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 60px; margin-bottom: 60px; }
+    .footer-brand h3 { font-size: 28px; font-weight: 800; color: var(--text-main); margin-bottom: 12px; }
+    .footer-brand p { color: var(--text-dim); font-size: 16px; line-height: 1.6; margin-bottom: 25px; }
+    .social-links { display: flex; gap: 15px; }
+    .social-icon { width: 45px; height: 45px; background: rgba(139, 92, 246, 0.1); border: 1px solid var(--border-color); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--text-dim); transition: 0.3s; }
+    .social-icon:hover { background: var(--primary); color: white; transform: translateY(-5px); }
+    .footer-links h4 { margin-bottom: 25px; color: var(--text-main); }
+    .footer-links ul li { margin-bottom: 12px; }
+    .footer-links a { color: var(--text-dim); transition: 0.3s; }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-bottom { padding-top: 30px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; color: var(--text-dim); font-size: 14px; }
+
+    /* --- RESPONSIVE HAMBURGER & LAYOUT --- */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 25px; height: 3px; background: #fff; transition: 0.3s; }
+    
+    @media (max-width: 992px) {
+        .hamburger { display: flex; }
+        
+        /* Mobile Menu */
+        nav ul { 
+            position: fixed; top: 70px; right: -100%; width: 100%; height: 100vh; 
+            background: var(--bg-body); flex-direction: column; padding-top: 50px; 
+            transition: 0.4s ease; border-top: 1px solid var(--border-color); 
+        }
+        nav ul.active { right: 0; }
+        
+        .hero-section { height: 50vh; }
+        .hero-content h1 { font-size: 32px; }
+        
+        /* Grid Adjustments */
+        .stats-container { grid-template-columns: 1fr 1fr; }
+        .footer-top { grid-template-columns: 1fr; text-align: center; }
+        .footer-bottom { flex-direction: column; align-items: center; gap: 15px; }
+    }
+    
+    @media (max-width: 576px) {
+        .stats-container { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body data-theme="dark">
+
+  <div id="preloader">
+    <div class="loader-content">
+      <div class="arc arc-1"></div>
+      <div class="arc arc-2"></div>
+      <div class="hex-core">
+        <div class="hex-dot"></div>
+      </div>
+    </div>
+    <div class="loading-brand">CODELINE <span>AI</span></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="container nav-flex">
+        <a href="index.html" class="logo">
+            <img src="CodeLine Logo.jpg" alt="Logo" class="logo-icon">
+            <span>CODELINE <span style="color:#fff">AI</span></span>
+        </a>
+        <ul id="nav-menu">
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="dashboard.html">DASHBOARD</a></li>
+            <li><a href="aboutus.html">ABOUT</a></li>
+            <li><a href="instructors.html" class="active">INSTRUCTORS</a></li>
+            <li><a href="placement.html">PLACEMENTS</a></li>
+            <li><a href="login.html" class="btn-red">Login / Join</a></li>
+        </ul>
+        <div class="nav-right-controls">
+            <button id="themeToggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </div>
+  </nav>
+
+  <section class="hero-section">
+    <div class="hero-content" data-aos="fade-up">
+        <h1>Meet Our <span>Mentors</span></h1>
+        <p>Industry experts committed to guiding you from novice to professional.</p>
+    </div>
+  </section>
+
+  <div class="container">
+      <div class="stats-container">
+          <div class="stat-card" data-aos="fade-up" data-aos-delay="0">
+              <span class="stat-number">50+</span>
+              <span class="stat-label">Expert Mentors</span>
+          </div>
+          <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+              <span class="stat-number">10k+</span>
+              <span class="stat-label">Students Mentored</span>
+          </div>
+          <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+              <span class="stat-number">4.9</span>
+              <span class="stat-label">Average Rating</span>
+          </div>
+          <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+              <span class="stat-number">24/7</span>
+              <span class="stat-label">Support Access</span>
+          </div>
+      </div>
+  </div>
+
+  <section class="instructors-section">
+      <div class="container">
+          <div class="section-heading-centered" data-aos="fade-up">
+              <h2>World-Class <span>Experts</span></h2>
+              <p>Learn from the best minds in the industry who have built scalable systems at top tech giants.</p>
+          </div>
+
+          <div class="instructor-grid">
+              
+              <div class="instructor-card" data-aos="fade-up">
+                  <div class="inst-image">
+                      <img src="CodeLineSir.jpeg" alt="Chandrakant Sir">
+                      <div class="inst-overlay">
+                          <a href="#"><i class="fab fa-linkedin"></i></a>
+                          <a href="#"><i class="fab fa-twitter"></i></a>
+                          <a href="#"><i class="fab fa-github"></i></a>
+                      </div>
+                  </div>
+                  <div class="inst-info">
+                      <h3 class="inst-name">Chandrakant Sir</h3>
+                      <span class="inst-role">Senior Java Architect</span>
+                      <p class="inst-bio">Ex-Microsoft Engineer with 10+ years of experience in distributed systems and cloud architecture.</p>
+                      <div class="skill-tags">
+                          <span class="skill-tag">Java</span>
+                          <span class="skill-tag">Spring Boot</span>
+                          <span class="skill-tag">Microservices</span>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="instructor-card" data-aos="fade-up" data-aos-delay="100">
+                  <div class="inst-image">
+                      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop" alt="Sneha">
+                      <div class="inst-overlay">
+                          <a href="#"><i class="fab fa-linkedin"></i></a>
+                          <a href="#"><i class="fab fa-twitter"></i></a>
+                          <a href="#"><i class="fab fa-github"></i></a>
+                      </div>
+                  </div>
+                  <div class="inst-info">
+                      <h3 class="inst-name">Sneha Gupta</h3>
+                      <span class="inst-role">Data Science Lead</span>
+                      <p class="inst-bio">AI Researcher specializing in NLP and Computer Vision. Passionate about simplifying complex math.</p>
+                      <div class="skill-tags">
+                          <span class="skill-tag">Python</span>
+                          <span class="skill-tag">TensorFlow</span>
+                          <span class="skill-tag">AI/ML</span>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="instructor-card" data-aos="fade-up" data-aos-delay="200">
+                  <div class="inst-image">
+                      <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=800&auto=format&fit=crop" alt="Amit">
+                      <div class="inst-overlay">
+                          <a href="#"><i class="fab fa-linkedin"></i></a>
+                          <a href="#"><i class="fab fa-twitter"></i></a>
+                          <a href="#"><i class="fab fa-github"></i></a>
+                      </div>
+                  </div>
+                  <div class="inst-info">
+                      <h3 class="inst-name">Amit Verma</h3>
+                      <span class="inst-role">Full Stack Developer</span>
+                      <p class="inst-bio">JavaScript wizard creating blazing fast web apps. Contributor to major open source React libraries.</p>
+                      <div class="skill-tags">
+                          <span class="skill-tag">React</span>
+                          <span class="skill-tag">Node.js</span>
+                          <span class="skill-tag">MongoDB</span>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="instructor-card" data-aos="fade-up" data-aos-delay="300">
+                  <div class="inst-image">
+                      <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=800&auto=format&fit=crop" alt="Priya">
+                      <div class="inst-overlay">
+                          <a href="#"><i class="fab fa-linkedin"></i></a>
+                          <a href="#"><i class="fab fa-dribbble"></i></a>
+                          <a href="#"><i class="fab fa-instagram"></i></a>
+                      </div>
+                  </div>
+                  <div class="inst-info">
+                      <h3 class="inst-name">Priya Singh</h3>
+                      <span class="inst-role">UI/UX Designer</span>
+                      <p class="inst-bio">Award-winning designer focused on user-centric interfaces. Believes design is about problem solving.</p>
+                      <div class="skill-tags">
+                          <span class="skill-tag">Figma</span>
+                          <span class="skill-tag">Adobe XD</span>
+                          <span class="skill-tag">Prototyping</span>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="instructor-card" data-aos="fade-up" data-aos-delay="400">
+                  <div class="inst-image">
+                      <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop" alt="Rahul">
+                      <div class="inst-overlay">
+                          <a href="#"><i class="fab fa-linkedin"></i></a>
+                          <a href="#"><i class="fab fa-twitter"></i></a>
+                      </div>
+                  </div>
+                  <div class="inst-info">
+                      <h3 class="inst-name">Rahul Nair</h3>
+                      <span class="inst-role">DevOps Engineer</span>
+                      <p class="inst-bio">Infrastructure automation expert. Manages clusters handling millions of requests per second.</p>
+                      <div class="skill-tags">
+                          <span class="skill-tag">AWS</span>
+                          <span class="skill-tag">Docker</span>
+                          <span class="skill-tag">Kubernetes</span>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="instructor-card" data-aos="fade-up" data-aos-delay="500">
+                  <div class="inst-image">
+                      <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=800&auto=format&fit=crop" alt="Anjali">
+                      <div class="inst-overlay">
+                          <a href="#"><i class="fab fa-linkedin"></i></a>
+                          <a href="#"><i class="fab fa-github"></i></a>
+                      </div>
+                  </div>
+                  <div class="inst-info">
+                      <h3 class="inst-name">Anjali Desai</h3>
+                      <span class="inst-role">Mobile Developer</span>
+                      <p class="inst-bio">Building seamless mobile experiences for both Android and iOS using modern frameworks.</p>
+                      <div class="skill-tags">
+                          <span class="skill-tag">Flutter</span>
+                          <span class="skill-tag">Dart</span>
+                          <span class="skill-tag">Firebase</span>
+                      </div>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+  </section>
+
+  <div class="container">
+      <section class="join-cta" data-aos="zoom-in">
+          <div class="cta-content">
+              <h2>Become an Instructor</h2>
+              <p>Are you passionate about teaching? Join our team of experts and inspire the next generation of developers.</p>
+              <a href="#" class="btn-white">Apply Now</a>
+          </div>
+      </section>
+  </div>
+
+  <footer class="main-footer">
+    <div class="container">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <h3>CODELINE AI</h3>
+                <p>Transforming careers through AI-powered education.</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Product</h4>
+                <ul><li><a href="#">Courses</a></li><li><a href="#">Mentorship</a></li></ul>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul><li><a href="#">About</a></li><li><a href="#">Contact</a></li></ul>
+            </div>
+            <div class="footer-newsletter">
+                <h4>Stay Updated</h4>
+                <div class="newsletter-form" style="display:flex; gap:10px; margin-top:15px;">
+                    <input type="email" placeholder="Email" style="flex:1; padding:15px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-card); color:var(--text-main);">
+                    <button style="width:50px; background:var(--primary); color:white; border:none; border-radius:8px; cursor:pointer;"><i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 CODELINE AI. All rights reserved.</p>
+            <div class="footer-right"><a href="#">Privacy</a><a href="#">Terms</a></div>
+        </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+
+    // Preloader
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('preloader');
+      setTimeout(() => {
+        preloader.style.opacity = '0';
+        setTimeout(() => preloader.style.display = 'none', 600);
+      }, 800);
+    });
+
+    // Theme Toggle
+    const toggleBtn = document.getElementById('themeToggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let theme = localStorage.getItem('codeline-theme') || (prefersDark ? 'dark' : 'light');
+    
+    function applyTheme(themeName) {
+        document.documentElement.setAttribute('data-theme', themeName);
+        localStorage.setItem('codeline-theme', themeName);
+        toggleBtn.innerHTML = themeName === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    }
+    applyTheme(theme);
+
+    toggleBtn.addEventListener('click', () => {
+        theme = theme === 'dark' ? 'light' : 'dark';
+        applyTheme(theme);
+    });
+
+    // Mobile Menu
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    }
+  </script>
+</body>
+</html>

@@ -5,316 +5,439 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>About Us - CODELINE AI</title>
   
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
   <style>
-    /* ========= 1. THEME VARIABLES ========= */
+    /* ========= THEME VARIABLES ========= */
     :root {
-      --primary: #9a0669;
+      --primary: #8a0b8a;
       --primary-dark: #4b0082;
-      --accent: #06b6d4;
+      --accent: #8a0b8a;
       
       --bg-body: #06060c;
-      --bg-nav: rgba(6, 6, 12, 0.95);
-      --bg-card: rgba(255, 255, 255, 0.05);
+      --bg-nav: #8a0b8a; 
+      --bg-card: rgba(255, 255, 255, 0.03);
+      --bg-card-hover: rgba(30, 30, 50, 1);
+      --bg-footer: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%);
       
       --text-main: #ffffff;
-      --text-dim: #94a3b8;
+      --text-dim: #b0b0c0;
       --border-color: rgba(138, 43, 226, 0.2);
+      --shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
     [data-theme="light"] {
-      --bg-body: #f1f5f9;
-      --bg-nav: rgba(255, 255, 255, 0.95);
+      --bg-body: #f8fafc;
+      --bg-nav: #8a0b8a;
       --bg-card: #ffffff;
-      
+      --bg-card-hover: #f1f5f9;
+      --bg-footer: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
       --text-main: #1e293b;
       --text-dim: #64748b;
       --border-color: rgba(0, 0, 0, 0.1);
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Poppins', sans-serif; background: var(--bg-body); color: var(--text-main); overflow-x: hidden; transition: 0.3s; }
-    a { text-decoration: none; color: inherit; transition: 0.3s; }
+    html { scroll-behavior: smooth; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
     ul { list-style: none; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
 
-    /* ========= 2. NAVBAR WITH TOGGLE ========= */
+    /* ========= 1. PRELOADER (Same as others) ========= */
+    #preloader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #050507; z-index: 99999;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    .loader-content { position: relative; width: 140px; height: 140px; display: flex; justify-content: center; align-items: center; }
+    .arc { position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 3px solid transparent; }
+    .arc-1 { border-top-color: #06b6d4; box-shadow: 0 0 10px rgba(6, 182, 212, 0.4); animation: spin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite; }
+    .arc-2 { width: 70%; height: 70%; border-bottom-color: var(--primary); box-shadow: 0 0 10px rgba(154, 6, 105, 0.4); animation: spin 3s linear infinite reverse; }
+    .hex-core {
+      position: absolute; width: 44px; height: 50px;
+      background: linear-gradient(135deg, var(--primary), #5b00ff);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      display: flex; justify-content: center; align-items: center;
+      animation: pulse 2s ease-in-out infinite;
+      box-shadow: 0 0 20px var(--primary);
+    }
+    .hex-core::after { content: ''; width: 32px; height: 38px; background: #050507; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); position: absolute; }
+    .hex-dot { position: absolute; width: 10px; height: 10px; background: #fff; border-radius: 50%; z-index: 5; box-shadow: 0 0 10px #fff, 0 0 20px #06b6d4; animation: flicker 1s infinite alternate; }
+    .loading-brand { margin-top: 25px; font-size: 16px; letter-spacing: 5px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; animation: fadeText 2s infinite; }
+    .loading-brand span { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes pulse { 0%, 100% { transform: scale(1); filter: brightness(1); } 50% { transform: scale(1.1); filter: brightness(1.3); } }
+    @keyframes flicker { 0% { opacity: 0.5; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); } }
+    @keyframes fadeText { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+    /* ========= 2. NAVBAR (Fixed Alignment) ========= */
     .navbar {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 15px 5%; position: fixed; top: 0; width: 100%;
-      background: var(--bg-nav); backdrop-filter: blur(10px);
-      z-index: 1000; border-bottom: 1px solid var(--border-color);
-      transition: 0.3s;
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+      padding: 15px 0; background: var(--bg-nav);
+      backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color);
     }
-
-    .logo { font-size: 24px; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
-    .logo span { color: var(--primary); }
-
-    .nav-links { display: flex; gap: 30px; align-items: center; }
-    .nav-links a { font-size: 15px; font-weight: 500; color: var(--text-dim); position: relative; }
-    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+    .nav-flex { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
     
-    .nav-right { display: flex; align-items: center; gap: 15px; }
-
-    /* Search Box */
-    .search-box {
-      display: flex; align-items: center; background: var(--bg-card);
-      padding: 8px 15px; border-radius: 50px; border: 1px solid var(--border-color);
+    .logo { 
+      display: flex; align-items: center; gap: 10px; 
+      font-size: 26px; font-weight: 900; color: #fff; letter-spacing: 1px; 
     }
-    .search-box input { background: transparent; border: none; color: var(--text-main); outline: none; font-size: 14px; }
-    .search-box i { color: var(--accent); cursor: pointer; }
+    .logo-icon { height: 35px; width: auto; object-fit: contain; border-radius: 5px; }
+    [data-theme="light"] .logo { color: #fff; }
 
-    /* Theme Toggle Button */
-    .theme-btn {
-      width: 40px; height: 40px; border-radius: 50%;
-      background: var(--bg-card); border: 1px solid var(--border-color);
-      color: var(--text-main); display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: 0.3s;
-    }
-    .theme-btn:hover { background: var(--primary); color: white; border-color: var(--primary); transform: rotate(15deg); }
+    nav ul { display: flex; gap: 30px; align-items: center; }
+    nav ul li a { color: #fff; font-weight: 600; font-size: 16px; text-transform: uppercase; transition: 0.3s; }
+    nav ul li a:hover, nav ul li a.active { color: var(--bg-body); }
 
-    .menu-btn { display: none; font-size: 24px; color: var(--text-main); cursor: pointer; }
+    .btn-red { background: linear-gradient(135deg, #8a2be2, #4b0082); color: white; padding: 10px 25px; border-radius: 50px; font-weight: 600; font-size: 14px; transition: 0.4s; border: none; }
     
-    @media (max-width: 900px) {
-      .nav-links {
-        display: none; position: absolute; top: 70px; left: 0; width: 100%;
-        background: var(--bg-nav); flex-direction: column; padding: 20px; text-align: center;
-        border-bottom: 1px solid var(--border-color);
-      }
-      .nav-links.active { display: flex; }
-      .search-box { display: none; } 
-      .menu-btn { display: block; }
+    .nav-right-controls { display: flex; align-items: center; gap: 20px; }
+    .theme-toggle { 
+        width: 40px; height: 40px; border-radius: 50%; 
+        background: rgba(255, 255, 255, 0.1); 
+        border: 1px solid rgba(255, 255, 255, 0.2); 
+        color: #fff; cursor: pointer; 
+        display: flex; align-items: center; justify-content: center; 
+        font-size: 18px; transition: all 0.3s; 
     }
+    .theme-toggle:hover { background: rgba(255, 255, 255, 0.2); }
 
     /* ========= 3. HERO SECTION ========= */
-    .hero-banner {
-      height: 60vh;
-      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1600&auto=format&fit=crop');
-      background-size: cover; background-position: center;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; margin-top: 70px;
+    .about-hero {
+      padding: 180px 0 100px; text-align: center; position: relative; overflow: hidden;
+      background: radial-gradient(circle at top, rgba(138, 11, 138, 0.15), transparent 60%);
     }
-    .hero-banner h1 { font-size: 4rem; font-weight: 700; color: white; margin-bottom: 10px; }
-    .breadcrumb { font-size: 1rem; color: #ccc; letter-spacing: 1px; text-transform: uppercase; }
-    .breadcrumb span { color: var(--primary); margin: 0 5px; }
+    .hero-subtitle { color: #8a0b8a; letter-spacing: 3px; font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 15px; display: block; }
+    .about-hero h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 20px; }
+    .about-hero h1 span { background: linear-gradient(to right, #fff, #8a0b8a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .about-hero p { font-size: 1.2rem; color: var(--text-dim); max-width: 700px; margin: 0 auto; line-height: 1.6; }
 
-    /* ========= 4. ABOUT CONTENT ========= */
-    .about-section {
-      padding: 80px 10%; display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
-      align-items: center; position: relative;
-    }
+    /* ========= 4. MISSION & VISION ========= */
+    .mission-section { padding: 80px 0; }
+    .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
     
-    .about-text h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 20px; line-height: 1.2; }
-    .about-text h2 span { color: var(--primary); }
-    .about-text p { color: var(--text-dim); margin-bottom: 20px; line-height: 1.6; font-size: 1rem; }
+    .mission-img-box { position: relative; border-radius: 20px; overflow: hidden; border: 1px solid var(--border-color); box-shadow: var(--shadow); }
+    .mission-img-box img { width: 100%; display: block; transition: 0.5s; }
+    .mission-img-box:hover img { transform: scale(1.05); }
+
+    .mission-content h2 { font-size: 36px; margin-bottom: 20px; color: var(--text-main); }
+    .mission-content p { color: var(--text-dim); margin-bottom: 30px; line-height: 1.7; font-size: 16px; }
     
-    .about-images { position: relative; height: 400px; }
-    .img-back {
-      width: 70%; height: 90%; object-fit: cover; position: absolute; top: 0; left: 0;
-      border-radius: 10px; opacity: 0.8; border: 1px solid var(--border-color);
+    .values-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .value-card {
+      background: var(--bg-card); padding: 20px; border-radius: 15px; border: 1px solid var(--border-color);
+      display: flex; align-items: center; gap: 15px; transition: 0.3s;
     }
-    .img-front {
-      width: 60%; height: 70%; object-fit: cover; position: absolute; bottom: 0; right: 0;
-      border-radius: 10px; border: 8px solid var(--bg-body); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-    .play-btn {
-      position: absolute; top: 40%; left: 30%; width: 60px; height: 60px; background: white;
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      color: var(--primary); font-size: 20px; cursor: pointer; box-shadow: 0 0 20px rgba(255,255,255,0.4);
-      transition: 0.3s;
-    }
-    .play-btn:hover { transform: scale(1.1); }
+    .value-card:hover { border-color: var(--primary); transform: translateX(5px); background: var(--bg-card-hover); }
+    .value-card i { font-size: 24px; color: var(--primary); }
+    .value-card h4 { font-size: 16px; margin: 0; color: var(--text-main); }
 
-    @media (max-width: 900px) {
-      .about-section { grid-template-columns: 1fr; }
-      .about-images { height: 350px; margin-top: 30px; }
+    /* ========= 5. STATS COUNTER ========= */
+    .stats-strip { background: var(--bg-footer); padding: 60px 0; margin: 80px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+    .stats-flex { display: flex; justify-content: space-around; text-align: center; flex-wrap: wrap; gap: 30px; }
+    .stat-item h3 { font-size: 42px; font-weight: 800; color: #8a0b8a; margin-bottom: 5px; }
+    .stat-item p { color: var(--text-dim); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* ========= 6. TIMELINE (JOURNEY) - MOBILE FIXED ========= */
+    .timeline-section { padding: 80px 0; position: relative; }
+    .timeline-heading { text-align: center; margin-bottom: 60px; }
+    .timeline-heading h2 { font-size: 36px; color: var(--text-main); }
+
+    .timeline { position: relative; max-width: 1000px; margin: 0 auto; }
+    .timeline::after {
+      content: ''; position: absolute; width: 4px; background: var(--border-color);
+      top: 0; bottom: 0; left: 50%; margin-left: -2px; border-radius: 10px;
     }
 
-    /* ========= 5. STATS STRIP ========= */
-    .stats-strip {
-      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-      padding: 60px 10%; margin: 50px 0;
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 30px; text-align: center; color: white;
-    }
-    .stat-num { font-size: 3rem; font-weight: 700; margin-bottom: 5px; }
-    .stat-label { font-size: 1rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
+    .t-container { padding: 10px 40px; position: relative; width: 50%; }
+    .t-left { left: 0; text-align: right; }
+    .t-right { left: 50%; }
 
-    /* ========= 6. TESTIMONIALS ========= */
-    .testimonials { padding: 80px 10%; text-align: center; }
-    .sec-title { font-size: 2.5rem; margin-bottom: 50px; }
+    .t-content {
+      padding: 20px 30px; background: var(--bg-card); position: relative; border-radius: 15px;
+      border: 1px solid var(--border-color); transition: 0.3s;
+    }
+    .t-content:hover { border-color: var(--primary); transform: scale(1.02); background: var(--bg-card-hover); }
+    .t-content h3 { font-size: 20px; color: var(--primary); margin-bottom: 5px; }
+    .t-content h4 { font-size: 16px; margin-bottom: 10px; color: var(--text-main); }
+    .t-content p { font-size: 14px; color: var(--text-dim); }
+
+    /* Timeline Dots */
+    .t-container::after {
+      content: ''; position: absolute; width: 20px; height: 20px; right: -10px; background: var(--bg-body);
+      border: 4px solid var(--primary); top: 20px; border-radius: 50%; z-index: 1;
+    }
+    .t-right::after { left: -10px; }
+
+    /* ========= 7. FOUNDER CARD ========= */
+    .team-section { padding: 80px 0; text-align: center; }
+    .founder-card {
+      background: linear-gradient(135deg, rgba(138, 11, 138, 0.1), rgba(75,0,130,0.1));
+      border: 1px solid var(--primary); border-radius: 30px; padding: 50px;
+      max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 50px;
+      position: relative; overflow: hidden;
+    }
+    .founder-img { width: 250px; height: 250px; border-radius: 50%; object-fit: cover; border: 5px solid var(--bg-body); box-shadow: 0 0 30px rgba(138, 11, 138, 0.3); }
+    .founder-info { text-align: left; }
+    .founder-info h2 { font-size: 32px; margin-bottom: 5px; color: var(--text-main); }
+    .founder-info h5 { color: #8a0b8a; margin-bottom: 20px; font-weight: 500; text-transform: uppercase; letter-spacing: 2px; }
+    .founder-info p { font-size: 16px; line-height: 1.7; color: var(--text-dim); font-style: italic; }
+    .signature { font-family: cursive; font-size: 24px; color: var(--text-main); margin-top: 20px; opacity: 0.8; }
+
+    /* ========= 8. FOOTER ========= */
+    .main-footer { background: var(--bg-footer); padding: 50px 0; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-dim); }
+
+    /* ========= RESPONSIVE FIXES (Mobile Layout) ========= */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 25px; height: 3px; background: #fff; transition: 0.3s; }
     
-    .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-    .testi-card {
-      background: var(--bg-card); padding: 30px; border-radius: 15px; text-align: left;
-      border: 1px solid var(--border-color); transition: 0.3s; position: relative;
+    @media (max-width: 992px) {
+      /* Navbar Height Fix */
+      .navbar { padding: 12px 0; }
+      .hamburger { display: flex; }
+      nav ul { 
+        position: fixed; top: 60px; right: -100%; width: 100%; height: 100vh; 
+        background: var(--bg-body); flex-direction: column; padding-top: 50px;
+        transition: 0.4s ease; border-top: 1px solid var(--border-color);
+      }
+      nav ul.active { right: 0; }
+      
+      .about-hero h1 { font-size: 2.5rem; }
+      .mission-grid { grid-template-columns: 1fr; }
+      
+      /* 🔥 TIMELINE FIX: Left Aligned on Mobile */
+      .timeline::after { left: 31px; }
+      .t-container { width: 100%; padding-left: 70px; padding-right: 25px; }
+      .t-container.t-right { left: 0; }
+      .t-container::after { left: 21px; right: auto; } /* Dots fixed to left */
+      .t-left, .t-right { text-align: left; }
+      
+      .stats-flex { flex-direction: column; gap: 40px; }
+      .founder-card { flex-direction: column; padding: 30px; text-align: center; }
+      .founder-info { text-align: center; }
     }
-    .testi-card:hover { transform: translateY(-5px); border-color: var(--primary); }
-    .testi-card i { font-size: 30px; color: var(--accent); margin-bottom: 15px; }
-    .testi-text { color: var(--text-dim); font-style: italic; margin-bottom: 20px; }
-    .user-info { display: flex; align-items: center; gap: 15px; }
-    .user-img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
-    
-    /* ========= 7. FOOTER ========= */
-    .footer {
-      background: #020205; padding: 50px 10%; border-top: 1px solid var(--border-color);
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px;
-    }
-    .footer h3 { color: white; margin-bottom: 20px; }
-    .footer p, .footer a { color: var(--text-dim); margin-bottom: 10px; display: block; font-size: 14px; }
-    .footer a:hover { color: var(--primary); }
-    .copyright { text-align: center; padding: 20px; background: black; color: var(--text-dim); font-size: 13px; }
-
   </style>
 </head>
 <body data-theme="dark">
 
-  <nav class="navbar">
-    <div class="logo">
-      <span>🎓</span> CODELINE AI
+  <div id="preloader">
+    <div class="loader-content">
+      <div class="arc arc-1"></div>
+      <div class="arc arc-2"></div>
+      <div class="hex-core"><div class="hex-dot"></div></div>
     </div>
+    <div class="loading-brand">CODELINE <span>AI</span></div>
+  </div>
 
-    <ul class="nav-links" id="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html" class="active">About</a></li>
-      <li><a href="my-courses.html">Courses</a></li>
-      <li><a href="#">Staff</a></li>
-      <li><a href="#">Blog</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-
-    <div class="nav-right">
-      <div class="search-box">
-        <input type="text" placeholder="Search...">
-        <i class="fas fa-search"></i>
-      </div>
-
-      <button class="theme-btn" id="theme-toggle">
-        <i class="fas fa-sun"></i>
-      </button>
-
-      <div class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+  <nav class="navbar">
+    <div class="container nav-flex">
+        <a href="index.html" class="logo">
+            <img src="CodeLine Logo.jpg" alt="Logo" class="logo-icon">
+            <span>CODELINE <span style="color:#fff">AI</span></span>
+        </a>
+        <ul id="nav-menu">
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="dashboard.html">DASHBOARD</a></li>
+            <li><a href="aboutus.html" class="active">ABOUT</a></li>
+            <li><a href="instructors.html">INSTRUCTORS</a></li>
+            <li><a href="placement.html">PLACEMENTS</a></li>
+            <li><a href="login.html" class="btn-red">Login / Join</a></li>
+        </ul>
+        <div class="nav-right-controls">
+            <button id="themeToggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+        </div>
     </div>
   </nav>
 
-  <section class="hero-banner" data-aos="fade-in">
-    <h1>About Us</h1>
-    <div class="breadcrumb">
-      <a href="index.html">Home</a> <span>&gt;</span> About Us
+  <section class="about-hero">
+    <div class="container" data-aos="fade-up">
+      <span class="hero-subtitle">OUR STORY</span>
+      <h1>Empowering the Next Gen of <br><span>Tech Leaders</span></h1>
+      <p>We are not just an LMS platform; we are a career accelerator designed to bridge the gap between academic learning and industry demands.</p>
     </div>
   </section>
 
-  <section class="about-section">
-    <div class="about-text" data-aos="fade-right">
-      <h2>Fox University Established <br><span>Since 1960</span></h2>
-      <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word.</p>
-      <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-      <p>Separated they live in. A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-    </div>
-    
-    <div class="about-images" data-aos="fade-left">
-      <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800&auto=format&fit=crop" class="img-back" alt="University">
-      <div class="play-btn"><i class="fas fa-play"></i></div>
-      <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=600&auto=format&fit=crop" class="img-front" alt="Students">
-    </div>
-  </section>
-
-  <section class="stats-strip" data-aos="fade-up">
-    <div><div class="stat-num">18</div><div class="stat-label">Certified Teachers</div></div>
-    <div><div class="stat-num">401</div><div class="stat-label">Students</div></div>
-    <div><div class="stat-num">30</div><div class="stat-label">Courses</div></div>
-    <div><div class="stat-num">50</div><div class="stat-label">Awards Won</div></div>
-  </section>
-
-  <section class="testimonials">
-    <h2 class="sec-title" data-aos="zoom-in">Student Says About Us</h2>
-    <div class="testi-grid">
-      
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="100">
-        <i class="fas fa-quote-left"></i>
-        <p class="testi-text">"Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts."</p>
-        <div class="user-info">
-          <img src="https://randomuser.me/api/portraits/men/32.jpg" class="user-img">
-          <div><h4>Henry Dee</h4><span style="font-size: 12px; color: var(--accent);">Web Developer</span></div>
+  <section class="mission-section">
+    <div class="container mission-grid">
+      <div class="mission-img-box" data-aos="fade-right">
+        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1000&auto=format&fit=crop" alt="Mission">
+      </div>
+      <div class="mission-content" data-aos="fade-left">
+        <h2>We’re on a Mission to <span>Democratize Education</span></h2>
+        <p>Codeline AI was born out of a simple idea: Quality tech education should be accessible, practical, and career-oriented. We combine AI-driven personalized learning with mentorship from top industry experts.</p>
+        
+        <div class="values-grid">
+          <div class="value-card">
+            <i class="fas fa-rocket"></i>
+            <h4>Practical Learning</h4>
+          </div>
+          <div class="value-card">
+            <i class="fas fa-globe"></i>
+            <h4>Global Community</h4>
+          </div>
+          <div class="value-card">
+            <i class="fas fa-certificate"></i>
+            <h4>Industry Certified</h4>
+          </div>
+          <div class="value-card">
+            <i class="fas fa-user-shield"></i>
+            <h4>Mentorship</h4>
+          </div>
         </div>
       </div>
-
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="200">
-        <i class="fas fa-quote-left"></i>
-        <p class="testi-text">"Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean."</p>
-        <div class="user-info">
-          <img src="https://randomuser.me/api/portraits/women/44.jpg" class="user-img">
-          <div><h4>Sarah Smith</h4><span style="font-size: 12px; color: var(--accent);">Data Scientist</span></div>
-        </div>
-      </div>
-
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="300">
-        <i class="fas fa-quote-left"></i>
-        <p class="testi-text">"A small river named Duden flows by their place and supplies it with the necessary regelialia."</p>
-        <div class="user-info">
-          <img src="https://randomuser.me/api/portraits/men/86.jpg" class="user-img">
-          <div><h4>Mark Huff</h4><span style="font-size: 12px; color: var(--accent);">Student</span></div>
-        </div>
-      </div>
-
     </div>
   </section>
 
-  <footer class="footer">
-    <div>
-      <h3>Have a Question?</h3>
-      <p><i class="fas fa-map-marker-alt"></i> 203 Fake St. Mountain View, San Francisco, California, USA</p>
-      <p><i class="fas fa-phone"></i> +2 392 3929 210</p>
-      <p><i class="fas fa-envelope"></i> info@codelineai.com</p>
-    </div>
-    <div>
-      <h3>Links</h3>
-      <a href="#">Home</a><a href="#">About</a><a href="#">Services</a><a href="#">Deparments</a><a href="#">Contact</a>
-    </div>
-    <div>
-      <h3>Subscribe Us!</h3>
-      <div class="search-box" style="margin-top: 10px;">
-        <input type="email" placeholder="Enter email address" style="width: 100%;">
-        <button style="background: var(--primary); color: white; border: none; padding: 5px 15px; border-radius: 20px; cursor: pointer;">Subscribe</button>
+  <div class="stats-strip">
+    <div class="container stats-flex" data-aos="fade-up">
+      <div class="stat-item">
+        <h3 class="counter" data-target="50">0+</h3>
+        <p>Expert Instructors</p>
       </div>
+      <div class="stat-item">
+        <h3 class="counter" data-target="10000">0+</h3>
+        <p>Students Enrolled</p>
+      </div>
+      <div class="stat-item">
+        <h3 class="counter" data-target="120">0+</h3>
+        <p>Corporate Partners</p>
+      </div>
+      <div class="stat-item">
+        <h3 class="counter" data-target="95">0%</h3>
+        <p>Success Rate</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="timeline-section">
+    <div class="container">
+      <div class="timeline-heading" data-aos="fade-up">
+        <h2>Our Journey</h2>
+      </div>
+      <div class="timeline">
+        <div class="t-container t-left" data-aos="fade-right">
+          <div class="t-content">
+            <h3>2020</h3>
+            <h4>The Beginning</h4>
+            <p>Started as a small YouTube channel teaching basic coding concepts to college students.</p>
+          </div>
+        </div>
+        <div class="t-container t-right" data-aos="fade-left">
+          <div class="t-content">
+            <h3>2022</h3>
+            <h4>First 1,000 Students</h4>
+            <p>Launched our first full-stack web development bootcamp which became a massive hit.</p>
+          </div>
+        </div>
+        <div class="t-container t-left" data-aos="fade-right">
+          <div class="t-content">
+            <h3>2024</h3>
+            <h4>AI Integration</h4>
+            <p>Revamped the platform with AI-driven course recommendations and doubt solving.</p>
+          </div>
+        </div>
+        <div class="t-container t-right" data-aos="fade-left">
+          <div class="t-content">
+            <h3>2026</h3>
+            <h4>Global Expansion</h4>
+            <p>Partnered with international tech giants for direct placements and global certifications.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="team-section">
+    <div class="container">
+      <div class="founder-card" data-aos="zoom-in">
+        <img src="CodeLineSir.jpeg" alt="Founder" class="founder-img">
+        <div class="founder-info">
+          <h2>Chandrakant Sir</h2>
+          <h5>Founder & CEO</h5>
+          <p>"Technology is changing faster than ever. At Codeline AI, our goal is to ensure you don't just keep up, but lead the way. We are building the education system of the future, today."</p>
+          <div class="signature"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="main-footer">
+    <div class="container">
+      <p>&copy; 2026 CODELINE AI. Empowering the Future.</p>
     </div>
   </footer>
-  
-  <div class="copyright">
-    Copyright © 2026 All rights reserved | This template is made with ❤️ by CodeLine AI
-  </div>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    AOS.init();
+    AOS.init({ duration: 1000, once: true });
 
-    // Menu Logic
-    function toggleMenu() {
-      document.getElementById('nav-links').classList.toggle('active');
-    }
-
-    // Theme Toggle Logic
-    const themeBtn = document.getElementById('theme-toggle');
-    const body = document.body;
-    
-    // Check saved theme
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    body.setAttribute('data-theme', savedTheme);
-    updateIcon(savedTheme);
-
-    themeBtn.addEventListener('click', () => {
-      const current = body.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
-      body.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      updateIcon(next);
+    // Preloader
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('preloader');
+      setTimeout(() => {
+        preloader.style.opacity = '0';
+        setTimeout(() => preloader.style.display = 'none', 600);
+      }, 800);
     });
 
-    function updateIcon(theme) {
-      themeBtn.innerHTML = theme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    // Theme Toggle
+    const toggleBtn = document.getElementById('themeToggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let theme = localStorage.getItem('codeline-theme') || (prefersDark ? 'dark' : 'light');
+    
+    function applyTheme(themeName) {
+        document.documentElement.setAttribute('data-theme', themeName);
+        localStorage.setItem('codeline-theme', themeName);
+        toggleBtn.innerHTML = themeName === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
     }
+    applyTheme(theme);
+
+    toggleBtn.addEventListener('click', () => {
+        theme = theme === 'dark' ? 'light' : 'dark';
+        applyTheme(theme);
+    });
+
+    // Mobile Menu
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    }
+
+    // Counter Animation
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+      const target = +counter.getAttribute('data-target');
+      const inc = target / 100;
+      const updateCount = () => {
+        const count = +counter.innerText.replace('+','').replace('%','');
+        if (count < target) {
+          counter.innerText = Math.ceil(count + inc) + (counter.getAttribute('data-target').includes('95') ? '%' : '+');
+          setTimeout(updateCount, 20);
+        } else {
+          counter.innerText = target + (counter.getAttribute('data-target').includes('95') ? '%' : '+');
+        }
+      };
+      updateCount();
+    });
   </script>
 </body>
 </html>

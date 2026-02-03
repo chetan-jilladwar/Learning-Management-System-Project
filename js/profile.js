@@ -1,4 +1,3 @@
-// js/profile.js (Same Logic, Works with New UI)
 document.addEventListener('DOMContentLoaded', async () => {
     const userId = localStorage.getItem('lsm_user_id');
     
@@ -28,8 +27,7 @@ async function initProfile(userId) {
         if (data.status === 'success' && data.data) {
             const profile = data.data;
             populateProfileForm(profile);
-            showMessage(messageEl, '', ''); // Clear loading msg
-            // messageEl.style.display = 'none';
+            messageEl.style.display = 'none'; // Hide loading
         } else {
             throw new Error(data.message || 'Profile not found');
         }
@@ -40,7 +38,6 @@ async function initProfile(userId) {
 }
 
 function populateProfileForm(profile) {
-    // Ye IDs ab HTML me exist karte hain
     if(document.getElementById('name')) document.getElementById('name').value = profile.Name || '';
     if(document.getElementById('email')) document.getElementById('email').value = profile.Email || '';
     if(document.getElementById('phone')) document.getElementById('phone').value = profile.Phone || '';
@@ -48,14 +45,14 @@ function populateProfileForm(profile) {
     // Update Avatar UI
     const placeholder = document.querySelector('.profile-pic-placeholder');
     if (placeholder) {
-        const initials = (profile.Name || '').split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        const initials = (profile.Name || 'User').split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
         placeholder.textContent = initials || 'U';
     }
     
-    localStorage.setItem('lsm_user_name', profile.Name);
+    if(profile.Name) localStorage.setItem('lsm_user_name', profile.Name);
 }
 
-// --- UPDATE PROFILE ---
+// --- UPDATE PROFILE (FIXED) ---
 document.getElementById('save-button')?.addEventListener('click', async () => {
     const messageEl = document.getElementById('message');
     const saveButton = document.getElementById('save-button');
@@ -71,19 +68,23 @@ document.getElementById('save-button')?.addEventListener('click', async () => {
     showLoading(saveButton, messageEl, 'Updating...');
     
     try {
-        const params = new URLSearchParams({
-            action: 'updateProfile',
-            userId: window.userId,
-            name: name,
-            phone: phone
+        // 🔥 FIX: Use URLSearchParams for POST data (Safe Method)
+        const formData = new URLSearchParams();
+        formData.append('action', 'updateProfile');
+        formData.append('userId', window.userId);
+        formData.append('name', name);
+        formData.append('phone', phone);
+
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            body: formData
         });
         
-        const response = await fetch(`${GOOGLE_SCRIPT_URL}?${params}`, { method: 'POST' });
         const data = await response.json();
         
         if (data.status === 'success') {
             localStorage.setItem('lsm_user_name', name);
-            populateProfileForm({ Name: name, Phone: phone });
+            populateProfileForm({ Name: name, Phone: phone }); // Update UI immediately
             showMessage(messageEl, 'Profile updated successfully!', 'success');
         } else {
             throw new Error(data.message || 'Update failed');
@@ -92,11 +93,11 @@ document.getElementById('save-button')?.addEventListener('click', async () => {
         console.error('Update error:', error);
         showMessage(messageEl, 'Update failed: ' + error.message, 'error');
     } finally {
-        hideLoading(saveButton, 'Save Changes');
+        hideLoading(saveButton, '<i class="fas fa-save"></i> Save Changes');
     }
 });
 
-// --- CHANGE PASSWORD ---
+// --- CHANGE PASSWORD (FIXED) ---
 document.getElementById('change-password-button')?.addEventListener('click', async () => {
     const messageEl = document.getElementById('message');
     const btn = document.getElementById('change-password-button');
@@ -113,14 +114,18 @@ document.getElementById('change-password-button')?.addEventListener('click', asy
     showLoading(btn, messageEl, 'Updating...');
     
     try {
-        const params = new URLSearchParams({
-            action: 'changePassword',
-            userId: window.userId,
-            currentPassword: currentPass,
-            newPassword: newPass
+        // 🔥 FIX: Use URLSearchParams here too
+        const formData = new URLSearchParams();
+        formData.append('action', 'changePassword');
+        formData.append('userId', window.userId);
+        formData.append('currentPassword', currentPass);
+        formData.append('newPassword', newPass);
+
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            body: formData
         });
         
-        const response = await fetch(`${GOOGLE_SCRIPT_URL}?${params}`, { method: 'POST' });
         const data = await response.json();
         
         if (data.status === 'success') {
@@ -134,7 +139,7 @@ document.getElementById('change-password-button')?.addEventListener('click', asy
     } catch (error) {
         showMessage(messageEl, error.message, 'error');
     } finally {
-        hideLoading(btn, 'Update Password');
+        hideLoading(btn, '<i class="fas fa-key"></i> Update Password');
     }
 });
 
@@ -144,16 +149,22 @@ function showMessage(el, text, type) {
         el.textContent = text;
         el.className = `message ${type}`;
         el.style.display = 'block';
+        
+        // Auto hide success message after 3s
+        if(type === 'success') {
+            setTimeout(() => { el.style.display = 'none'; }, 3000);
+        }
     }
 }
 
 function showLoading(btn, msgEl, text) {
     btn.disabled = true;
     btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${text}`;
-    showMessage(msgEl, text, 'loading');
+    // Optional: msgEl ko hide rakhein taaki button par focus rahe, ya dikhana hai to dikhayein
+    if(msgEl) msgEl.style.display = 'none'; 
 }
 
-function hideLoading(btn, originalText) {
+function hideLoading(btn, originalHTML) {
     btn.disabled = false;
-    btn.innerHTML = originalText || 'Save';
+    btn.innerHTML = originalHTML || 'Save';
 }

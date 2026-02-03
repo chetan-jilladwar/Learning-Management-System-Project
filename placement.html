@@ -3,2261 +3,495 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CODELINE AI - Learn Smarter</title>
+  <title>Placements - CODELINE AI</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
   <style>
-  /* PREMIUM PURPLE FUTURISTIC THEME 
-   CODELINE AI - FULL RE-DESIGN
-*/
+    /* --- THEME VARIABLES --- */
+    :root {
+      --primary: #8a0b8a;
+      --primary-dark: #4b0082;
+      --accent: #8a0b8a;
+      --success: #00d26a; 
+      --gold: #ffd700;   
+      
+      --bg-body: #06060c;
+      --bg-nav: #8a0b8a;
+      --bg-card: rgba(255, 255, 255, 0.03);
+      --bg-card-hover: rgba(30, 30, 50, 1);
+      --bg-footer: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%);
+      
+      --text-main: #ffffff;
+      --text-dim: #b0b0c0;
+      --border-color: rgba(138, 43, 226, 0.2);
+      --shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
 
-* { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
-    font-family: 'Poppins', sans-serif; 
-}
+    [data-theme="light"] {
+      --bg-body: #f8fafc;
+      --bg-nav: #8a0b8a;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f1f5f9;
+      --bg-footer: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      --text-main: #1e293b;
+      --text-dim: #64748b;
+      --border-color: rgba(0, 0, 0, 0.1);
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
 
-:root {
-    --primary: #9a0669;
-    --primary-light: #a64dff; 
-    --primary-dark: #4b0082;
-    --accent: #9a0669;
-    --bg-dark: #06060c;
-    --bg-card: rgba(255, 255, 255, 0.03);
-    --white: #ffffff;
-    --text-dim: #b0b0c0;
-}
-/* LIGHT MODE (Professional Clean) */
-/* ⭐ PREMIUM LIGHT MODE - CODELINE AI ⭐ */
-[data-theme="light"] {
-    /* Backgrounds - Clean & Modern */
-    --bg-dark: #f8fafc;           /* Soft slate gray */
-    --bg-secondary: #ffffff;      /* Pure white */
-    --bg-card: rgba(255, 255, 255, 0.92);  /* Glass white */
+    html { scroll-behavior: smooth; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+    /* ========= 2. ADVANCED LOGO LOADER (TECH-HEX) ========= */
+    #preloader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #050507; /* Deep Tech Dark */
+      z-index: 99999;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    .loader-content { position: relative; width: 140px; height: 140px; display: flex; justify-content: center; align-items: center; }
+
+    .arc {
+      position: absolute; width: 100%; height: 100%;
+      border-radius: 50%; border: 3px solid transparent;
+    }
+    .arc-1 { 
+      border-top-color: #06b6d4; 
+      box-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+      animation: spin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite; 
+    }
+    .arc-2 { 
+      width: 70%; height: 70%; 
+      border-bottom-color: var(--primary); 
+      box-shadow: 0 0 10px rgba(154, 6, 105, 0.4);
+      animation: spin 3s linear infinite reverse; 
+    }
+
+    .hex-core {
+      position: absolute; width: 44px; height: 50px;
+      background: linear-gradient(135deg, var(--primary), #5b00ff);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      display: flex; justify-content: center; align-items: center;
+      animation: pulse 2s ease-in-out infinite;
+      box-shadow: 0 0 20px var(--primary);
+    }
+    .hex-core::after {
+      content: ''; width: 32px; height: 38px;
+      background: #050507; 
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      position: absolute;
+    }
     
-    /* Text Colors - Perfect Readability */
-    --white: #1e293b;             /* Dark slate */
-    --text-dim: #64748b;          /* Medium slate */
-    
-    /* Purple Theme Maintained - Light Variant */
-    --primary: #7c3aed;           /* Perfect purple */
-    --primary-light: #a78bfa;     /* Light purple */
-    --primary-dark: #6d28d9;      /* Dark purple */
-    --accent: #ec4899;            /* Pink accent */
-    
-    /* Additional Light Mode Colors */
-    --success: #10b981;
-    --warning: #f59e0b;
-    --border-light: rgba(148, 163, 184, 0.2);
-}
-/* Light Mode Specific Fixes */
-[data-theme="light"] {
-    /* Navbar */
+    .hex-dot { 
+      position: absolute; width: 10px; height: 10px; 
+      background: #fff; border-radius: 50%; z-index: 5; 
+      box-shadow: 0 0 10px #fff, 0 0 20px #06b6d4; 
+      animation: flicker 1s infinite alternate;
+    }
+
+    .loading-brand {
+      margin-top: 25px; font-family: 'Poppins', sans-serif;
+      font-size: 16px; letter-spacing: 5px; font-weight: 700;
+      color: var(--text-dim); text-transform: uppercase;
+      animation: fadeText 2s infinite;
+    }
+    .loading-brand span { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes pulse { 0%, 100% { transform: scale(1); filter: brightness(1); } 50% { transform: scale(1.1); filter: brightness(1.3); } }
+    @keyframes flicker { 0% { opacity: 0.5; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); } }
+    @keyframes fadeText { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+    /* --- NAVBAR --- */
     .navbar {
-        background: rgba(151, 10, 118, 0.95) !important;
-        border-bottom: 1px solid var(--border-light);
-        box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+      padding: 15px 0; background: var(--bg-nav);
+      backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color);
+    }
+    .nav-flex { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+    
+    .logo { display: flex; align-items: center; gap: 10px; font-size: 26px; font-weight: 900; color: #fff; letter-spacing: 1px; }
+    .logo-icon { height: 35px; width: auto; object-fit: contain; border-radius: 5px; }
+    [data-theme="light"] .logo { color: #fff; }
+    
+    nav ul { display: flex; gap: 30px; align-items: center; }
+    nav ul li a { color: #fff; font-weight: 600; font-size: 16px; text-transform: uppercase; transition: 0.3s; }
+    nav ul li a:hover, nav ul li a.active { color: var(--bg-body); }
+    .btn-red { background: linear-gradient(135deg, #8a2be2, #4b0082); color: white; padding: 10px 25px; border-radius: 50px; font-weight: 600; font-size: 14px; transition: 0.4s; border: none; }
+    
+    /* Theme Toggle & Hamburger Layout */
+    .nav-right-controls { display: flex; align-items: center; gap: 20px; }
+
+    .theme-toggle { 
+        width: 40px; height: 40px; border-radius: 50%; 
+        background: rgba(255, 255, 255, 0.1); 
+        border: 1px solid rgba(255, 255, 255, 0.2); 
+        color: #fff; cursor: pointer; 
+        display: flex; align-items: center; justify-content: center; 
+        font-size: 18px; transition: all 0.3s; 
+    }
+    .theme-toggle:hover { background: rgba(255, 255, 255, 0.2); }
+
+    /* --- HERO SECTION --- */
+    .hero-section {
+      padding: 180px 0 100px; text-align: center; position: relative; overflow: hidden;
+      background: radial-gradient(circle at top, rgba(138, 11, 138, 0.15), transparent 60%);
+    }
+    .hero-content h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 20px; }
+    .hero-content h1 span { background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-content p { font-size: 1.2rem; color: var(--text-dim); max-width: 700px; margin: 0 auto 40px; }
+
+    /* --- PLACEMENT STATS ROW --- */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px;
+      margin-bottom: 80px; position: relative; z-index: 2;
+    }
+    .p-stat-card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      padding: 30px 20px; border-radius: 20px; text-align: center;
+      backdrop-filter: blur(10px); box-shadow: var(--shadow);
+      transition: 0.3s;
+    }
+    .p-stat-card:hover { transform: translateY(-10px); border-color: var(--primary); background: var(--bg-card-hover); }
+    .p-stat-icon { font-size: 40px; color: var(--gold); margin-bottom: 15px; }
+    .p-stat-num { font-size: 36px; font-weight: 800; color: var(--text-main); margin-bottom: 5px; }
+    .p-stat-label { color: var(--text-dim); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* --- MARQUEE (Hiring Partners) --- */
+    .marquee-section { padding: 50px 0; background: var(--bg-footer); overflow: hidden; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+    .marquee-title { text-align: center; margin-bottom: 40px; font-size: 24px; color: var(--text-dim); }
+    .marquee-track { display: flex; gap: 60px; width: max-content; animation: scroll 30s linear infinite; }
+    .marquee-track img { height: 50px; opacity: 0.6; filter: grayscale(100%); transition: 0.3s; }
+    .marquee-track img:hover { opacity: 1; filter: grayscale(0%); transform: scale(1.1); }
+    @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* --- SUCCESS STORIES (ALUMNI) --- */
+    .stories-section { padding: 100px 0; }
+    .section-head { text-align: center; margin-bottom: 60px; }
+    .section-head h2 { font-size: 40px; font-weight: 700; margin-bottom: 10px; color: var(--text-main); }
+    .section-head h2 span { color: var(--primary); }
+    .section-head p { color: var(--text-dim); }
+
+    .stories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+    
+    .story-card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 24px; padding: 30px; position: relative; overflow: hidden;
+      transition: 0.4s;
+    }
+    .story-card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(138, 11, 138, 0.2); }
+    
+    /* Glowing Border Effect on Card */
+    .story-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+    }
+
+    .student-header { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
+    .student-img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); }
+    .student-info h3 { font-size: 18px; color: var(--text-main); margin-bottom: 5px; }
+    .student-info p { font-size: 13px; color: var(--text-dim); }
+
+    .placed-at {
+      background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 15px;
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;
+    }
+    .company-logo-small { height: 30px; width: auto; }
+    .package-badge { background: rgba(0, 210, 106, 0.15); color: var(--success); padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; border: 1px solid var(--success); }
+
+    .story-quote { font-style: italic; color: var(--text-dim); font-size: 14px; line-height: 1.6; }
+    .quote-icon { font-size: 24px; color: var(--primary); opacity: 0.5; margin-bottom: 10px; }
+
+    /* --- PLACEMENT PROCESS --- */
+    .process-section { padding: 80px 0; background: var(--bg-footer); }
+    .process-steps { display: flex; justify-content: space-between; margin-top: 50px; flex-wrap: wrap; gap: 20px; }
+    
+    .step-card {
+      flex: 1; min-width: 250px; background: var(--bg-card); padding: 30px 20px;
+      border-radius: 20px; text-align: center; border: 1px solid var(--border-color);
+      position: relative; transition: 0.3s;
+    }
+    .step-card:hover { background: var(--bg-card-hover); transform: scale(1.05); }
+    
+    .step-icon {
+      width: 60px; height: 60px; background: var(--primary); color: white;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 24px; margin: 0 auto 20px; box-shadow: 0 0 20px rgba(138, 11, 138, 0.5);
+    }
+    .step-card h4 { font-size: 18px; margin-bottom: 10px; color: var(--text-main); }
+    .step-card p { font-size: 14px; color: var(--text-dim); }
+
+    /* Arrow between steps (Desktop only) */
+    .step-card:not(:last-child)::after {
+      content: '\f054'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+      position: absolute; right: -20px; top: 50%; transform: translateY(-50%);
+      color: var(--text-dim); font-size: 20px; opacity: 0.5;
+    }
+
+    /* --- CTA --- */
+    .cta-container { text-align: center; margin: 80px 0; }
+    .cta-box {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      padding: 60px; border-radius: 30px; position: relative; overflow: hidden;
+    }
+    .cta-box h2 { font-size: 36px; color: white; margin-bottom: 15px; }
+    .cta-box p { color: rgba(255,255,255,0.9); margin-bottom: 30px; font-size: 18px; }
+    .btn-white { background: white; color: var(--primary); padding: 15px 40px; border-radius: 50px; font-weight: 700; text-decoration: none; transition: 0.3s; display: inline-block; }
+    .btn-white:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+
+    /* --- FOOTER (Reused) --- */
+    .main-footer { background: var(--bg-footer); border-top: 1px solid var(--border-color); padding: 80px 0 30px; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 60px; margin-bottom: 60px; }
+    .footer-brand h3 { font-size: 28px; font-weight: 800; color: var(--text-main); margin-bottom: 12px; }
+    .footer-brand p { color: var(--text-dim); font-size: 16px; line-height: 1.6; margin-bottom: 25px; }
+    .social-links { display: flex; gap: 15px; }
+    .social-icon { width: 45px; height: 45px; background: rgba(139, 92, 246, 0.1); border: 1px solid var(--border-color); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--text-dim); transition: 0.3s; }
+    .social-icon:hover { background: var(--primary); color: white; transform: translateY(-5px); }
+    .footer-links h4 { margin-bottom: 25px; color: var(--text-main); }
+    .footer-links ul li { margin-bottom: 12px; }
+    .footer-links a { color: var(--text-dim); transition: 0.3s; }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-bottom { padding-top: 30px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; color: var(--text-dim); font-size: 14px; }
+
+    /* --- RESPONSIVE HAMBURGER & LAYOUT --- */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 25px; height: 3px; background: #fff; transition: 0.3s; }
+    
+    @media (max-width: 992px) {
+        .hamburger { display: flex; }
+        
+        /* Mobile Menu */
+        nav ul { 
+            position: fixed; top: 70px; right: -100%; width: 100%; height: 100vh; 
+            background: var(--bg-body); flex-direction: column; padding-top: 50px; 
+            transition: 0.4s ease; border-top: 1px solid var(--border-color); 
+        }
+        nav ul.active { right: 0; }
+        
+        .hero-section { height: 50vh; }
+        .hero-content h1 { font-size: 32px; }
+        
+        /* Stats Responsive */
+        .stats-row { grid-template-columns: 1fr 1fr; }
+        
+        /* Process Step Responsive */
+        .step-card::after { display: none; }
+        
+        .footer-top { grid-template-columns: 1fr; text-align: center; }
+        .footer-bottom { flex-direction: column; gap: 15px; align-items: center; }
     }
     
-    /* Feature Cards */
-    .feature-card {
-        background: rgba(102, 116, 101, 0.9) !important;
-        border: 1px solid var(--border-light);
-        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    @media (max-width: 576px) {
+        .stats-row { grid-template-columns: 1fr; }
     }
-    
-    /* Course Cards */
-    .course-card {
-        background: rgba(255, 255, 255, 0.95) !important;
-        border: 1px solid var(--border-light);
-    }
-    
-    /* Testimonials */
-    .testimonial-card {
-        background: rgba(255, 255, 255, 0.9) !important;
-        border: 1px solid var(--border-light);
-    }
-    
-    /* Footer */
-    .modern-footer {
-        background: #f1f5f9 !important;
-        border-top: 1px solid var(--border-light);
-    }
-}
-
-/* Hero Overlay Light Mode */
-[data-theme="light"] .overlay {
-    background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, rgba(30, 41, 59, 0.85) 100%);
-}
-/* Mobile Optimizations */
-@media (max-width: 768px) {
-    [data-theme="light"] .navbar {
-        background: rgba(167, 23, 124, 0.98) !important;
-        backdrop-filter: blur(20px);
-    }
-    
-    [data-theme="light"] .course-card {
-        background: white !important;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-    }
-}
-
-
-/* 🔥 PERFECT RESPONSIVE THEME TOGGLE - MOBILE + LAPTOP */
-/* 🔥 SMART POSITION THEME TOGGLE - MOBILE & LAPTOP */
-.theme-toggle {
-    position: fixed;
-    z-index: 10000;
-    border: none;
-    border-radius: 50%;
-    background: var(--bg-card);
-    backdrop-filter: blur(25px);
-    border: 2px solid rgba(138,43,226,0.3);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--white);
-    transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    font-size: 18px;
-}
-/* Mobile Navbar Perfect Alignment */
-@media (max-width: 768px) {
-    .nav-flex {
-        position: relative;
-        padding: 0 15px;
-    }
-    
-    .hamburger {
-        position: absolute;
-        top: 50%;
-        right: 15px;
-        transform: translateY(-50%);
-        margin: 0;
-    }
-    
-    /* Logo left side */
-    .logo {
-        margin-right: auto;
-    }
-}
-
-
-/* ⭐ LAPTOP: Placements section ke RIGHT side mein */
-@media (min-width: 769px) {
-    .theme-toggle {
-        top: 25px;
-        right: 25px;
-        width: 56px;
-        height: 56px;
-        font-size: 18px;
-    }
-}
-
-/* Light Mode */
-[data-theme="light"] .theme-toggle {
-    background: rgba(124,58,237,0.15);
-    border-color: rgba(124,58,237,0.4);
-    color: #7c3aed;
-}
-
-/* Hover */
-.theme-toggle:hover {
-    transform: scale(1.1);
-    box-shadow: 0 15px 40px rgba(138,43,226,0.4);
-}
-
-/* MOBILE - Smaller + Safe Position */
-@media (max-width: 768px) {
-    .theme-toggle {
-        top: 75px !important;      /* Navbar height ke baad */
-        right: 15px;
-        width: 48px;               /* Chota button */
-        height: 48px;
-        font-size: 16px;
-    }
-}
-
-/* TABLET - Medium Size */
-@media (max-width: 1024px) and (min-width: 769px) {
-    .theme-toggle {
-        width: 52px;
-        height: 52px;
-        font-size: 17px;
-    }
-}
-
-/* Light Mode Button Fix */
-[data-theme="light"] .theme-toggle {
-    background: rgba(124,58,237,0.15) !important;
-    border-color: rgba(124,58,237,0.4) !important;
-    color: #7c3aed !important;
-}
-
-/* Hover Effects (All Devices) */
-.theme-toggle:hover {
-    transform: scale(1.1) !important;
-    box-shadow: 0 15px 40px rgba(138,43,226,0.4) !important;
-}
-
-/* Navbar Z-Index Fix (Toggle peeche na jaye) */
-.navbar {
-    z-index: 1000 !important;
-}
-/* Touch-friendly mobile button */
-@media (max-width: 768px) {
-    .theme-toggle:active {
-        transform: scale(0.95) !important;  /* Press effect */
-    }
-}
-
-.theme-toggle {
-    z-index: 10000 !important;  /* Higher than navbar */
-}
-/* Mobile Navbar Safe Height */
-@media (max-width: 768px) {
-    .navbar {
-        padding: 12px 0 !important;  /* Thoda compact */
-        min-height: 65px !important; /* Fixed height */
-    }
-    
-    /* Hero content ko niche shift karo */
-    .hero-content {
-        padding-top: 80px;  /* Navbar space */
-    }
-}
-/* Touch-friendly mobile button */
-@media (max-width: 768px) {
-    .theme-toggle:active {
-        transform: scale(0.95) !important;  /* Press effect */
-    }
-}
-
-
-
-
-
-
-
-/* Smooth theme transition */
-body {
-    background-color: var(--bg-dark);
-    color: var(--white);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-
-.container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* --- NAVBAR --- */
-/* --- NAVBAR (Aapka Original Style) --- */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    padding: 15px 0;
-    background: #9a0669; /* Aapka original background */
-    backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(138, 43, 226, 0.2);
-}
-
-.nav-flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-size: 26px;
-    font-weight: 900;
-    color: white;
-    text-decoration: none;
-    letter-spacing: 1px;
-}
-
-/* Laptop View (Default) */
-nav ul {
-    display: flex;
-    list-style: none;
-    gap: 30px;
-    align-items: center;
-}
-
-nav ul li a {
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 16px;
-    transition: 0.3s;
-    text-transform: uppercase;
-}
-
-nav ul li a:hover, nav ul li a.active {
-    color: #06060c;
-}
-
-.hamburger {
-    display: none; /* Laptop par hide */
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-}
-
-.hamburger span {
-    width: 25px;
-    height: 3px;
-    background: white;
-    transition: 0.3s;
-}
-
-.mobile-only { display: none; }
-
-/* --- MOBILE VIEW (992px se niche) --- */
-@media (max-width: 992px) {
-    .hamburger { display: flex; }
-    .desktop-only { display: none; }
-    .mobile-only { display: block; }
-
-    nav ul {
-        position: fixed;
-        top: 70px; /* Navbar height ke baad shuru ho */
-        right: -100%; /* Shuru me bahar */
-        width: 100%;
-        height: 100vh;
-        background: #9a0669;
-        flex-direction: column;
-        padding-top: 50px;
-        transition: 0.4s ease;
-        gap: 40px;
-    }
-
-    nav ul.active {
-        right: 0; /* Click karne pe andar aaye */
-    }
-}
-
-/* Hamburger Animation */
-.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
-.hamburger.active span:nth-child(2) { opacity: 0; }
-.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
-
-/* Aapka Button Style */
-.btn-red {
-    background: linear-gradient(135deg, #8a2be2, #4b0082);
-    color: white;
-    padding: 10px 25px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 14px;
-    transition: 0.4s;
-    border: none;
-}
-/* --- HERO SECTION --- */
-.hero-section {
-    position: relative;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-}
-
-#hero-video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -1;
-}
-
-.overlay {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(circle, rgba(138, 43, 226, 0.1) 0%, rgba(6, 6, 12, 0.8) 100%);
-}
-
-.hero-content h1 {
-    font-size: 65px;
-    line-height: 1.1;
-    margin-bottom: 20px;
-}
-
-.hero-content h1 span {
-    background: linear-gradient(to right, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.btn-red-large {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
-    padding: 18px 45px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 18px;
-    display: inline-block;
-    transition: 0.4s;
-}
-
-/* --- FEATURE OVERLAP --- */
-.features-overlap {
-    margin-top: -80px;
-    position: relative;
-    z-index: 10;
-}
-
-.feature-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-}
-
-.feature-card {
-    background: rgba(20, 20, 35, 0.9);
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    border: 1px solid rgba(138, 43, 226, 0.2);
-    transition: 0.3s;
-}
-
-.feature-card:hover {
-    transform: translateY(-10px);
-    border-color: var(--primary);
-    background: rgba(30, 30, 50, 1);
-}
-
-.feature-card i { font-size: 45px; color: var(--accent); margin-bottom: 20px; }
-
-
-
-
-
-/* Cards Container - Ise hi hum row mein set karenge */
-.why-features-grid {
-    display: flex; /* Cards ko ek line mein layega */
-    justify-content: center;
-    align-items: stretch;
-    gap: 20px;
-    width: 100%;
-}
-
-
-/* --- COURSE SLIDER --- */
-.parallax-section { padding: 100px 0; background-attachment: fixed; }
-
-.section-heading h2 { font-size: 40px; text-align: center; margin-bottom: 50px; }
-.section-heading span { color: #9a0669; }
-
-.course-slider-wrapper { position: relative; padding: 0 40px; }
-
-#course-catalog-container {
-    display: flex;
-    gap: 25px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    scroll-snap-type: x mandatory;
-    padding: 20px 5px;
-}
-
-#course-catalog-container::-webkit-scrollbar { display: none; }
-
-.course-card {
-    flex: 0 0 calc(33.333% - 17px);
-    max-width: calc(33.333% - 17px);
-    background: var(--bg-card);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    overflow: hidden;
-    scroll-snap-align: start;
-    transition: 0.4s;
-}
-
-.course-card:hover {
-    border-color: var(--primary);
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(138, 43, 226, 0.2);
-}
-
-.course-image-container img { width: 100%; height: 200px; object-fit: cover; }
-
-.course-header { padding: 20px; }
-.course-info { padding: 0 20px 20px; color: var(--text-dim); font-size: 14px; }
-
-.course-actions {
-    display: flex;
-    gap: 10px;
-    padding: 15px;
-    background: rgba(0,0,0,0.3);
-}
-
-.btn-action {
-    flex: 1; text-align: center; padding: 10px; border-radius: 8px;
-    font-weight: bold; font-size: 12px; text-decoration: none;
-}
-
-.btn-enroll, .btn-continue { background: var(--primary); color: white; }
-.btn-view { background: rgba(255,255,255,0.1); color: white; }
-
-/* --- ARROWS --- */
-.slider-btn {
-    position: absolute;
-    top: 50%; transform: translateY(-50%);
-    background: var(--primary); color: white;
-    width: 50px; height: 50px; border-radius: 50%;
-    cursor: pointer; z-index: 10; border: none;
-    transition: 0.3s;
-}
-
-.slider-btn:hover { background: var(--white); color: var(--primary); }
-.prev-btn { left: -10px; }
-.next-btn { right: -10px; }
-
-/* --- METRICS --- */
-.metrics-section {
-    background: linear-gradient(135deg, var(--primary-dark), #06060c);
-    padding: 80px 0;
-}
-
-.metric-item h3 { font-size: 50px; color: var(--accent); }
-
-/* 🔥 TESTIMONIALS - PERFECT DARK + LIGHT MODE */
-.testimonials-marquee-section {
-    padding: 100px 0;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
-    overflow: hidden;
-}
-
-/* ☀️ LIGHT MODE BACKGROUND */
-[data-theme="light"] .testimonials-marquee-section {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-}
-
-/* Marquee */
-.t-marquee-container {
-    display: flex;
-    overflow: hidden;
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-}
-
-.t-track {
-    display: flex;
-    gap: 40px;
-    animation: testimonial-loop 30s linear infinite;
-    padding: 30px 0;
-}
-
-.t-marquee-container:hover .t-track {
-    animation-play-state: paused;
-}
-
-@keyframes testimonial-loop {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
-/* 🔥 DARK MODE CARDS */
-.testimonial-card {
-    flex: 0 0 350px;
-    background: rgba(26, 26, 46, 0.9);        /* Deep Purple Glass */
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(139, 92, 246, 0.4); /* Purple Border */
-    border-radius: 20px;
-    padding: 30px;
-    position: relative;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-}
-
-.testimonial-card:hover {
-    background: rgba(139, 92, 246, 0.15);     /* Purple Glow */
-    border-color: #8b5cf6;
-    transform: translateY(-10px);
-    box-shadow: 
-        0 25px 50px rgba(139, 92, 246, 0.3),
-        0 0 25px rgba(139, 92, 246, 0.2);
-}
-
-.quote-icon {
-    color: #8b5cf6;  /* Purple */
-    font-size: 24px;
-    margin-bottom: 15px;
-    opacity: 0.8;
-}
-
-.review-text {
-    color: #e0d7ff;  /* Light Purple */
-    font-size: 15px;
-    line-height: 1.6;
-    font-style: italic;
-    margin-bottom: 25px;
-    min-height: 80px;
-}
-
-.student-info-row img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 3px solid rgba(139, 92, 246, 0.6); /* Purple Ring */
-    object-fit: cover;
-    box-shadow: 0 5px 15px rgba(139, 92, 246, 0.2);
-}
-
-.student-info-row h4 {
-    color: #ffffff;
-    font-size: 16px;
-    margin: 0;
-}
-
-.student-info-row span {
-    color: #06b6d4;  /* Cyan */
-    font-size: 12px;
-    display: block;
-}
-
-/* ☀️ LIGHT MODE OVERRIDE */
-[data-theme="light"] .testimonial-card {
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(124, 58, 237, 0.25);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-}
-
-[data-theme="light"] .testimonial-card:hover {
-    background: rgba(124, 58, 237, 0.08);
-    border-color: #7c3aed;
-    box-shadow: 
-        0 25px 50px rgba(124, 58, 237, 0.15),
-        0 0 25px rgba(124, 58, 237, 0.1);
-}
-
-[data-theme="light"] .student-info-row img {
-    border: 3px solid rgba(124, 58, 237, 0.4);
-    box-shadow: 0 5px 15px rgba(124, 58, 237, 0.15);
-}
-
-[data-theme="light"] .review-text {
-    color: #475569;
-}
-
-[data-theme="light"] .student-info-row h4 {
-    color: #1e293b;
-}
-
-[data-theme="light"] .student-info-row span {
-    color: #0ea5e9;
-}
-
-[data-theme="light"] .quote-icon {
-    color: #7c3aed;
-}
-
-
-
-/* --- NEW WHY CODELINE AI SECTION (Reference Image Style) --- */
-
-
-.feature-item {
-    font-size: 16px;
-    color: var(--white);
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-}
-
-.feature-item i {
-    color: var(--primary-light); /* Purple checkmark */
-    margin-right: 10px;
-    font-size: 20px;
-}
-
-/* New Primary Button */
-.btn-primary-new {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: var(--white);
-    padding: 15px 35px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 16px;
-    display: inline-block;
-    transition: 0.4s ease;
-    box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
-}
-
-.btn-primary-new:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(138, 43, 226, 0.6);
-    background: var(--accent); /* Hover pe Cyan ho sakta hai for contrast */
-    color: var(--bg-dark);
-}
-
-/* --- Responsive Adjustments --- */
-@media (max-width: 992px) {
-    .why-grid-container {
-        flex-direction: column;
-        text-align: center;
-        gap: 60px;
-    }
-
-    .why-image-collage {
-        width: 100%;
-        height: auto;
-        max-width: 400px; /* Limit image collage width on tablets */
-        margin: 0 auto;
-    }
-
-    .why-content-right {
-        max-width: 100%;
-    }
-
-    .why-content-right h2 {
-        font-size: 38px;
-    }
-    
-    .why-features-list {
-        grid-template-columns: 1fr; /* Stack features vertically on tablets */
-        text-align: left; /* Align feature items to left */
-    }
-
-    .why-content-right .btn-primary-new {
-        width: 100%;
-        text-align: center;
-    }
-}
-
-@media (max-width: 576px) {
-    .why-section-new {
-        padding: 60px 0;
-    }
-    .why-content-right h2 {
-        font-size: 32px;
-    }
-    .why-image-collage {
-        grid-template-columns: 1fr; /* Stack images on very small screens */
-        height: auto;
-    }
-    .why-image-collage .image-wrapper {
-        width: 80%;
-        margin: 0 auto; /* Center single images */
-    }
-    .why-image-collage .image-wrapper:nth-child(even) {
-        margin-top: 20px; /* Add some spacing when stacked */
-    }
-}
-
-
-/* Placements Container */
-.placements-new-section {
-    padding: 100px 0;
-    background: #323242;
-    overflow: hidden;
-}
-
-.marquee-container {
-    width: 100%;
-    display: flex;
-    overflow: hidden;
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-}
-
-.marquee-track {
-    display: flex;
-    gap: 40px;
-    animation: scroll-left 25s linear infinite;
-    padding: 40px 0;
-}
-
-@keyframes scroll-left {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
-.marquee-track:hover {
-    animation-play-state: paused; /* Hover karne par ruk jayega */
-}
-
-/* Alumni Card Styling */
-.alumni-card {
-    flex: 0 0 220px;
-    background: white;
-    padding: 30px 20px;
-    border-radius: 20px;
-    text-align: center;
-    position: relative;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    transition: 0.3s ease;
-    cursor: pointer;
-}
-
-.alumni-img-wrapper {
-    width: 90px;
-    height: 90px;
-    margin: 0 auto 15px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 4px solid #f0f0f0;
-}
-
-.alumni-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.company-logo {
-    height: 30px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: center;
-}
-
-.company-logo img {
-    max-height: 100%;
-    
-    transition: 0.3s;
-}
-
-.alumni-card:hover .company-logo img {
-    filter: grayscale(0); /* Hover par color logo */
-}
-
-.alumni-dept {
-    font-size: 14px;
-    color: #666;
-    font-weight: 500;
-}
-
-/* Tooltip pop-up (Video Style) */
-.alumni-tooltip {
-    position: absolute;
-    bottom: -30px;
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: #000;
-    color: white;
-    width: 180px;
-    padding: 15px;
-    border-radius: 12px;
-    opacity: 0;
-    visibility: hidden;
-    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 100;
-    box-shadow: 0 10px 30px rgba(138, 43, 226, 0.5);
-}
-
-.alumni-card:hover .alumni-tooltip {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-    bottom: 10px;
-}
-dfdssdd
-.alumni-tooltip strong { display: block; font-size: 16px; margin-bottom: 5px; }
-.alumni-tooltip span { display: block; font-size: 12px; color: #aaa; margin-bottom: 10px; }
-.alumni-tooltip a { color: var(--accent); font-size: 13px; text-decoration: none; font-weight: bold; }
-
-/* 🔥 PLACEMENTS SECTION - DARK + LIGHT MODE (Faculty Style) */
-.placements-new-section {
-    padding: 80px 0;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
-}
-
-/* ☀️ LIGHT MODE */
-[data-theme="light"] .placements-new-section {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-}
-
-/* DARK MODE CARDS */
-.alumni-card {
-    flex: 0 0 220px;
-    background: rgba(26, 26, 46, 0.9);        /* Deep Purple Glass */
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(139, 92, 246, 0.4); /* Purple Border */
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.alumni-card:hover {
-    background: rgba(139, 92, 246, 0.15);     /* Purple Glow */
-    border-color: #8b5cf6;
-    box-shadow: 
-        0 25px 50px rgba(139, 92, 246, 0.3),
-        0 0 25px rgba(139, 92, 246, 0.2);
-}
-
-.alumni-img-wrapper {
-    border: 4px solid rgba(139, 92, 246, 0.6); /* Purple Ring */
-    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
-}
-
-.alumni-dept {
-    color: #94a3b8;
-    font-weight: 500;
-}
-
-.alumni-tooltip {
-    background: rgba(0, 0, 0, 0.9);
-    box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
-}
-
-/* ☀️ LIGHT MODE OVERRIDE */
-[data-theme="light"] .alumni-card {
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(124, 58, 237, 0.25);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-}
-
-[data-theme="light"] .alumni-card:hover {
-    background: rgba(124, 58, 237, 0.08);
-    border-color: #7c3aed;
-    box-shadow: 
-        0 25px 50px rgba(124, 58, 237, 0.15),
-        0 0 25px rgba(124, 58, 237, 0.1);
-}
-
-[data-theme="light"] .alumni-img-wrapper {
-    border: 4px solid rgba(124, 58, 237, 0.4);
-    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.15);
-}
-
-[data-theme="light"] .alumni-dept {
-    color: #64748b;
-}
-
-[data-theme="light"] .alumni-tooltip {
-    background: rgba(0, 0, 0, 0.85);
-    box-shadow: 0 15px 40px rgba(124, 58, 237, 0.3);
-}
-
-/* Marquee Animation (Add if missing) */
-.marquee-container {
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-}
-
-.marquee-track {
-    display: flex;
-    gap: 20px;
-    animation: placementScroll 30s linear infinite;
-}
-
-.marquee-track:hover {
-    animation-play-state: paused;
-}
-
-@keyframes placementScroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
-
-
-
-
-/* --- MODERN FOOTER STYLING --- */
-/* 🔥 PROFESSIONAL FOOTER - DARK + LIGHT MODE */
-.main-footer {
-    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%);
-    border-top: 1px solid rgba(139, 92, 246, 0.3);
-    padding: 60px 0 30px;
-    position: relative;
-    overflow: hidden;
-}
-
-.main-footer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #8b5cf6, #06b6d4, transparent);
-}
-
-/* Footer Grid */
-.footer-top {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1.5fr;
-    gap: 50px;
-    margin-bottom: 40px;
-}
-
-.footer-brand h3 {
-    font-size: 28px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #ffffff, #8b5cf6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 12px;
-}
-
-.footer-brand p {
-    color: #94a3b8;
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 25px;
-}
-
-/* Social Icons */
-.social-links {
-    display: flex;
-    gap: 15px;
-}
-
-.social-icon {
-    width: 50px;
-    height: 50px;
-    background: rgba(139, 92, 246, 0.2);
-    border: 1px solid rgba(139, 92, 246, 0.4);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #e0d7ff;
-    font-size: 18px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.social-icon:hover {
-    background: linear-gradient(135deg, #8b5cf6, #06b6d4);
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 15px 35px rgba(139, 92, 246, 0.4);
-}
-
-/* 🔥 TALL PROFESSIONAL FOOTER - INCREASED HEIGHT */
-.main-footer {
-    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%);
-    border-top: 1px solid rgba(139, 92, 246, 0.3);
-    padding: 100px 0 50px;  /* ↑ HEIGHT DOUBLED: 60px→100px, 30px→50px */
-    position: relative;
-    overflow: hidden;
-}
-
-/* MORE SPACIOUS GRID */
-.footer-top {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1.5fr;
-    gap: 60px;              /* ↑ 50px → 60px */
-    margin-bottom: 60px;    /* ↑ 40px → 60px */
-}
-
-/* BRAND SECTION - TALLER */
-.footer-brand {
-    padding: 20px 0;        /* Extra breathing space */
-}
-
-.footer-brand h3 {
-    font-size: 32px;        /* ↑ Slightly bigger logo */
-    margin-bottom: 20px;    /* ↑ More space */
-}
-
-.footer-brand p {
-    font-size: 16px;
-    line-height: 1.8;       /* Better readability */
-    margin-bottom: 35px;    /* ↑ Extra space */
-}
-
-/* LINK COLUMNS - BETTER SPACING */
-.footer-links {
-    padding: 15px 0;
-}
-
-.footer-links h4 {
-    margin-bottom: 25px;    /* ↑ More space under heading */
-}
-
-.footer-links li {
-    margin-bottom: 16px;    /* ↑ Line spacing */
-}
-
-/* NEWSLETTER - EXPANDED */
-.footer-newsletter {
-    padding: 20px 0;
-}
-
-.newsletter-form {
-    padding: 4px;           /* Slightly thicker glass border */
-}
-
-.newsletter-form input {
-    padding: 18px 20px;     /* ↑ Bigger input field */
-    font-size: 16px;
-}
-
-.newsletter-form button {
-    width: 55px;            /* ↑ Slightly bigger button */
-    height: 55px;
-}
-
-/* FOOTER BOTTOM - MORE SPACE */
-.footer-bottom {
-    padding-top: 50px;      /* ↑ 30px → 50px */
-    border-top: 1px solid rgba(139, 92, 246, 0.3);
-    padding-bottom: 30px;   /* Bottom cushion */
-    margin-top: 40px;
-}
-
-/* PERFECT RESPONSIVE HEIGHTS */
-@media (max-width: 1024px) {
-    .main-footer {
-        padding: 80px 0 40px;   /* Medium screens */
-    }
-    
-    .footer-top {
-        grid-template-columns: 2fr 1fr 1fr;
-        gap: 50px;
-        margin-bottom: 50px;
-    }
-}
-
-@media (max-width: 768px) {
-    .main-footer {
-        padding: 60px 0 30px;   /* Mobile optimized */
-    }
-    
-    .footer-top {
-        grid-template-columns: 1fr;
-        gap: 40px;              /* Single column spacing */
-        margin-bottom: 40px;
-        text-align: center;
-    }
-    
-    .footer-brand h3 {
-        font-size: 28px;
-    }
-    
-    .newsletter-form {
-        flex-direction: column;
-    }
-    
-    .newsletter-form input {
-        margin-bottom: 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    .main-footer {
-        padding: 50px 0 25px;   /* Small mobile */
-    }
-    
-    .footer-top {
-        gap: 30px;
-    }
-}
-
-
-/* --- COMMUNITY SECTION --- */
-/* 🔥 COMMUNITY SECTION - ADVANCED EFFECTS */
-.community-section {
-    padding: 120px 0;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-.community-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #8b5cf6, #06b6d4, transparent);
-    animation: glow-line 3s ease-in-out infinite alternate;
-}
-
-@keyframes glow-line {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-}
-
-/* Community Box */
-.community-box {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.community-content h2 {
-    font-size: clamp(32px, 5vw, 48px);
-    font-weight: 800;
-    background: linear-gradient(135deg, #ffffff, #c4b5fd, #06b6d4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 20px;
-}
-
-.community-content h2 span {
-    background: linear-gradient(135deg, #8b5cf6, #06b6d4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.community-content p {
-    color: #94a3b8;
-    font-size: 18px;
-    line-height: 1.7;
-    max-width: 500px;
-    margin-bottom: 40px;
-}
-
-/* 🔥 ADVANCED COMMUNITY CARDS */
-.community-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.comm-card {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 25px;
-    border-radius: 24px;
-    text-decoration: none;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(139, 92, 246, 0.3);
-    background: rgba(26, 26, 46, 0.6);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-}
-
-.comm-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.6s;
-}
-
-.comm-card:hover::before {
-    left: 100%;
-}
-
-.comm-card i {
-    font-size: 32px;
-    padding: 20px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.4s ease;
-    flex-shrink: 0;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-/* Discord Card */
-.comm-card.discord i {
-    background: rgba(116, 127, 225, 0.9);
-    color: white;
-}
-
-.comm-card.discord:hover i {
-    background: linear-gradient(135deg, #5865f2, #7289da);
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 20px 40px rgba(88, 101, 242, 0.4);
-}
-
-/* Telegram Card */
-.comm-card.telegram i {
-    background: rgba(0, 219, 165, 0.9);
-    color: white;
-}
-
-.comm-card.telegram:hover i {
-    background: linear-gradient(135deg, #0088cc, #00baab);
-    transform: scale(1.1) rotate(-5deg);
-    box-shadow: 0 20px 40px rgba(0, 136, 204, 0.4);
-}
-
-/* WhatsApp Card */
-.comm-card.whatsapp i {
-    background: rgba(37, 211, 102, 0.9);
-    color: white;
-}
-
-.comm-card.whatsapp:hover i {
-    background: linear-gradient(135deg, #25d366, #128c7e);
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 20px 40px rgba(37, 211, 102, 0.4);
-}
-
-.comm-card:hover {
-    transform: translateY(-15px) scale(1.02);
-    border-color: #8b5cf6;
-    box-shadow: 
-        0 30px 60px rgba(139, 92, 246, 0.3),
-        0 0 30px rgba(139, 92, 246, 0.2);
-}
-
-.comm-card h4 {
-    color: #ffffff;
-    font-size: 20px;
-    font-weight: 700;
-    margin: 0 0 4px 0;
-    letter-spacing: -0.5px;
-}
-
-.comm-card span {
-    color: #a78bfa;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-/* Community Image */
-.community-image img {
-    width: 100%;
-    height: 500px;
-    object-fit: cover;
-    border-radius: 24px;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
-}
-
-.community-image:hover img {
-    transform: scale(1.02);
-    box-shadow: 0 40px 100px rgba(139, 92, 246, 0.3);
-}
-
-/* ☀️ LIGHT MODE */
-[data-theme="light"] .community-section {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-}
-
-[data-theme="light"] .comm-card {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(124, 58, 237, 0.2);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-}
-
-[data-theme="light"] .comm-card:hover {
-    border-color: #7c3aed;
-    box-shadow: 
-        0 30px 60px rgba(124, 58, 237, 0.2),
-        0 0 30px rgba(124, 58, 237, 0.15);
-}
-
-[data-theme="light"] .comm-card h4 {
-    color: #1e293b;
-}
-
-[data-theme="light"] .comm-card span {
-    color: #7c3aed;
-}
-
-[data-theme="light"] .community-content p {
-    color: #64748b;
-}
-
-[data-theme="light"] .community-image img {
-    box-shadow: 0 30px 80px rgba(0,0,0,0.15);
-}
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-    .community-box {
-        grid-template-columns: 1fr;
-        gap: 50px;
-        text-align: center;
-    }
-    
-    .community-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    
-    .comm-card {
-        padding: 20px;
-        justify-content: center;
-    }
-}
-
-
-/* --- COURSES SECTION STYLING --- */
-.courses-section {
-    padding: 100px 0;
-    background: #0d0dc4;
-}
-
-.courses-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
-    margin-top: 50px;
-}
-
-.course-card-premium {
-    background: rgba(60, 102, 175, 0.03);
-    border: 1px solid rgba(138, 43, 226, 0.2);
-    border-radius: 20px;
-    overflow: hidden;
-    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
-    backdrop-filter: blur(10px);
-}
-
-.course-card-premium:hover {
-    transform: translateY(-15px);
-    border-color: #8a2be2;
-    box-shadow: 0 15px 40px rgba(138, 43, 226, 0.2);
-}
-/* Mobile Responsive Fix */
-@media (max-width: 768px) {
-    .popular-courses-modern {
-        padding: 40px 0;
-    }
-
-    /* Slider wrapper ko horizontal scrollable banana */
-    .course-catalog-dynamic {
-        display: flex;
-        gap: 15px;
-        overflow-x: auto; /* Horizontal scroll enable */
-        scroll-snap-type: x mandatory; /* Smooth snapping */
-        padding: 10px 20px 30px; /* Niche space taaki shadow na kate */
-        -webkit-overflow-scrolling: touch; /* iOS smooth scroll */
-    }
-
-    /* Card ki width fix karna taaki wo pichke nahi */
-    .course-card {
-        flex: 0 0 85%; /* Ek waqt mein ek card 85% dikhega, baaki agla card dikhega */
-        max-width: 300px;
-        scroll-snap-align: center; /* Card center mein rukega */
-        margin-bottom: 0;
-    }
-
-    /* Slider buttons mobile par hide kar dena (swipe best hota hai) */
-    .slider-control {
-        display: none !important;
-    }
-
-    /* Heading text size chota karna mobile ke liye */
-    .section-heading-centered h2 {
-        font-size: 28px;
-    }
-}
-
-/* Image Wrapper & Tags */
-.course-img-wrapper {
-    position: relative;
-    height: 200px;
-    overflow: hidden;
-}
-
-.course-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: 0.5s;
-}
-
-.course-card-premium:hover .course-img-wrapper img {
-    transform: scale(1.1);
-}
-
-.course-tag {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    background: #8a2be2;
-    color: white;
-    padding: 5px 12px;
-    border-radius: 50px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.course-tag.blue { background: #00f2ff; color: #000; }
-
-/* Course Body */
-.course-body {
-    padding: 25px;
-}
-
-.course-meta {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    font-size: 13px;
-    color: #b0b0c0;
-}
-
-.course-body h3 {
-    color: white;
-    font-size: 20px;
-    margin-bottom: 12px;
-    line-height: 1.4;
-}
-
-.course-body p {
-    color: #888;
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 20px;
-}
-
-
-.original {
-    color: #666;
-    text-decoration: line-through;
-    font-size: 16px;
-}
-
-/* Buttons */
-.course-footer {
-    display: flex;
-    gap: 15px;
-}
-
-.btn-enroll {
-    flex: 2;
-    background:  #9a0669;
-    color: white;
-    padding: 12px;
-    text-align: center;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 14px;
-    transition: 0.3s;
-}
-
-.btn-enroll:hover {
-    background: white;
-    color:  #9a0669;
-    box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
-}
-
-.btn-view-details {
-    flex: 1;
-    border: 1px solid  #9a0669;
-    color: white;
-    padding: 12px;
-    text-align: center;
-    border-radius: 10px;
-    text-decoration: none;
-    font-size: 14px;
-    transition: 0.3s;
-}
-
-.btn-view-details:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-/* --- Faculty Section Styling --- */
-/* 🔥 ORIGINAL + BETTER COLORS */
-.faculty-marquee-section {
-    padding: 80px 0;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
-    overflow: hidden;
-}
-
-.section-heading-centered {
-    text-align: center;
-    margin-bottom: 50px;
-}
-
-.section-heading-centered h2 span {
-    background: linear-gradient(135deg, #8b5cf6, #06b6d4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-/* Seamless Faculty Marquee */
-.f-marquee-container {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    padding: 20px 0;
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-}
-
-.f-track {
-    display: flex;
-    width: max-content;
-    gap: 30px;
-    animation: facultyScroll 35s linear infinite;
-}
-
-.f-track:hover {
-    animation-play-state: paused;
-}
-
-/* 🔥 PROFESSIONAL FACULTY CARDS */
-.faculty-card {
-    width: 280px;
-    background: rgba(26, 26, 46, 0.9);        /* Deep Purple Glass */
-    backdrop-filter: blur(15px);
-    border-radius: 20px;
-    padding: 30px 20px;
-    text-align: center;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-    border: 1px solid rgba(139, 92, 246, 0.4);  /* Purple Border */
-    flex-shrink: 0;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.faculty-card:hover {
-    background: rgba(139, 92, 246, 0.15);     /* Purple Glow */
-    border-color: #8b5cf6;
-    transform: translateY(-12px);
-    box-shadow: 
-        0 25px 50px rgba(139, 92, 246, 0.3),
-        0 0 25px rgba(139, 92, 246, 0.2);
-}
-
-.faculty-img-container {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 20px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 4px solid rgba(139, 92, 246, 0.6);  /* Purple Ring */
-    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
-}
-
-.faculty-img-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.faculty-card h4 {
-    color: #ffffff;
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 10px;
-}
-
-.faculty-role {
-    color: #06b6d4;                              /* Cyan Accent */
-    font-weight: 600;
-    font-size: 14px;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.faculty-social {
-    display: flex;
-    justify-content: center;
-    gap: 18px;
-}
-
-.faculty-social a {
-    width: 45px;
-    height: 45px;
-    background: rgba(139, 92, 246, 0.2);
-    border: 1px solid rgba(139, 92, 246, 0.5);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #e0d7ff;
-    font-size: 18px;
-    transition: all 0.4s ease;
-}
-
-.faculty-social a:hover {
-    background: linear-gradient(135deg, #8b5cf6, #06b6d4);
-    border-color: #06b6d4;
-    color: white;
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 12px 30px rgba(139, 92, 246, 0.4);
-}
-
-/* Animation */
-@keyframes facultyScroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-/* ☀️ LIGHT MODE FACULTY COLORS ONLY */
-[data-theme="light"] .faculty-marquee-section {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-}
-
-[data-theme="light"] .faculty-card {
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(124, 58, 237, 0.25);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-}
-
-[data-theme="light"] .faculty-card:hover {
-    background: rgba(124, 58, 237, 0.08);
-    border-color: #7c3aed;
-    box-shadow: 
-        0 25px 50px rgba(124, 58, 237, 0.15),
-        0 0 25px rgba(124, 58, 237, 0.1);
-}
-
-[data-theme="light"] .faculty-img-container {
-    border: 4px solid rgba(124, 58, 237, 0.4);
-    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.15);
-}
-
-[data-theme="light"] .faculty-card:hover .faculty-img-container {
-    border-color: #0ea5e9;
-}
-
-[data-theme="light"] .faculty-card h4 {
-    color: #1e293b;
-}
-
-[data-theme="light"] .faculty-role {
-    color: #0ea5e9;
-}
-
-[data-theme="light"] .faculty-social a {
-    background: rgba(124, 58, 237, 0.12);
-    border: 1px solid rgba(124, 58, 237, 0.3);
-    color: #7c3aed;
-}
-
-[data-theme="light"] .faculty-social a:hover {
-    background: linear-gradient(135deg, #7c3aed, #0ea5e9);
-    border-color: #0ea5e9;
-}
-
-
-/* --- WHY SECTION STYLING --- */
-.why-section-new {
-    padding: 100px 0;
-    position: relative;
-    overflow: hidden;
-}
-
-.why-grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-}
-
-/* Image Side */
-.why-image-single {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.main-image-wrapper {
-    position: relative;
-    z-index: 2;
-    border-radius: 30px;
-    overflow: hidden;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-    border: 5px solid var(--pista); /* Pista Green Border */
-    transition: var(--transition);
-}
-
-.main-image-wrapper img {
-    width: 100%;
-    height: 500px;
-    object-fit: cover;
-    display: block;
-}
-
-.main-image-wrapper:hover {
-    transform: translateY(-10px) rotate(-1deg);
-}
-
-/* Floating Tag */
-.experience-tag {
-    position: absolute;
-    bottom: 30px;
-    right: -20px;
-    background: var(--white);
-    color: var(--primary-dark);
-    padding: 15px 25px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    display: flex;
-    flex-direction: column;
-    z-index: 3;
-    border-left: 5px solid var(--primary);
-}
-
-.experience-tag .number { font-weight: 800; font-size: 20px; color: var(--primary); }
-.experience-tag .text { font-size: 12px; font-weight: 600; opacity: 0.8; }
-
-/* Glow Background Effect */
-.glow-bg {
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
-    opacity: 0.2;
-    z-index: 1;
-    filter: blur(50px);
-}
-
-/* Right Content Side */
-.why-content-right h2 {
-    font-size: 42px;
-    line-height: 1.2;
-    margin-bottom: 25px;
-}
-
-.why-content-right h2 span {
-    color: var(--primary);
-}
-
-.why-content-right p {
-    font-size: 16px;
-    margin-bottom: 20px;
-    color: var(--text-color);
-    opacity: 0.9;
-}
-
-.why-features-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin: 30px 0;
-}
-
-.feature-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 600;
-    font-size: 15px;
-}
-
-.feature-item i {
-    color: var(--primary); /* Purple check icon */
-    font-size: 18px;
-}
-
-/* Mobile Responsive */
-@media (max-width: 992px) {
-    .why-grid-container {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-    .why-image-single { order: 2; }
-    .why-content-right { order: 1; }
-    .experience-tag { right: 20px; }
-    .why-features-list { justify-items: center; }
-}
-
   </style>
 </head>
 
 <body data-theme="dark">
-    <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme" title="Dark/Light Mode">
-        <i class="fas fa-sun active-icon"></i>
-        <i class="fas fa-moon inactive-icon"></i>
-    </button>
+
+  <div id="preloader">
+    <div class="loader-content">
+      <div class="arc arc-1"></div>
+      <div class="arc arc-2"></div>
+      <div class="hex-core">
+        <div class="hex-dot"></div>
+      </div>
+    </div>
+    <div class="loading-brand">CODELINE <span>AI</span></div>
+  </div>
 
   <nav class="navbar">
     <div class="container nav-flex">
-        <a href="#" class="logo">CODELINE <span>AI</span></a>
-        
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
+        <a href="index.html" class="logo">
+            <img src="CodeLine Logo.jpg" alt="Logo" class="logo-icon">
+            <span>CODELINE <span style="color:#fff">AI</span></span>
+        </a>
         <ul id="nav-menu">
-            <li><a href="#" class="active">HOME</a></li>
+            <li><a href="index.html">HOME</a></li>
             <li><a href="dashboard.html">DASHBOARD</a></li>
             <li><a href="aboutus.html">ABOUT</a></li>
-            <li><a href="placement.html">PLACEMENTS</a></li>
-            <li class="mobile-only"><a href="#" class="btn-red">Login/Register</a></li>
+            <li><a href="instructors.html">INSTRUCTORS</a></li>
+            <li><a href="placement.html" class="active">PLACEMENTS</a></li>
+            <li><a href="login.html" class="btn-red">Login / Join</a></li>
         </ul>
-
-        <a href="#" class="btn-red desktop-only">Login/Register</a>
+        <div class="nav-right-controls">
+            <button id="themeToggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+        </div>
     </div>
-</nav>
+  </nav>
 
   <section class="hero-section">
-    <video autoplay muted loop playsinline id="hero-video">
-      <source src="https://www.pexels.com/download/video/3209298.mp4" type="video/mp4">
-    </video>
-    <div class="overlay"></div>
-    <div class="container hero-content">
-      <h6>HELLO STUDENTS</h6>
-      <h1>WELCOME TO <span>CODELINE AI</span></h1>
-      <p>Build real projects, get mentored, and land your dream job at top tech companies.</p>
-      <br>
-      <a href="#" class="btn-red-large">JOIN US NOW!</a>
+    <div class="container hero-content" data-aos="fade-up">
+        <h1>Launch Your <span>Career</span></h1>
+        <p>From learning to earning. Our placement program ensures you land your dream job at top tech giants.</p>
     </div>
   </section>
 
-  <section class="features-overlap">
-    <div class="container">
-      <div class="feature-grid">
-        <div class="feature-card">
-          <i class="fas fa-desktop"></i>
-          <h3>Online Meeting</h3>
-          <p>Interactive live sessions with top mentors to clear all your doubts in real-time.</p>
-        </div>
-        <div class="feature-card">
-          <i class="fas fa-users"></i>
-          <h3>Best Networking</h3>
-          <p>Join a global community of developers and build your professional network.</p>
-        </div>
-        <div class="feature-card">
-          <i class="fas fa-graduation-cap"></i>
-          <h3>Best Education</h3>
-          <p>Get industry-recognized certificates and work on real-world industry projects.</p>
-        </div>
+  <div class="container">
+      <div class="stats-row">
+          <div class="p-stat-card" data-aos="zoom-in" data-aos-delay="0">
+              <i class="fas fa-trophy p-stat-icon"></i>
+              <div class="p-stat-num counter" data-target="150">0%</div>
+              <div class="p-stat-label">Avg Hike</div>
+          </div>
+          <div class="p-stat-card" data-aos="zoom-in" data-aos-delay="100">
+              <i class="fas fa-briefcase p-stat-icon"></i>
+              <div class="p-stat-num counter" data-target="1200">0+</div>
+              <div class="p-stat-label">Hiring Partners</div>
+          </div>
+          <div class="p-stat-card" data-aos="zoom-in" data-aos-delay="200">
+              <i class="fas fa-money-bill-wave p-stat-icon"></i>
+              <div class="p-stat-num">42 LPA</div>
+              <div class="p-stat-label">Highest Package</div>
+          </div>
+          <div class="p-stat-card" data-aos="zoom-in" data-aos-delay="300">
+              <i class="fas fa-check-circle p-stat-icon"></i>
+              <div class="p-stat-num counter" data-target="95">0%</div>
+              <div class="p-stat-label">Placement Rate</div>
+          </div>
       </div>
-    </div>
-  </section>
-<section class="why-section-new">
-    <div class="container why-grid-container">
-        <div class="why-image-single">
-            <div class="main-image-wrapper">
-                <img src="Codeline Img.png" alt="Learning at Codeline AI">
-                
-            </div>
-            <div class="glow-bg"></div>
-        </div>
+  </div>
 
-        <div class="why-content-right">
-            <h2>Why <span>CODELINE AI</span> Learning Platform?</h2>
-            <p>Aapki tech journey ko naya mod dene ke liye humne banaya hai ek aisa environment jahan sirf theory nahi, practical execution par focus hota hai. Get industry-recognized certificates and work on real-world industry projects with top mentors.</p>
-            
-            <p>We're developing an innovative bootstrap-powered UI Kit tool designed specifically for developers, engineers, and digital agencies.</p>
-
-            <div class="why-features-list">
-                <div class="feature-item">
-                    <i class="fas fa-check-circle"></i> Wide Range of Courses
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-check-circle"></i> Cost-Effective
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-check-circle"></i> Global Networking
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-check-circle"></i> Get Certificate
-                </div>
-            </div>
-
-            <a href="#" class="btn-red-large">Create an Account</a>
-        </div>
-    </div>
-</section>
-      
-    </div>
+  <section class="marquee-section">
+      <h3 class="marquee-title">Our Alumni Work At</h3>
+      <div class="marquee-track">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Tesla_logo.png" alt="Tesla">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Tata_Consultancy_Services_Logo.svg" alt="TCS">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft">
+      </div>
   </section>
 
-<section class="placements-new-section" id="placements">
-    <div class="container">
-        <div class="section-heading" style="text-align: center; margin-bottom: 50px;">
-            <h2 style="font-size: 40px;">Our Students <span style="color: var(--primary);">Placed At</span></h2>
-            <p style="color: var(--text-dim);">Our alumni are working in top tech giants across the globe.</p>
-        </div>
+  <section class="stories-section">
+      <div class="container">
+          <div class="section-head" data-aos="fade-up">
+              <h2>Hall of <span>Fame</span></h2>
+              <p>Real people, real results. See how we changed careers.</p>
+          </div>
 
-        <div class="marquee-container">
-            <div class="marquee-track">
-                <div class="alumni-card">
-                    <div class="alumni-img-wrapper">
-                        <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="Aman">
-                    </div>
-                    <div class="company-logo">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon">
-                    </div>
-                    <p class="alumni-dept">CS / IT</p>
-                    <div class="alumni-tooltip">
-                        <strong>Aman Verma</strong>
-                        <span>Landed First Job!</span>
-                        <a href="#">LinkedIn Profile ↗</a>
-                    </div>
-                </div>
+          <div class="stories-grid">
+              <div class="story-card" data-aos="fade-up">
+                  <div class="student-header">
+                      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Student" class="student-img">
+                      <div class="student-info">
+                          <h3>Rahul Sharma</h3>
+                          <p>Full Stack Developer</p>
+                      </div>
+                  </div>
+                  <div class="placed-at">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="company-logo-small">
+                      <span class="package-badge">24 LPA</span>
+                  </div>
+                  <i class="fas fa-quote-left quote-icon"></i>
+                  <p class="story-quote">"I was working in a service-based company with low pay. Codeline AI's mentorship helped me crack the Google interview in just 6 months."</p>
+              </div>
 
-                <div class="alumni-card">
-                    <div class="alumni-img-wrapper">
-                        <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="Priya">
-                    </div>
-                    <div class="company-logo">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
-                    </div>
-                    <p class="alumni-dept">Data Science</p>
-                    <div class="alumni-tooltip">
-                        <strong>Priya Sharma</strong>
-                        <span>160% Salary Hike</span>
-                        <a href="#">LinkedIn Profile ↗</a>
-                    </div>
-                </div>
-                <div class="alumni-card">
-                    <div class="alumni-img-wrapper">
-                        <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="Aman">
-                    </div>
-                    <div class="company-logo">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon">
-                    </div>
-                    <p class="alumni-dept">CS / IT</p>
-                    <div class="alumni-tooltip">
-                        <strong>Aman Verma</strong>
-                        <span>Landed First Job!</span>
-                        <a href="#">LinkedIn Profile ↗</a>
-                    </div>
-                </div>
+              <div class="story-card" data-aos="fade-up" data-aos-delay="100">
+                  <div class="student-header">
+                      <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Student" class="student-img">
+                      <div class="student-info">
+                          <h3>Priya Patel</h3>
+                          <p>Data Scientist</p>
+                      </div>
+                  </div>
+                  <div class="placed-at">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon" class="company-logo-small">
+                      <span class="package-badge">32 LPA</span>
+                  </div>
+                  <i class="fas fa-quote-left quote-icon"></i>
+                  <p class="story-quote">"The project-based learning approach here is unmatched. I built 5 real-world AI projects which impressed my interviewers at Amazon."</p>
+              </div>
 
-                <div class="alumni-card">
-                    <div class="alumni-img-wrapper">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rohit">
-                    </div>
-                    <div class="company-logo">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft">
-                    </div>
-                    <p class="alumni-dept">Full Stack</p>
-                    <div class="alumni-tooltip">
-                        <strong>Rohit Singh</strong>
-                        <span>Service to Product</span>
-                        <a href="#">LinkedIn Profile ↗</a>
-                    </div>
-                </div>
+              <div class="story-card" data-aos="fade-up" data-aos-delay="200">
+                  <div class="student-header">
+                      <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="Student" class="student-img">
+                      <div class="student-info">
+                          <h3>Amit Verma</h3>
+                          <p>Backend Engineer</p>
+                      </div>
+                  </div>
+                  <div class="placed-at">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" class="company-logo-small">
+                      <span class="package-badge">42 LPA</span>
+                  </div>
+                  <i class="fas fa-quote-left quote-icon"></i>
+                  <p class="story-quote">"From a Tier-3 college to Microsoft. This platform gave me the roadmap and confidence I needed. The mock interviews were a game changer."</p>
+              </div>
+          </div>
+      </div>
+  </section>
 
-                <div class="alumni-card">
-                    <div class="alumni-img-wrapper">
-                        <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="Aman">
-                    </div>
-                    <div class="company-logo">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon">
-                    </div>
-                    <p class="alumni-dept">CS / IT</p>
-                    <div class="alumni-tooltip">
-                        <strong>Aman Verma</strong>
-                        <span>Landed First Job!</span>
-                        <a href="#">LinkedIn Profile ↗</a>
-                    </div>
-                </div>
+  <section class="process-section">
+      <div class="container">
+          <div class="section-head" data-aos="fade-up">
+              <h2>How We Get You <span>Hired</span></h2>
+              <p>Our 4-step proven roadmap to success.</p>
+          </div>
+          
+          <div class="process-steps">
+              <div class="step-card" data-aos="fade-up" data-aos-delay="0">
+                  <div class="step-icon"><i class="fas fa-laptop-code"></i></div>
+                  <h4>1. Skill Building</h4>
+                  <p>Master the tech stack with live classes and hands-on projects.</p>
+              </div>
+              <div class="step-card" data-aos="fade-up" data-aos-delay="150">
+                  <div class="step-icon"><i class="fas fa-file-alt"></i></div>
+                  <h4>2. Resume Prep</h4>
+                  <p>We craft an ATS-friendly resume that gets you shortlisted.</p>
+              </div>
+              <div class="step-card" data-aos="fade-up" data-aos-delay="300">
+                  <div class="step-icon"><i class="fas fa-users-cog"></i></div>
+                  <h4>3. Mock Interviews</h4>
+                  <p>Practice with industry experts to remove interview fear.</p>
+              </div>
+              <div class="step-card" data-aos="fade-up" data-aos-delay="450">
+                  <div class="step-icon"><i class="fas fa-rocket"></i></div>
+                  <h4>4. Get Hired</h4>
+                  <p>Direct referrals to our 1200+ hiring partners.</p>
+              </div>
+          </div>
+      </div>
+  </section>
 
-            </div>
-        </div>
-    </div>
-</section>
+  <div class="container">
+      <div class="cta-container" data-aos="zoom-in">
+          <div class="cta-box">
+              <h2>Ready to Start Your Success Story?</h2>
+              <p>Join the next batch and take the first step towards your dream career.</p>
+              <a href="login.html" class="btn-white">Apply Now</a>
+          </div>
+      </div>
+  </div>
 
-<section class="popular-courses-modern" id="popular-courses-section">
-    <div class="container">
-        <div class="section-heading-centered">
-            <h2>🔥 Trending <span>Courses</span></h2>
-            <p>Top-rated classes selected just for you</p>
-        </div>
-
-        <div class="course-slider-wrapper-modern">
-            <button id="prevBtn" class="slider-control prev"><i class="fas fa-chevron-left"></i></button>
-
-            <div id="course-catalog-container" class="course-catalog-dynamic">
-            </div>
-
-            <button id="nextBtn" class="slider-control next"><i class="fas fa-chevron-right"></i></button>
-        </div>
-    </div>
-</section>
-
-<section class="faculty-marquee-section">
-    <div class="container">
-        <div class="section-heading-centered">
-            <h2>Our Expert <span>Faculty</span></h2>
-        </div>
-
-        <div class="f-marquee-container">
-            <div class="f-track">
-                <div class="faculty-card">
-                    <div class="faculty-img-container">
-                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400" alt="Ankush Singla">
-                    </div>
-                    <h4>Ankush Singla</h4>
-                    <p class="faculty-role">DSA Expert</p>
-                    <div class="faculty-social">
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-
-                <div class="faculty-card">
-                    <div class="faculty-img-container">
-                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400" alt="Dr. Rahul Jain">
-                    </div>
-                    <h4>Dr. Rahul Jain</h4>
-                    <p class="faculty-role">Machine Learning</p>
-                    <div class="faculty-social">
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-
-                <div class="faculty-card">
-                    <div class="faculty-img-container">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400" alt="Sandeep Maheswari">
-                    </div>
-                    <h4>Sandeep Maheswari</h4>
-                    <p class="faculty-role">Motivational Speaker</p>
-                    <div class="faculty-social">
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-
-                <div class="faculty-card">
-                    <div class="faculty-img-container">
-                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400" alt="Ankush Singla">
-                    </div>
-                    <h4>Ankush Singla</h4>
-                    <p class="faculty-role">DSA Expert</p>
-                    <div class="faculty-social">
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-
-                <div class="faculty-card">
-                    <div class="faculty-img-container">
-                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400" alt="Dr. Rahul Jain">
-                    </div>
-                    <h4>Dr. Rahul Jain</h4>
-                    <p class="faculty-role">Machine Learning</p>
-                    <div class="faculty-social">
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-
-                <div class="faculty-card">
-                    <div class="faculty-img-container">
-                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400" alt="Ankush Singla">
-                    </div>
-                    <h4>Ankush Singla</h4>
-                    <p class="faculty-role">DSA Expert</p>
-                    <div class="faculty-social">
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="testimonials-marquee-section">
-    <div class="container">
-        <div class="section-heading-centered">
-            <h2>What Our <span>Students Say</span></h2>
-            <p>Real stories from our students who transformed their careers.</p>
-        </div>
-
-        <div class="t-marquee-container">
-            <div class="t-track">
-                <div class="testimonial-card">
-                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                    <p class="review-text">"Codeline AI ki wajah se mera basic se advanced tak ka safar bahut smooth raha. Mentors hamesha doubt solve karne ke liye available rehte hain."</p>
-                    <div class="student-info-row">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Student">
-                        <div>
-                            <h4>Karan Malhotra</h4>
-                            <span>Full Stack Developer</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                    <p class="review-text">"The industry projects are the best part. Maine 10 se zyada real-world projects banaye jo mere resume ke liye bahut helpful rahe."</p>
-                    <div class="student-info-row">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Student">
-                        <div>
-                            <h4>Sneha Kapoor</h4>
-                            <span>Data Analyst @ TCS</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                    <p class="review-text">"Best platform for beginners. Logic building par itna focus kisi aur course mein nahi dekha. Highly recommended!"</p>
-                    <div class="student-info-row">
-                        <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="Student">
-                        <div>
-                            <h4>Rahul Verma</h4>
-                            <span>SDE Intern</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="community-section">
-    <div class="container">
-        <div class="community-box">
-            <div class="community-content">
-                <h2>Join Our <span>Growing Community</span></h2>
-                <p>10,000+ students are already learning together. Get exclusive access to free resources, job alerts, and 24/7 doubt support.</p>
-
-                <div class="community-grid">
-                    <a href="#" class="comm-card discord">
-                        <i class="fab fa-discord"></i>
-                        <div>
-                            <h4>Discord</h4>
-                            <span>5k+ Members</span>
-                        </div>
-                    </a>
-                    <a href="#" class="comm-card telegram">
-                        <i class="fab fa-telegram-plane"></i>
-                        <div>
-                            <h4>Telegram</h4>
-                            <span>3k+ Subscribers</span>
-                        </div>
-                    </a>
-                    <a href="#" class="comm-card whatsapp">
-                        <i class="fab fa-whatsapp"></i>
-                        <div>
-                            <h4>WhatsApp</h4>
-                            <span>Join Group</span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="community-image">
-                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" alt="Community">
-            </div>
-        </div>
-    </div>
-</section>
-<footer class="main-footer">
+  <footer class="main-footer">
     <div class="container">
         <div class="footer-top">
             <div class="footer-brand">
                 <h3>CODELINE AI</h3>
-                <p>Transforming careers through AI-powered coding education</p>
+                <p>Transforming careers through AI-powered education.</p>
                 <div class="social-links">
                     <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
                     <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
@@ -2265,268 +499,85 @@ dfdssdd
                     <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
-
             <div class="footer-links">
                 <h4>Product</h4>
-                <ul>
-                    <li><a href="#">Courses</a></li>
-                    <li><a href="#">Dashboard</a></li>
-                    <li><a href="#">Projects</a></li>
-                    <li><a href="#">Mentorship</a></li>
-                </ul>
+                <ul><li><a href="#">Courses</a></li><li><a href="#">Mentorship</a></li></ul>
             </div>
-
             <div class="footer-links">
                 <h4>Company</h4>
-                <ul>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
+                <ul><li><a href="#">About</a></li><li><a href="#">Contact</a></li></ul>
             </div>
-
             <div class="footer-newsletter">
                 <h4>Stay Updated</h4>
-                <p>Get latest course updates & job alerts</p>
-                <div class="newsletter-form">
-                    <input type="email" placeholder="Enter your email">
-                    <button><i class="fas fa-arrow-right"></i></button>
+                <div class="newsletter-form" style="display:flex; gap:10px; margin-top:15px;">
+                    <input type="email" placeholder="Email" style="flex:1; padding:15px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-card); color:var(--text-main);">
+                    <button style="width:50px; background:var(--primary); color:white; border:none; border-radius:8px; cursor:pointer;"><i class="fas fa-arrow-right"></i></button>
                 </div>
             </div>
         </div>
-
         <div class="footer-bottom">
-            <div class="footer-left">
-                <p>© 2026 CODELINE AI. All rights reserved.</p>
-            </div>
-            <div class="footer-right">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Cookie Policy</a>
-            </div>
+            <p>© 2026 CODELINE AI. All rights reserved.</p>
+            <div class="footer-right"><a href="#">Privacy</a><a href="#">Terms</a></div>
         </div>
     </div>
-</footer>
+  </footer>
 
-<script>
-    // 1. THEME MANAGEMENT (Class Based - Best Practice)
-    class CodeLineLMSTheme {
-        constructor() {
-            this.toggleBtn = document.getElementById('themeToggle');
-            // Check if button exists to avoid errors on pages without toggle
-            if (this.toggleBtn) {
-                this.init();
-            }
-        }
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
 
-        init() {
-            const savedTheme = localStorage.getItem('codeline-theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+    // Preloader
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('preloader');
+      setTimeout(() => {
+        preloader.style.opacity = '0';
+        setTimeout(() => preloader.style.display = 'none', 600);
+      }, 800);
+    });
 
-            document.documentElement.setAttribute('data-theme', theme);
-            this.updateToggleIcon(theme);
-
-            this.toggleBtn.addEventListener('click', () => this.toggleTheme());
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                if (!localStorage.getItem('codeline-theme')) {
-                    this.setTheme(e.matches ? 'dark' : 'light');
-                }
-            });
-        }
-
-        toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            this.setTheme(newTheme);
-        }
-
-        setTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('codeline-theme', theme);
-            this.updateToggleIcon(theme);
-        }
-
-        updateToggleIcon(theme) {
-            const sunIcon = this.toggleBtn.querySelector('.fa-sun');
-            const moonIcon = this.toggleBtn.querySelector('.fa-moon');
-
-            if (theme === 'dark') {
-                sunIcon.classList.add('active-icon');
-                sunIcon.classList.remove('inactive-icon');
-                moonIcon.classList.add('inactive-icon');
-                moonIcon.classList.remove('active-icon');
-            } else {
-                sunIcon.classList.add('inactive-icon');
-                sunIcon.classList.remove('active-icon');
-                moonIcon.classList.add('active-icon');
-                moonIcon.classList.remove('inactive-icon');
-            }
-        }
+    // Theme Toggle
+    const toggleBtn = document.getElementById('themeToggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let theme = localStorage.getItem('codeline-theme') || (prefersDark ? 'dark' : 'light');
+    
+    function applyTheme(themeName) {
+        document.documentElement.setAttribute('data-theme', themeName);
+        localStorage.setItem('codeline-theme', themeName);
+        toggleBtn.innerHTML = themeName === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
     }
+    applyTheme(theme);
 
-    // 2. MOBILE MENU TOGGLE
+    toggleBtn.addEventListener('click', () => {
+        theme = theme === 'dark' ? 'light' : 'dark';
+        applyTheme(theme);
+    });
+
+    // Mobile Menu
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
-
     if (hamburger && navMenu) {
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
-
-        // Close menu on link click
-        document.querySelectorAll('nav ul li a').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-            });
-        });
     }
 
-    // 3. COURSE CATALOG SLIDER (Buttons)
-    const container = document.getElementById('course-catalog-container');
-    const nextBtn = document.getElementById('nextBtn');
-    const prevBtn = document.getElementById('prevBtn');
-
-    if (nextBtn && prevBtn && container) {
-        nextBtn.addEventListener('click', () => {
-            container.scrollLeft += 345; // Card width + gap
-        });
-
-        prevBtn.addEventListener('click', () => {
-            container.scrollLeft -= 345;
-        });
-    }
-
-    // 4. MARQUEE / INFINITE SCROLL SETUP
-    // Simply doubling the content for smooth loop animation for all tracks
-    function setupMarquee(selector) {
-        const track = document.querySelector(selector);
-        if (track) {
-            track.innerHTML += track.innerHTML;
+    // Counter Animation
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+      const target = +counter.getAttribute('data-target');
+      const inc = target / 100;
+      const updateCount = () => {
+        const count = +counter.innerText.replace('+','').replace('%','');
+        if (count < target) {
+          counter.innerText = Math.ceil(count + inc) + (counter.getAttribute('data-target').includes('95') ? '%' : '+');
+          setTimeout(updateCount, 20);
+        } else {
+          counter.innerText = target + (counter.getAttribute('data-target').includes('95') ? '%' : '+');
         }
-    }
-
-    // 5. DYNAMIC COURSE CATALOG GENERATION
-    const coursesData = [{
-            title: "ReactJS Masterclass",
-            info: "Intermediate • 12 Weeks • John Doe",
-            image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=800&auto=format&fit=crop",
-            status: "continue",
-            detailsUrl: "#",
-            enrollUrl: "#"
-        },
-        {
-            title: "Python for Data Science",
-            info: "Beginner • 8 Weeks • Jane Smith",
-            image: "https://images.unsplash.com/photo-1581092928929-e85b9b7e7a5d?q=80&w=800&auto=format&fit=crop",
-            status: "enroll",
-            detailsUrl: "#",
-            enrollUrl: "#"
-        },
-        {
-            title: "Introduction to Cybersecurity",
-            info: "Beginner • 6 Weeks • Alex Kim",
-            image: "https://images.unsplash.com/photo-1526498460520-4c2463309647?q=80&w=800&auto=format&fit=crop",
-            status: "enroll",
-            detailsUrl: "#",
-            enrollUrl: "#"
-        },
-        {
-            title: "Modern UI/UX Design",
-            info: "Intermediate • 10 Weeks • Sarah Lee",
-            image: "https://images.unsplash.com/photo-1558548177-3e11b0520d2a?q=80&w=800&auto=format&fit=crop",
-            status: "enroll",
-            detailsUrl: "#",
-            enrollUrl: "#"
-        },
-        {
-            title: "Advanced Java Spring Boot",
-            info: "Advanced • 14 Weeks • Michael Chen",
-            image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop",
-            status: "enroll",
-            detailsUrl: "#",
-            enrollUrl: "#"
-        },
-        {
-            title: "AWS Cloud Architect",
-            info: "Advanced • 10 Weeks • Amazon Certified",
-            image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop",
-            status: "enroll",
-            detailsUrl: "#",
-            enrollUrl: "#"
-        }
-    ];
-
-    function renderCourses() {
-        const courseContainer = document.getElementById('course-catalog-container');
-        if (!courseContainer) return;
-
-        courseContainer.innerHTML = coursesData.map(course => {
-            let actionButton = '';
-
-            if (course.status === 'continue') {
-                actionButton = `
-                    <a href="${course.enrollUrl}" class="btn-action btn-continue">CONTINUE LEARNING</a>
-                    <a href="${course.detailsUrl}" class="btn-action btn-view">DETAILS</a>
-                `;
-            } else {
-                actionButton = `
-                    <a href="${course.enrollUrl}" class="btn-action btn-enroll">ENROLL NOW</a>
-                    <a href="${course.detailsUrl}" class="btn-action btn-view">VIEW DETAILS</a>
-                `;
-            }
-
-            return `
-                <div class="course-card">
-                    <div class="course-image-container">
-                        <img src="${course.image}" alt="${course.title}" loading="lazy">
-                    </div>
-                    <div class="course-header">
-                        <h3>${course.title}</h3>
-                    </div>
-                    <div class="course-info">
-                        <p>${course.info}</p>
-                    </div>
-                    <div class="course-actions">
-                        ${actionButton}
-                    </div>
-                </div>
-            `;
-        }).join('');
-    }
-
-    // === INITIALIZATION ===
-    document.addEventListener('DOMContentLoaded', () => {
-        new CodeLineLMSTheme(); // Init Theme
-        renderCourses(); // Init Courses
-
-        // Init Marquees (Double content for CSS infinite loop)
-        setupMarquee('.t-track'); // Testimonials
-        setupMarquee('.f-track'); // Faculty
-        setupMarquee('.marquee-track'); // Placements
+      };
+      updateCount();
     });
-</script>
-
-<script src="js/config.js"></script>
-<script src="js/course-catalog.js"></script>
+  </script>
 </body>
 </html>
-  <script src="js/config.js"></script>
-
-  <script src="js/course-catalog.js"></script>
-
-  
-
-</body>
-</html>
-
-
-
-
-
-
-
-

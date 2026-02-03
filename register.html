@@ -3,233 +3,262 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Student Signup - LSM Portal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <title>Student Signup - CODELINE AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
   <style>
     :root {
-      --primary-color: #4a00e0;
-      --secondary-color: #8e2de2;
-      --text-color: #333;
-      --form-bg: rgba(255, 255, 255, 0.15);
-      --border-radius-large: 16px;
+      --primary: #9a0669;        /* Brand Pink */
+      --accent: #00d2ff;         /* Cyber Blue */
+      --bg-dark: #0f0c29;
+      --bg-gradient: linear-gradient(135deg, #790c72, #790c72, #790c72);
+      --glass: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #ffffff;
     }
 
-    /* Animated Gradient Background */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(-45deg, #4a00e0, #739ddc, #705293, #d2b835);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
+      background: var(--bg-gradient);
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      color: var(--text-color);
-    }
-
-    @keyframes gradientBG {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-
-    /* Glassmorphism Form */
-    .form-container {
-      width: 92%;
-      max-width: 440px;
-      padding: 40px 36px;
-      background: var(--form-bg);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: var(--border-radius-large);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .form-container:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 22px 48px rgba(0,0,0,0.35);
-    }
-
-    h2 {
-      color: #fff;
-      font-size: 2.2rem;
-      margin: 0 0 8px;
-      text-align: center;
-    }
-    .form-container p:not(.login-link) {
-      margin: 0 0 28px;
-      color: #eaeaea;
-      text-align: center;
-      font-size: 0.95rem;
-    }
-
-    /* Floating Labels */
-    .form-group {
+      overflow: hidden;
       position: relative;
-      margin-bottom: 22px;
-    }
-    .form-group label {
-      position: absolute;
-      top: 14px;
-      left: 14px;
-      font-size: 0.95rem;
-      color: #ddd;
-      pointer-events: none;
-      padding: 0 6px;
-      transition: 0.25s ease;
-      background: transparent;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 14px 14px;
-      border: none;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.22);
-      color: #fff;
-      font-size: 1rem;
-      outline: none;
-      transition: box-shadow 0.2s ease, background 0.2s ease;
     }
 
-    /* Floating effect */
-    .form-group input:focus + label,
-    .form-group input:not(:placeholder-shown) + label {
-      top: -10px;
-      left: 10px;
-      font-size: 0.75rem;
-      color: #fff;
-      background: rgba(0,0,0,0.35);
-      border-radius: 4px;
-      padding: 0 4px;
+    /* --- BACKGROUND PARTICLES --- */
+    .circles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; }
+    .circles li {
+      position: absolute; display: block; list-style: none;
+      width: 20px; height: 20px; background: rgba(255, 255, 255, 0.1);
+      animation: animate 25s linear infinite; bottom: -150px; border-radius: 4px;
+    }
+    /* Add specific particle styles here if needed, or keep minimal for brevity */
+    .circles li:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
+    .circles li:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+    /* ... more circles ... */
+
+    @keyframes animate {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; }
+      100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; }
     }
 
-    .form-group input:focus {
-      background: rgba(255,255,255,0.28);
-      box-shadow: 0 0 0 3px rgba(142,45,226,0.25);
+    /* --- FLOATING ICONS --- */
+    .floating-icon {
+      position: absolute; color: rgba(255, 255, 255, 0.06); z-index: 1;
+      animation: floatIcon 6s ease-in-out infinite;
+    }
+    .icon-1 { top: 10%; left: 10%; font-size: 5rem; animation-delay: 0s; }
+    .icon-2 { bottom: 15%; right: 10%; font-size: 6rem; animation-delay: 2s; }
+    .icon-3 { top: 20%; right: 20%; font-size: 4rem; animation-delay: 4s; }
+    .icon-4 { bottom: 10%; left: 15%; font-size: 4.5rem; animation-delay: 1s; }
+
+    @keyframes floatIcon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
     }
 
-    /* Button */
-    #submit-btn {
-      display: block;
-      width: 100%;
-      padding: 14px 16px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #fff;
-      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-top: 8px;
+    /* --- REGISTER CARD --- */
+    .container { position: relative; z-index: 10; width: 100%; max-width: 450px; margin: 20px; }
+
+    .register-card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
       position: relative;
       overflow: hidden;
-      transition: background 0.3s ease;
-      box-shadow: 0 8px 18px rgba(142,45,226,0.35);
-    }
-    #submit-btn:hover {
-      background: linear-gradient(90deg, #5b00ff, #a140f5);
+      text-align: center; /* Center logo */
     }
 
-    .ripple {
-      position: absolute;
-      width: 100px;
-      height: 100px;
-      background: rgba(255,255,255,0.4);
-      border-radius: 50%;
-      transform: scale(0);
-      animation: rippleEffect 0.6s linear;
-      pointer-events: none;
-    }
-    @keyframes rippleEffect {
-      to {
-        transform: scale(2.6);
-        opacity: 0;
-      }
+    .register-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
     }
 
-    #message {
-      text-align: center;
-      margin: 14px 0 0;
-      font-weight: 700;
-      font-size: 0.95rem;
+    .header-area { margin-bottom: 25px; }
+    
+    /* --- LOGO --- */
+    .logo-img {
+      width: 90px;
+      height: auto;
+      margin-bottom: 10px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
 
-    .error { color: #ff6b6b; }
-    .success { color: #2ecc71; }
-
-    .login-link {
-      text-align: center;
-      margin-top: 24px;
-      font-size: 0.92rem;
-      color: #f3f3f3;
-    }
-    .login-link a {
-      color: #ffffff;
-      font-weight: 700;
-      text-decoration: none;
+    h2 { color: var(--text); font-weight: 700; font-size: 1.8rem; margin-bottom: 5px; }
+    
+    .typewriter {
+      font-size: 0.85rem; color: var(--accent); font-weight: 500; min-height: 1.2em;
     }
 
-    @media (max-width: 480px) {
-      .form-container { padding: 28px 20px; }
-      h2 { font-size: 1.9rem; }
+    /* --- INPUTS --- */
+    .input-group { position: relative; margin-bottom: 20px; text-align: left; }
+
+    .input-icon {
+      position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+      color: rgba(255,255,255,0.5); font-size: 1.1rem; transition: 0.3s;
     }
+
+    .form-control {
+      width: 100%; background: rgba(0, 0, 0, 0.2);
+      border: 2px solid transparent; padding: 14px 14px 14px 45px;
+      border-radius: 12px; color: #fff; font-size: 0.95rem;
+      outline: none; transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      background: rgba(0, 0, 0, 0.4); border-color: var(--accent);
+      box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+    }
+    .form-control:focus + .input-icon { color: var(--accent); }
+
+    .form-label {
+      position: absolute; left: 45px; top: 50%; transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.5); pointer-events: none; transition: 0.3s; font-size: 0.9rem;
+    }
+
+    .form-control:focus ~ .form-label,
+    .form-control:not(:placeholder-shown) ~ .form-label {
+      top: -10px; left: 10px; font-size: 0.7rem; color: var(--primary);
+      background: var(--bg-dark); padding: 0 5px; border-radius: 4px;
+    }
+
+    /* --- BUTTON --- */
+    .btn-register {
+      width: 100%; padding: 15px; border: none; border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      color: white; font-size: 1.1rem; font-weight: 600; cursor: pointer;
+      position: relative; overflow: hidden; transition: 0.4s;
+      box-shadow: 0 4px 15px rgba(0, 210, 255, 0.4); margin-top: 10px;
+    }
+    .btn-register:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 210, 255, 0.6); }
+    .btn-register::after {
+      content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: 0.5s;
+    }
+    .btn-register:hover::after { left: 100%; }
+
+    .login-link { text-align: center; margin-top: 20px; font-size: 0.9rem; color: rgba(255,255,255,0.7); }
+    .login-link a { color: var(--accent); text-decoration: none; font-weight: 600; transition: 0.3s; }
+    .login-link a:hover { color: #fff; text-shadow: 0 0 10px var(--accent); }
+
+    .message { text-align: center; margin-top: 15px; font-size: 0.9rem; min-height: 20px; font-weight: 500; }
+    .error-msg { color: #ff4d4d; }
+    .success-msg { color: #00d26a; }
+
+    /* Mobile */
+    @media (max-width: 480px) { .register-card { padding: 30px 20px; } h2 { font-size: 1.6rem; } }
   </style>
 </head>
 <body>
 
-  <div class="form-container" role="main">
-    <h2>Student Signup</h2>
-    <p>Join LSM and start learning today.</p>
+  <ul class="circles"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>
 
-    <form id="register-form" novalidate>
+  <i class="fas fa-rocket floating-icon icon-1"></i>
+  <i class="fas fa-code floating-icon icon-2"></i>
+  <i class="fas fa-globe floating-icon icon-3"></i>
+  <i class="fas fa-lightbulb floating-icon icon-4"></i>
+
+  <div class="container">
+    <div class="register-card">
       
-      <div class="form-group">
-        <input type="text" id="name" name="name" required placeholder=" " autocomplete="name"/>
-        <label for="name">Full Name</label>
+      <div class="header-area">
+        <img src="Codeline Logo.jpg" alt="Codeline AI Logo" class="logo-img">
+        <h2>Create Account</h2>
+        <div class="typewriter" id="typewriter-text"></div>
       </div>
 
-      <div class="form-group">
-        <input type="email" id="email" name="email" required placeholder=" " autocomplete="email"/>
-        <label for="email">Email</label>
-      </div>
+      <form id="register-form" novalidate>
+        
+        <div class="input-group">
+          <input type="text" id="name" name="name" class="form-control" placeholder=" " required autocomplete="off">
+          <i class="fas fa-user input-icon"></i>
+          <label for="name" class="form-label">Full Name</label>
+        </div>
 
-      <div class="form-group">
-        <input type="tel" id="phone" name="phone" placeholder=" " autocomplete="tel"/>
-        <label for="phone">Phone (Optional)</label>
-      </div>
+        <div class="input-group">
+          <input type="email" id="email" name="email" class="form-control" placeholder=" " required autocomplete="off">
+          <i class="fas fa-envelope input-icon"></i>
+          <label for="email" class="form-label">Email Address</label>
+        </div>
 
-      <div class="form-group">
-        <input type="password" id="password" name="password" required placeholder=" " autocomplete="new-password"/>
-        <label for="password">Password</label>
-      </div>
+        <div class="input-group">
+          <input type="tel" id="phone" name="phone" class="form-control" placeholder=" " autocomplete="off">
+          <i class="fas fa-phone input-icon"></i>
+          <label for="phone" class="form-label">Phone Number</label>
+        </div>
 
-      <button type="submit" id="submit-btn">Register</button>
+        <div class="input-group">
+          <input type="password" id="password" name="password" class="form-control" placeholder=" " required>
+          <i class="fas fa-lock input-icon"></i>
+          <label for="password" class="form-label">Create Password</label>
+        </div>
 
-      <p id="message"></p>
-    </form>
+        <button type="submit" id="submit-btn" class="btn-register">
+          Start Learning <i class="fas fa-arrow-right"></i>
+        </button>
 
-    <p class="login-link">Already have an account? <a href="login.html">Login here</a></p>
+        <div id="message" class="message"></div>
+      </form>
+
+      <p class="login-link">Already a member? <a href="login.html">Login Here</a></p>
+
+    </div>
   </div>
 
+  <script src="js/register.js"></script>
+
   <script>
-    // Ripple Animation
-    const btn = document.getElementById('submit-btn');
-    btn.addEventListener('click', function (e) {
-      if (this.disabled) return;
+    // Typing Effect
+    const textElement = document.getElementById('typewriter-text');
+    const texts = ["Join the Future of Learning", "Unlock Your Potential", "Become a Pro Developer"];
+    let textIndex = 0; let charIndex = 0; let isDeleting = false;
 
-      const rect = this.getBoundingClientRect();
-      const ripple = document.createElement('span');
-      ripple.className = 'ripple';
-      ripple.style.left = (e.clientX - rect.left - 50) + 'px';
-      ripple.style.top = (e.clientY - rect.top - 50) + 'px';
-      this.appendChild(ripple);
+    function typeEffect() {
+      const currentText = texts[textIndex];
+      if (isDeleting) {
+        textElement.textContent = currentText.substring(0, charIndex - 1); charIndex--;
+      } else {
+        textElement.textContent = currentText.substring(0, charIndex + 1); charIndex++;
+      }
 
-      setTimeout(() => ripple.remove(), 600);
+      if (!isDeleting && charIndex === currentText.length) {
+        isDeleting = true; setTimeout(typeEffect, 2000);
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false; textIndex = (textIndex + 1) % texts.length; setTimeout(typeEffect, 500);
+      } else {
+        setTimeout(typeEffect, isDeleting ? 50 : 100);
+      }
+    }
+    typeEffect();
+
+    // Basic Validation Feedback
+    const form = document.getElementById('register-form');
+    const msg = document.getElementById('message');
+    form.addEventListener('submit', (e) => {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const pass = document.getElementById('password').value;
+      if(!name || !email || !pass) {
+        msg.textContent = "Please fill all required fields.";
+        msg.className = "message error-msg";
+      } else {
+        msg.textContent = "Creating Account...";
+        msg.className = "message";
+        msg.style.color = "var(--accent)";
+      }
     });
   </script>
-  <script src="js/register.js"></script>
 
 </body>
 </html>

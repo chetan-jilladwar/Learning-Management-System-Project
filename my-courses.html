@@ -8,18 +8,15 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
   <style>
-    /* ========= 1. THEME VARIABLES (CODELINE AI) ========= */
+    /* ========= 1. THEME VARIABLES ========= */
     :root {
-      /* Brand Colors */
       --primary: #9a0669;
       --primary-dark: #4b0082;
       --accent: #06b6d4;
       
-      /* DARK MODE DEFAULT */
       --bg-body: #06060c;
       --bg-sidebar: rgba(6, 6, 12, 0.85);
       --bg-card: rgba(255, 255, 255, 0.03);
@@ -29,24 +26,22 @@
       --text-dim: #b0b0c0;
       --border-color: rgba(138, 43, 226, 0.2);
       --shadow: 0 10px 30px rgba(0,0,0,0.3);
-      
       --sidebar-width: 280px;
     }
 
-    /* LIGHT MODE OVERRIDES */
     [data-theme="light"] {
       --bg-body: #f8fafc;
       --bg-sidebar: rgba(255, 255, 255, 0.9);
       --bg-card: #ffffff;
       --bg-card-hover: #f1f5f9;
-      
       --text-main: #1e293b;
       --text-dim: #64748b;
       --border-color: rgba(0, 0, 0, 0.1);
       --shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --primary: #9a0669;
+      --accent: #0891b2;
     }
 
-    /* GLOBAL RESET */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
     body {
@@ -61,263 +56,230 @@
     a { text-decoration: none; color: inherit; transition: 0.3s; }
     ul { list-style: none; }
 
-    /* ========= 2. PRELOADER ========= */
+    /* ========= 2. MAIN PAGE PRELOADER (TECH-HEX) ========= */
     #preloader {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: var(--bg-body); z-index: 99999;
-      display: flex; justify-content: center; align-items: center;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
+      background: #050507; z-index: 99999;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
     }
-    .spinner {
-      width: 60px; height: 60px;
-      border: 5px solid rgba(154, 6, 105, 0.2);
-      border-top: 5px solid var(--primary);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin { 100% { transform: rotate(360deg); } }
 
-    /* ========= 3. LAYOUT ========= */
+    .loader-content { position: relative; width: 140px; height: 140px; display: flex; justify-content: center; align-items: center; }
+
+    .arc { position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 3px solid transparent; }
+    .arc-1 { border-top-color: var(--accent); box-shadow: 0 0 10px rgba(6, 182, 212, 0.4); animation: spin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite; }
+    .arc-2 { width: 70%; height: 70%; border-bottom-color: var(--primary); box-shadow: 0 0 10px rgba(154, 6, 105, 0.4); animation: spin 3s linear infinite reverse; }
+
+    .hex-core {
+      position: absolute; width: 44px; height: 50px;
+      background: linear-gradient(135deg, var(--primary), #5b00ff);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      display: flex; justify-content: center; align-items: center;
+      animation: pulse 2s ease-in-out infinite;
+      box-shadow: 0 0 20px var(--primary);
+    }
+    .hex-core::after {
+      content: ''; width: 32px; height: 38px; background: #050507;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); position: absolute;
+    }
+    .hex-dot { position: absolute; width: 10px; height: 10px; background: #fff; border-radius: 50%; z-index: 5; box-shadow: 0 0 10px #fff, 0 0 20px var(--accent); animation: flicker 1s infinite alternate; }
+
+    .loading-brand { margin-top: 25px; font-family: 'Poppins', sans-serif; font-size: 16px; letter-spacing: 5px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; animation: fadeText 2s infinite; }
+    .loading-brand span { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+
+    /* ========= 3. COURSE LOADER (GLOBE ANIMATION) ========= */
+    /* Container Alignment */
+    .section-center {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    /* Path (Track) */
+    .section-path {
+      position: relative;
+      width: 238px;
+      height: 76px;
+      border-radius: 35px;
+      text-align: center;
+      /* Adapted for Dark Theme */
+      background-color: rgba(255, 255, 255, 0.05); 
+      box-shadow: inset -2px 20px 10px 0 rgba(0,0,0,.2), inset -2px 30px 10px 0 rgba(0,0,0,.1);
+      border: 2px solid var(--border-color);
+      overflow: hidden;
+      transition: all 300ms linear;
+    }
+
+    /* The Rolling Globe */
+    .globe {
+      position: relative;
+      width: 66px;
+      height: 66px;
+      overflow: hidden;
+      margin-top: 3px; /* Centering tweak */
+      margin-left: 3px;
+      border-radius: 50%;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.65);
+      animation: rotateBall 4s ease infinite;
+      transition: all 300ms linear;
+      background: #1a1a2e; /* Fallback bg */
+    }
+
+    @keyframes rotateBall {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(162px); } /* Rolls to right */
+      100% { transform: translateX(0); }
+    }
+
+    /* Globe Highlight */
+    .globe:after {
+      position: absolute; width: 5px; height: 12px;
+      background-color: rgba(255, 255, 255, 0.3);
+      content: ''; left: 40px; top: 15px;
+      border-radius: 50%; z-index: 2;
+      box-shadow: 0 0 14px 7px rgba(255, 255, 255, 0.1);
+    }
+
+    /* Globe Shadow Overlay */
+    .globe:before {
+      position: absolute; width: 100%; height: 100%;
+      content: ''; left: 0; top: 0;
+      border-radius: 50%; z-index: 1;
+      box-shadow: inset 0 0 15px #000;
+      opacity: 0.6;
+      transition: all 300ms linear;
+    }
+
+    /* Moving Stripes Wrapper */
+    .globe .wrapper {
+      position: absolute; width: 528px; height: 528px;
+      top: 0; left: -462px;
+      animation: moveBall 4s ease infinite;
+    }
+
+    @keyframes moveBall {
+      0% { left: -462px; }
+      50% { left: 0; }
+      100% { left: -462px; }
+    }
+
+    /* Stripes (Colors matched to theme) */
+    .globe .wrapper span {
+      position: absolute; width: 33px; height: 528px;
+      top: 0; left: 0;
+      background-color: var(--primary); /* Main Purple */
+      box-shadow: inset 0 0 25px rgba(0,0,0,0.5);
+    }
+
+    .globe .wrapper span:nth-child(2) { left: 33px; background-color: var(--primary-dark); }
+    .globe .wrapper span:nth-child(3) { left: 66px; }
+    .globe .wrapper span:nth-child(4) { left: 99px; background-color: var(--primary-dark); }
+    .globe .wrapper span:nth-child(5) { left: 132px; }
+    .globe .wrapper span:nth-child(6) { left: 165px; background-color: var(--primary-dark); }
+    .globe .wrapper span:nth-child(7) { left: 198px; }
+    .globe .wrapper span:nth-child(8) { left: 231px; background-color: var(--primary-dark); }
+    .globe .wrapper span:nth-child(9) { left: 264px; }
+    .globe .wrapper span:nth-child(10) { left: 297px; background-color: var(--primary-dark); }
+    .globe .wrapper span:nth-child(11) { left: 330px; }
+    .globe .wrapper span:nth-child(12) { left: 363px; background-color: var(--primary-dark); }
+    .globe .wrapper span:nth-child(13) { left: 396px; }
+    .globe .wrapper span:nth-child(14) { left: 429px; background-color: var(--primary-dark); }
+    .globe .wrapper span:nth-child(15) { left: 462px; }
+    .globe .wrapper span:nth-child(16) { left: 495px; background-color: var(--primary-dark); }
+
+    .loading-status-text {
+      font-size: 1.1rem; color: var(--text-dim); letter-spacing: 1px;
+      text-align: center; margin-top: 15px; animation: fadeText 1.5s infinite;
+    }
+
+    /* Keyframes for text/main loader */
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes pulse { 0%, 100% { transform: scale(1); filter: brightness(1); } 50% { transform: scale(1.1); filter: brightness(1.3); } }
+    @keyframes flicker { 0% { opacity: 0.5; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); } }
+    @keyframes fadeText { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+    /* ========= 4. LAYOUT ========= */
     .dashboard-wrapper { display: flex; width: 100%; min-height: 100vh; position: relative; }
 
-    /* ========= 4. GLASS SIDEBAR ========= */
     .sidebar {
       width: var(--sidebar-width);
       position: fixed; top: 0; left: 0; height: 100vh;
-      background: var(--bg-sidebar);
-      backdrop-filter: blur(15px);
-      border-right: 1px solid var(--border-color);
-      z-index: 1000;
-      padding: 30px 20px;
-      transition: transform 0.3s ease;
+      background: var(--bg-sidebar); backdrop-filter: blur(15px);
+      border-right: 1px solid var(--border-color); z-index: 1000;
+      padding: 30px 20px; transition: transform 0.3s ease;
     }
-    
-    @media (max-width: 992px) {
-       .sidebar { transform: translateX(-100%); }
-       .sidebar.mobile-open { transform: translateX(0); }
-    }
+    @media (max-width: 992px) { .sidebar { transform: translateX(-100%); } .sidebar.mobile-open { transform: translateX(0); } }
 
-    .logo-area {
-      font-size: 24px; font-weight: 800; color: var(--text-main);
-      margin-bottom: 5px; display: flex; align-items: center; gap: 10px;
-    }
+    .logo-area { font-size: 24px; font-weight: 800; color: var(--text-main); margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
     .logo-area span { color: var(--primary); }
     .sidebar-sub { font-size: 12px; color: var(--text-dim); margin-bottom: 40px; text-transform: uppercase; letter-spacing: 1px; }
 
     .sidebar-nav ul { display: flex; flex-direction: column; gap: 8px; }
-    
-    .sidebar-nav a {
-      display: flex; align-items: center; gap: 15px;
-      padding: 12px 18px; border-radius: 12px;
-      font-weight: 500; font-size: 15px;
-      color: var(--text-dim); border: 1px solid transparent;
-    }
-
-    .sidebar-nav a:hover, .sidebar-nav li.active a {
-      background: linear-gradient(90deg, rgba(154,6,105,0.1), transparent);
-      color: var(--primary); border-color: var(--border-color);
-      transform: translateX(5px);
-    }
+    .sidebar-nav a { display: flex; align-items: center; gap: 15px; padding: 12px 18px; border-radius: 12px; font-weight: 500; font-size: 15px; color: var(--text-dim); border: 1px solid transparent; }
+    .sidebar-nav a:hover, .sidebar-nav li.active a { background: linear-gradient(90deg, rgba(154,6,105,0.1), transparent); color: var(--primary); border-color: var(--border-color); transform: translateX(5px); }
     .sidebar-nav a i { width: 20px; text-align: center; font-size: 18px; }
 
-    .sidebar-footer {
-      position: absolute; bottom: 30px; left: 20px; right: 20px;
-      padding: 15px; background: var(--bg-card);
-      border-radius: 15px; border: 1px solid var(--border-color);
-      color: var(--text-dim); font-size: 13px;
-    }
+    .sidebar-footer { position: absolute; bottom: 30px; left: 20px; right: 20px; padding: 15px; background: var(--bg-card); border-radius: 15px; border: 1px solid var(--border-color); color: var(--text-dim); font-size: 13px; }
     .sidebar-footer strong { display: block; color: var(--text-main); font-size: 15px; margin-top: 2px; }
 
     /* ========= 5. MAIN CONTENT ========= */
-    .main-content {
-      flex: 1; margin-left: var(--sidebar-width);
-      padding: 30px 40px;
-      background: radial-gradient(circle at top right, rgba(154,6,105,0.1), transparent 40%);
-    }
+    .main-content { flex: 1; margin-left: var(--sidebar-width); padding: 30px 40px; background: radial-gradient(circle at top right, rgba(154,6,105,0.1), transparent 40%); }
     @media (max-width: 992px) { .main-content { margin-left: 0; padding: 20px; } }
 
-    /* Header */
-    .dashboard-header {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 40px;
-    }
-    
+    .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
     .dashboard-header h1 { font-size: 28px; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
     .dashboard-header h1 span.emoji { font-size: 24px; filter: grayscale(0.2); }
 
     .header-actions { display: flex; align-items: center; gap: 15px; }
-
-    .action-btn {
-      width: 45px; height: 45px; border-radius: 50%;
-      border: 1px solid var(--border-color); background: var(--bg-card);
-      color: var(--text-main); display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: 0.3s;
-    }
+    .action-btn { width: 45px; height: 45px; border-radius: 50%; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-main); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; }
     .action-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
-    
     .mobile-menu-btn { display: none; }
     @media (max-width: 992px) { .mobile-menu-btn { display: flex; } }
 
-    /* ========= 6. COURSES GRID & CARDS ========= */
-    /* ========= 6. PREMIUM COURSE CARD UI ========= */
-    .my-courses-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 30px;
-      margin-top: 20px;
-      padding-bottom: 40px;
-    }
+    /* ========= 6. COURSE CARDS ========= */
+    .my-courses-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; margin-top: 20px; padding-bottom: 40px; }
 
-    .course-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 24px;
-      overflow: hidden;
-      position: relative;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-    }
+    .course-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 24px; overflow: hidden; position: relative; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: var(--shadow); display: flex; flex-direction: column; }
+    .course-card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(154, 6, 105, 0.2); background: var(--bg-card-hover); }
 
-    /* Hover Effect - Lift & Glow */
-    .course-card:hover {
-      transform: translateY(-10px);
-      border-color: var(--primary);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(154, 6, 105, 0.2);
-      background: var(--bg-card-hover);
-    }
+    .course-header-box { height: 150px; position: relative; background: linear-gradient(135deg, #2e0235, #4b0082); overflow: hidden; }
+    .course-header-box::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 20px 20px; opacity: 0.3; transform: rotate(45deg); }
 
-    /* Card Header (Gradient & Pattern) */
-    .course-header-box {
-      height: 150px;
-      position: relative;
-      background: linear-gradient(135deg, #2e0235, #4b0082); /* Fallback */
-      overflow: hidden;
-    }
-    
-    /* Abstract Pattern Overlay */
-    .course-header-box::before {
-      content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-      background-size: 20px 20px;
-      opacity: 0.3; transform: rotate(45deg);
-    }
+    .course-badge { position: absolute; top: 15px; right: 15px; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); color: var(--accent); padding: 6px 14px; border-radius: 30px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid rgba(6, 182, 212, 0.3); z-index: 2; }
+    .course-floating-icon { position: absolute; bottom: -25px; left: 25px; width: 60px; height: 60px; background: var(--bg-body); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--primary); box-shadow: 0 10px 20px rgba(0,0,0,0.3); border: 2px solid var(--border-color); z-index: 5; }
 
-    /* Floating Badge (Status) */
-    .course-badge {
-      position: absolute; top: 15px; right: 15px;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(4px);
-      color: var(--accent);
-      padding: 6px 14px; border-radius: 30px;
-      font-size: 11px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.5px;
-      border: 1px solid rgba(6, 182, 212, 0.3);
-      z-index: 2;
-    }
-
-    /* Overlapping Icon */
-    .course-floating-icon {
-      position: absolute; bottom: -25px; left: 25px;
-      width: 60px; height: 60px;
-      background: var(--bg-body);
-      border-radius: 18px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 28px; color: var(--primary);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-      border: 2px solid var(--border-color);
-      z-index: 5;
-    }
-
-    /* Card Body */
-    .card-content {
-      padding: 40px 25px 25px 25px; /* Top padding extra for icon */
-      flex: 1; display: flex; flex-direction: column;
-    }
-
-    .course-title {
-      font-size: 18px; font-weight: 700; color: var(--text-main);
-      margin-bottom: 8px; line-height: 1.4;
-    }
-
-    .course-instructor {
-      font-size: 13px; color: var(--text-dim); margin-bottom: 20px;
-      display: flex; align-items: center; gap: 6px;
-    }
+    .card-content { padding: 40px 25px 25px 25px; flex: 1; display: flex; flex-direction: column; }
+    .course-title { font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; line-height: 1.4; }
+    .course-instructor { font-size: 13px; color: var(--text-dim); margin-bottom: 20px; display: flex; align-items: center; gap: 6px; }
     .course-instructor i { color: var(--accent); }
 
-    /* Progress Bar Container */
     .progress-container { margin-bottom: 20px; }
-    .progress-info {
-      display: flex; justify-content: space-between;
-      font-size: 12px; margin-bottom: 6px; font-weight: 600;
-    }
-    .progress-track {
-      width: 100%; height: 6px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 10px; overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      border-radius: 10px; transition: width 1s ease;
-      box-shadow: 0 0 10px rgba(6, 182, 212, 0.6);
-    }
+    .progress-info { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; font-weight: 600; }
+    .progress-track { width: 100%; height: 6px; background: rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 10px; transition: width 1s ease; box-shadow: 0 0 10px rgba(6, 182, 212, 0.6); }
 
-    /* Action Button */
-    .btn-course {
-      width: 100%; padding: 12px;
-      border-radius: 12px;
-      background: rgba(154, 6, 105, 0.1);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      font-size: 14px; font-weight: 600;
-      cursor: pointer; transition: all 0.3s;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-    }
-    .btn-course:hover {
-      background: var(--primary);
-      color: white; border-color: var(--primary);
-      box-shadow: 0 8px 20px rgba(154, 6, 105, 0.4);
-      transform: translateY(-2px);
-    }
+    .btn-course { width: 100%; padding: 12px; border-radius: 12px; background: rgba(154, 6, 105, 0.1); border: 1px solid var(--border-color); color: var(--text-main); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-course:hover { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 8px 20px rgba(154, 6, 105, 0.4); transform: translateY(-2px); }
 
-    /* Loading State */
-    #loading-message-container { text-align: center; margin-top: 50px; color: var(--text-dim); }
-    #loading-text { font-size: 16px; letter-spacing: 1px; animation: blink 1.5s infinite; }
-    @keyframes blink { 50% { opacity: 0.5; } }
-
-    /* Overlay */
-    .sidebar-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 900;
-      opacity: 0; visibility: hidden; transition: 0.3s;
-    }
+    .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 900; opacity: 0; visibility: hidden; transition: 0.3s; }
     .sidebar-overlay.active { opacity: 1; visibility: visible; }
-
-    /* Spinner Animation */
-.spinner-border {
-  width: 50px;
-  height: 50px;
-  border: 4px solid rgba(154, 6, 105, 0.2); /* Light fade */
-  border-top: 4px solid #9a0669; /* Main Pink Color */
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 0 auto;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
   </style>
 </head>
 
-<body data-theme="dark"> <div id="preloader">
+<body data-theme="dark"> 
+  
+  <div id="preloader">
     <div class="loader-content">
-      <div class="spinner"></div>
+      <div class="arc arc-1"></div>
+      <div class="arc arc-2"></div>
+      <div class="hex-core">
+        <div class="hex-dot"></div>
+      </div>
     </div>
+    <div class="loading-brand">CODELINE <span>AI</span></div>
   </div>
 
   <div class="sidebar-overlay" id="sidebar-overlay"></div>
@@ -338,7 +300,7 @@
           <li><a href="progress.html"><i class="fas fa-chart-line"></i><span>Progress</span></a></li>
           <li><a href="fees.html"><i class="fas fa-wallet"></i><span>Fees</span></a></li>
           <li><a href="profile.html"><i class="fas fa-user-gear"></i><span>Profile</span></a></li>
-          <li><a href="#" id="logout-link"><i class="fas fa-arrow-right-from-bracket"></i><span>Logout</span></a></li>
+         <li><a href="#" id="logout-btn"><i class="fas fa-arrow-right-from-bracket"></i><span>Logout</span></a></li>
           <li><a href="index.html"><i class="fas fa-arrow-left"></i><span>Back to Home</span></a></li>
         </ul>
       </nav>
@@ -350,37 +312,76 @@
     </aside>
 
     <main class="main-content">
-  <header class="dashboard-header" data-aos="fade-down">
-    <h1><span class="emoji">📚</span> My Enrolled Courses</h1>
-    <div class="header-actions">
-      <button class="action-btn mobile-menu-btn" id="mobile-menu-btn" title="Open Menu">
-        <i class="fas fa-bars"></i>
-      </button>
-      <button class="action-btn" id="dark-mode-toggle" title="Toggle Dark/Light Mode">
-        <i class="fas fa-sun"></i>
-      </button>
-    </div>
-  </header>
+      <header class="dashboard-header" data-aos="fade-down">
+        <h1><span class="emoji">📚</span> My Enrolled Courses</h1>
+        <div class="header-actions">
+          <button class="action-btn mobile-menu-btn" id="mobile-menu-btn" title="Open Menu">
+            <i class="fas fa-bars"></i>
+          </button>
+          <button class="action-btn" id="dark-mode-toggle" title="Toggle Dark/Light Mode">
+            <i class="fas fa-sun"></i>
+          </button>
+        </div>
+      </header>
 
-  <div id="course-loader" style="text-align: center; margin-top: 80px;">
-    <div class="spinner-border"></div>
-    <p style="margin-top: 15px; color: var(--text-dim); font-size: 1.1rem;">Loading your courses...</p>
-  </div>
+      <div id="course-loader" style="text-align: center; margin-top: 50px;">
+        <div class="section-center">
+          <div class="section-path">
+            <div class="globe">
+              <div class="wrapper">
+                <span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="loading-status-text">Fetching Courses...</p>
+      </div>
 
-  <section class="my-courses-list" id="courses-container" style="display: none;" data-aos="fade-up" data-aos-delay="200">
-    </section>
-</main>
+      <section class="my-courses-list" id="courses-container" style="display: none;" data-aos="fade-up" data-aos-delay="200">
+      </section>
+    </main>
   </div>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
   <script>
+    // ==== 4. LOGOUT LOGIC ====
+    const logoutBtn = document.getElementById('logout-btn');
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // Link ko rokega
+
+            // 1. Confirm karein (Optional)
+            if(confirm('Are you sure you want to logout?')) {
+                
+                // 2. User data clear karein (Example keys)
+                // Jo bhi key aap login ke waqt save karte hain, use remove karein
+                localStorage.removeItem('loggedInUser'); 
+                localStorage.removeItem('authToken');
+                
+                // Agar sab kuch clear karna hai toh ye use karein:
+                // localStorage.clear(); 
+
+                // 3. Login page par bhejein
+                window.location.href = 'login.html'; 
+            }
+        });
+    }
+  </script>
+
+  <script>
+
+    
     // ==== 1. PRELOADER & ANIMATIONS ====
     window.addEventListener('load', () => {
         const preloader = document.getElementById('preloader');
         if(preloader) {
             preloader.style.opacity = '0';
-            setTimeout(() => preloader.style.display = 'none', 500);
+            setTimeout(() => preloader.style.display = 'none', 800);
         }
         AOS.init({ duration: 800, once: true });
     });

@@ -1,38 +1,28 @@
-// js/dashboard.js - FIXED: Sirf ENROLLED courses hi dikhega
-var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyUyX9QrGH5zBtS3-EvQs3kSlmzBTEmXWMmhiLSIIGQ1h8LDruLtkkF_-stKHexSonZog/exec";
+// js/dashboard.js - FIXED: Duplicate Auth Check Removed
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const userId = localStorage.getItem('lsm_user_id');
-  const userName = localStorage.getItem('lsm_user_name') || 'Student';
-
-  if (!userId) {
-    alert('Please login to view dashboard.');
-    window.location.href = 'login.html';
-    return;
-  }
-
-  setupWelcomeMessage(userName);
-  setupLogout();
-  await loadDashboardStats(userId);
-});
-
+var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxAUni6GS7Eoe6IVad0K9OakqOCD2wAT62UVQIV16rQxURt5IZU1TAaJJSsv_4Zj2h_VA/exec";
 
 // --- New Dark Mode Logic ---
-
-// Function to handle Dark/Light theme switching
 function setupDarkModeToggle() {
     const darkModeToggle = document.getElementById('dark-mode-toggle');
     const body = document.body;
+    // Check if the toggle exists to prevent errors on pages without it
+    if (!darkModeToggle) return;
+
     const icon = darkModeToggle.querySelector('i');
 
     // 1. Theme applying function
     function setTheme(theme) {
         body.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
-        if (theme === 'dark') {
-            icon.classList.replace('fa-moon', 'fa-sun');
-        } else {
-            icon.classList.replace('fa-sun', 'fa-moon');
+        
+        // Only update icon if it exists
+        if (icon) {
+            if (theme === 'dark') {
+                icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+            }
         }
     }
 
@@ -48,31 +38,24 @@ function setupDarkModeToggle() {
     });
 }
 
-
-// --- Update DOMContentLoaded to include Dark Mode Setup ---
 document.addEventListener('DOMContentLoaded', async () => {
   const userId = localStorage.getItem('lsm_user_id');
   const userName = localStorage.getItem('lsm_user_name') || 'Student';
 
-  if (!userId) {
-    alert('Please login to view dashboard.');
-    window.location.href = 'login.html';
-    return;
-  }
-
-  // 🔥 NEW: Setup Dark Mode before anything else
-  setupDarkModeToggle(); 
+  // 🔥 REMOVED DUPLICATE AUTH CHECK HERE
+  // Because js/auth-check.js is already handling the redirection logic.
   
+  // Just return if no user to stop further execution of dashboard logic
+  if (!userId) return; 
+
+  // Initialize features
+  setupDarkModeToggle(); 
   setupWelcomeMessage(userName);
   setupLogout();
+  
+  // Load data
   await loadDashboardStats(userId);
 });
-
-// ... (rest of your existing functions: setupWelcomeMessage, setupLogout, loadDashboardStats, etc.)
-// Note: loadDashboardStats, updateDashboardStats, setLoadingStats, and showDashboardError functions 
-//       should remain the same as the original script you provided.
-
-// ... (existing functions)
 
 function setupWelcomeMessage(userName) {
   const welcomeEl = document.getElementById('welcome-message');
@@ -113,7 +96,7 @@ async function loadDashboardStats(userId) {
   const stats = {
     enrolledCoursesEl: document.getElementById('enrolled-count'),
     overallProgressEl: document.getElementById('progress-percent'),
-    recentActivityEl: document.querySelector('.dashboard-section'),
+    recentActivityEl: document.querySelector('.dashboard-section'), // Targeting section for activity update
     upcomingSessionEl: document.getElementById('upcoming-session')
   };
 
@@ -126,7 +109,7 @@ async function loadDashboardStats(userId) {
     const data = await response.json();
 
     if (data.status === 'success' && Array.isArray(data.data)) {
-      // 🔥 FIXED: SIRF ENROLLED COURSES (Progress !== null)
+      // 🔥 FIXED: Filter for ENROLLED courses (Progress is not null/undefined)
       const enrolledCourses = data.data.filter(course => 
         course.Progress !== null && 
         course.Progress !== undefined && 
@@ -162,28 +145,41 @@ function updateDashboardStats(enrolledCourses, stats) {
     stats.overallProgressEl.textContent = `${Math.round(totalProgress)}%`;
   }
 
+  // Update Activity Section based on data
   if (stats.recentActivityEl) {
+    // We are looking for the .activity-list container specifically if it exists, otherwise the section
+    const activityListContainer = document.getElementById('activity-data-container') || stats.recentActivityEl;
+    
     if (enrolledCount > 0) {
       const recentCourse = enrolledCourses[0];
-      stats.recentActivityEl.innerHTML = `
-        <h2>Recent Activity</h2>
+      // Keep existing structure, just inject content
+      activityListContainer.innerHTML = `
         <div class="activity-item">
-          📚 Enrolled in <strong>${recentCourse.Title}</strong>
-          <span class="activity-date">${new Date().toLocaleDateString()}</span>
+          <div>
+            <strong>Enrolled in ${recentCourse.Title}</strong>
+            <p>${new Date().toLocaleDateString()}</p>
+          </div>
+          <span class="status-tag status-new">✨ Active</span>
         </div>
         <div class="activity-item">
-          🎯 ${recentCourse.Progress.topicsCompleted || 0}/${recentCourse.Progress.totalTopics || 0} topics completed
+          <div>
+            <strong>Progress Check</strong>
+            <p>${recentCourse.Progress.topicsCompleted || 0}/${recentCourse.Progress.totalTopics || 0} topics completed</p>
+          </div>
+          <span class="status-tag" style="color:var(--accent); background:rgba(6,182,212,0.15);">⏳ ${recentCourse.Progress.progressPercentage}% Done</span>
         </div>
       `;
     } else {
-      stats.recentActivityEl.innerHTML = `
-        <h2>Recent Activity</h2>
+      activityListContainer.innerHTML = `
         <div class="activity-item">
-          📚 No enrolled courses yet
-          <span class="activity-date">Start your learning journey!</span>
+          <div>
+            <strong>No enrolled courses yet</strong>
+            <p>Start your learning journey today!</p>
+          </div>
+          <span class="status-tag status-new">🆕 New</span>
         </div>
-        <div class="activity-item">
-          <a href="index.html" class="btn btn-primary btn-small">Browse Courses</a>
+        <div class="activity-item" style="justify-content: center;">
+          <a href="index.html" class="btn-primary" style="padding: 8px 16px; border-radius: 8px; font-size: 13px; text-decoration: none;">Browse Courses</a>
         </div>
       `;
     }
@@ -199,24 +195,19 @@ function setLoadingStats(stats) {
   if (stats.enrolledCoursesEl) stats.enrolledCoursesEl.textContent = '…';
   if (stats.overallProgressEl) stats.overallProgressEl.textContent = '…%';
 
-  if (stats.recentActivityEl) {
-    stats.recentActivityEl.innerHTML = `
-      <h2>Recent Activity</h2>
-      <div class="loading">Loading your activity...</div>
-    `;
-  }
+  // Optional: add loading state to activity list if needed
 }
 
 function showDashboardError(stats) {
   if (stats.enrolledCoursesEl) stats.enrolledCoursesEl.textContent = '0';
   if (stats.overallProgressEl) stats.overallProgressEl.textContent = '0%';
 
-  if (stats.recentActivityEl) {
-    stats.recentActivityEl.innerHTML = `
-      <h2>Recent Activity</h2>
-      <div class="error-state">
+  const activityListContainer = document.getElementById('activity-data-container');
+  if (activityListContainer) {
+    activityListContainer.innerHTML = `
+      <div class="activity-item" style="justify-content: center; flex-direction: column; gap: 10px; text-align: center;">
         <p>⚠️ Failed to load data</p>
-        <button onclick="location.reload()" class="btn btn-small">Retry</button>
+        <button onclick="location.reload()" style="padding: 5px 10px; cursor: pointer;">Retry</button>
       </div>
     `;
   }

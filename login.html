@@ -3,271 +3,279 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Student Login - CODELINE AI Portal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <title>LSM Portal Login - CODELINE AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
   <style>
     :root {
-      --primary-color: #4a00e0;
-      --secondary-color: #e2b82d;
-      --text-color: #333;
-      --form-bg: rgba(255, 255, 255, 0.15);
-      --border-radius-large: 16px;
+      --primary: #9a0669;        /* Brand Pink */
+      --primary-dark: #5b0042;
+      --accent: #00d2ff;         /* Cyan for tech feel */
+      --bg-dark: #0f0c29;
+      --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      --glass: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #ffffff;
     }
 
-    /* Animated Gradient Background */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(-45deg, #4a00e0,  #9a0669, #705293, #d2b835);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
+      background: var(--bg-gradient);
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      color: var(--text-color);
-    }
-    @keyframes gradientBG {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-
-    /* Glassmorphism Form */
-    .form-container {
-      width: 92%;
-      max-width: 440px;
-      padding: 40px 36px;
-      background: var(--form-bg);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: var(--border-radius-large);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .form-container:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 22px 48px rgba(0,0,0,0.35);
-    }
-
-    h1 {
-      color: #fff;
-      font-size: 2.2rem;
-      margin: 0 0 8px;
-      text-align: center;
-      letter-spacing: -0.3px;
-    }
-    p.subtitle {
-      margin: 0 0 28px;
-      color: #eaeaea;
-      text-align: center;
-      font-size: 0.95rem;
-    }
-
-    /* Floating Labels */
-    .form-group {
+      overflow: hidden;
       position: relative;
-      margin-bottom: 22px;
-    }
-    .form-input {
-      width: 100%;
-      padding: 14px 14px;
-      border: none;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.22);
-      color: #fff;
-      font-size: 1rem;
-      outline: none;
-      transition: box-shadow 0.2s ease, background 0.2s ease;
-    }
-    .form-input::placeholder {
-      color: transparent;
-    }
-    .form-input:focus {
-      background: rgba(255,255,255,0.28);
-      box-shadow: 0 0 0 3px rgba(142,45,226,0.25);
-    }
-    .form-label {
-      position: absolute;
-      top: 14px;
-      left: 14px;
-      font-size: 0.95rem;
-      color: #ddd;
-      pointer-events: none;
-      padding: 0 6px;
-      transition: 0.25s ease;
-      background: transparent;
-      border-radius: 4px;
-    }
-    .form-input:focus + .form-label,
-    .form-input:not(:placeholder-shown) + .form-label {
-      top: -10px;
-      left: 10px;
-      font-size: 0.75rem;
-      color: #fff;
-      background: rgba(0,0,0,0.35);
     }
 
-    /* Button with Ripple */
-    .btn-primary {
-      display: block;
-      width: 100%;
-      padding: 14px 16px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #fff;
-      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-top: 8px;
+    /* --- BACKGROUND PARTICLES --- */
+    .circles {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0;
+    }
+    .circles li {
+      position: absolute; display: block; list-style: none;
+      width: 20px; height: 20px; background: rgba(255, 255, 255, 0.1);
+      animation: animate 25s linear infinite; bottom: -150px; border-radius: 4px;
+    }
+    /* ... particle animation delays/sizes same as before ... */
+    .circles li:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
+    .circles li:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+    .circles li:nth-child(3) { left: 70%; width: 20px; height: 20px; animation-delay: 4s; }
+    /* ... add more circles if you want ... */
+
+    @keyframes animate {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; }
+      100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; }
+    }
+
+    /* --- FLOATING ICONS --- */
+    .floating-icon {
+      position: absolute; color: rgba(255, 255, 255, 0.08); z-index: 1;
+      animation: floatIcon 6s ease-in-out infinite;
+    }
+    .icon-1 { top: 15%; left: 15%; font-size: 4rem; animation-delay: 0s; }
+    .icon-2 { bottom: 20%; right: 15%; font-size: 5rem; animation-delay: 2s; }
+    .icon-3 { top: 20%; right: 25%; font-size: 3rem; animation-delay: 4s; }
+    .icon-4 { bottom: 15%; left: 20%; font-size: 3.5rem; animation-delay: 1s; }
+
+    @keyframes floatIcon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    /* --- LOGIN CARD --- */
+    .container {
+      position: relative; z-index: 10; width: 100%; max-width: 420px; margin: 20px;
+    }
+
+    .login-card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
       position: relative;
       overflow: hidden;
-      transition: background 0.3s ease, transform 0.1s ease;
-      box-shadow: 0 8px 18px rgba(142,45,226,0.35);
-    }
-    .btn-primary:hover {
-      background: linear-gradient(90deg, #5b00ff, #a140f5);
-    }
-    .btn-primary:active {
-      transform: translateY(1px);
-    }
-    .ripple {
-      position: absolute;
-      width: 100px;
-      height: 100px;
-      background: rgba(255,255,255,0.4);
-      border-radius: 50%;
-      transform: scale(0);
-      animation: rippleEffect 0.6s linear;
-      pointer-events: none;
-      left: 0;
-      top: 0;
-    }
-    @keyframes rippleEffect {
-      to {
-        transform: scale(2.6);
-        opacity: 0;
-      }
+      text-align: center; /* Center everything including logo */
     }
 
-    /* Messages */
-    .message {
-      text-align: center;
-      margin-top: 14px;
-      font-weight: 700;
-      font-size: 0.95rem;
+    /* Top decorative line */
+    .login-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
     }
-    .error-message { color: #ff6b6b; }
-    .success-message { color: #2ecc71; }
 
-    /* Footer */
+    .brand-area { margin-bottom: 30px; }
+
+    /* --- LOGO STYLING --- */
+    .logo-img {
+      width: 100px; /* Adjust size as needed */
+      height: auto;
+      margin-bottom: 15px;
+      border-radius: 12px; /* Optional rounded corners */
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Optional shadow */
+    }
+
+    h2 {
+      color: var(--text); font-weight: 700; font-size: 1.8rem; letter-spacing: 1px;
+      margin-bottom: 5px;
+    }
+
+    .typewriter {
+      font-size: 0.9rem; color: var(--accent); min-height: 1.5em; margin-bottom: 20px; font-weight: 500;
+    }
+
+    /* --- INPUT FIELDS --- */
+    .input-group { position: relative; margin-bottom: 25px; text-align: left; }
+
+    .input-icon {
+      position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+      color: rgba(255,255,255,0.5); font-size: 1.1rem; transition: 0.3s;
+    }
+
+    .form-control {
+      width: 100%; background: rgba(0, 0, 0, 0.2);
+      border: 2px solid transparent; padding: 15px 15px 15px 45px;
+      border-radius: 12px; color: #fff; font-size: 1rem; outline: none; transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      background: rgba(0, 0, 0, 0.4); border-color: var(--primary);
+      box-shadow: 0 0 15px rgba(154, 6, 105, 0.3);
+    }
+    .form-control:focus + .input-icon { color: var(--primary); }
+
+    .form-label {
+      position: absolute; left: 45px; top: 50%; transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.5); pointer-events: none; transition: 0.3s; font-size: 0.95rem;
+    }
+
+    .form-control:focus ~ .form-label,
+    .form-control:not(:placeholder-shown) ~ .form-label {
+      top: -10px; left: 10px; font-size: 0.75rem; color: var(--accent);
+      background: var(--bg-dark); padding: 0 5px; border-radius: 4px;
+    }
+
+    /* --- BUTTON --- */
+    .btn-login {
+      width: 100%; padding: 16px; border: none; border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), #b92b27);
+      color: white; font-size: 1.1rem; font-weight: 600; cursor: pointer;
+      position: relative; overflow: hidden; transition: 0.4s;
+      box-shadow: 0 4px 15px rgba(154, 6, 105, 0.4); margin-top: 10px;
+    }
+    .btn-login:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(154, 6, 105, 0.6); letter-spacing: 1px; }
+    .btn-login::after {
+      content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: 0.5s;
+    }
+    .btn-login:hover::after { left: 100%; }
+
+    /* --- FOOTER --- */
     .form-footer {
-      text-align: center;
-      margin-top: 24px;
-      font-size: 0.92rem;
-      color: #f3f3f3;
+      margin-top: 25px; font-size: 0.9rem; color: rgba(255,255,255,0.6);
     }
-    .form-footer a {
-      color: #ffffff;
-      font-weight: 700;
-      text-decoration: none;
-      border-bottom: 2px solid transparent;
-      transition: border-color 0.2s ease;
-    }
-    .form-footer a:hover {
-      border-color: #ffffff;
+    .form-footer a { color: var(--accent); text-decoration: none; font-weight: 600; transition: 0.3s; }
+    .form-footer a:hover { text-shadow: 0 0 10px var(--accent); color: #fff; }
+
+    .message { text-align: center; margin-top: 15px; font-size: 0.9rem; min-height: 20px; }
+    .error-msg { color: #ff4d4d; animation: shake 0.4s ease; }
+    .success-msg { color: #00d26a; }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); }
     }
 
-    /* Responsive */
-    @media (max-width: 480px) {
-      .form-container { padding: 28px 20px; }
-      h1 { font-size: 1.9rem; }
-      .btn-primary { font-size: 1rem; padding: 12px; }
-    }
+    /* Mobile */
+    @media (max-width: 480px) { .login-card { padding: 30px 20px; } h2 { font-size: 1.5rem; } }
   </style>
 </head>
 <body>
-  <main class="form-container" role="main" aria-label="Login form">
-    <h1>Student Login</h1>
-    <p class="subtitle">Welcome back! Please login to your account.</p>
 
-    <form id="login-form" novalidate>
-      <div class="form-group">
-        <input type="email" id="email" class="form-input" placeholder=" " autocomplete="email" required aria-required="true" />
-        <label for="email" class="form-label">Email</label>
+  <ul class="circles"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>
+
+  <i class="fas fa-graduation-cap floating-icon icon-1"></i>
+  <i class="fas fa-laptop-code floating-icon icon-2"></i>
+  <i class="fas fa-book-open floating-icon icon-3"></i>
+  <i class="fas fa-brain floating-icon icon-4"></i>
+
+  <div class="container">
+    <div class="login-card">
+      
+      <div class="brand-area">
+        <img src="Codeline Logo.jpg" alt="Codeline AI Logo" class="logo-img">
+        <h2>CODELINE AI</h2>
+        <div class="typewriter" id="typewriter-text"></div>
       </div>
 
-      <div class="form-group">
-        <input type="password" id="password" class="form-input" placeholder=" " autocomplete="current-password" required aria-required="true" minlength="6" />
-        <label for="password" class="form-label">Password</label>
+      <form id="login-form" novalidate>
+        <div class="input-group">
+          <input type="email" id="email" class="form-control" placeholder=" " required autocomplete="off">
+          <i class="fas fa-envelope input-icon"></i>
+          <label for="email" class="form-label">Student Email</label>
+        </div>
+
+        <div class="input-group">
+          <input type="password" id="password" class="form-control" placeholder=" " required>
+          <i class="fas fa-lock input-icon"></i>
+          <label for="password" class="form-label">Password</label>
+          <i class="fas fa-eye" id="togglePassword" style="position:absolute; right:15px; top:50%; transform:translateY(-50%); cursor:pointer; color:rgba(255,255,255,0.4);"></i>
+        </div>
+
+        <button type="submit" class="btn-login" id="login-button">
+          Access Portal <i class="fas fa-arrow-right"></i>
+        </button>
+
+        <div id="login-message" class="message"></div>
+      </form>
+
+      <div class="form-footer">
+        <p>Don't have an account? <a href="register.html">Apply Now</a></p>
+        <p style="margin-top:5px;"><a href="#" onclick="alert('Contact Admin at admin@codeline.ai')">Forgot Password?</a></p>
       </div>
 
-      <button type="submit" class="btn-primary" id="login-button">Login</button>
-      <p id="login-message" class="message" aria-live="polite"></p>
-    </form>
+    </div>
+  </div>
 
-    <p class="form-footer">New user? <a href="register.html">Create an account</a></p>
-  </main>
+  <script src="js/config.js"></script>
+  <script src="js/login.js"></script>
 
   <script>
-    // Ripple effect on button
-    const btn = document.querySelector('.btn-primary');
-    btn.addEventListener('click', function (e) {
-      const rect = this.getBoundingClientRect();
-      const ripple = document.createElement('span');
-      ripple.className = 'ripple';
-      ripple.style.left = (e.clientX - rect.left - 50) + 'px';
-      ripple.style.top = (e.clientY - rect.top - 50) + 'px';
-      this.appendChild(ripple);
-      setTimeout(() => ripple.remove(), 600);
+    // Typing Effect
+    const textElement = document.getElementById('typewriter-text');
+    const texts = ["Student Learning Portal", "Empowering Your Future", "Master Your Skills"];
+    let textIndex = 0; let charIndex = 0; let isDeleting = false;
+
+    function typeEffect() {
+      const currentText = texts[textIndex];
+      if (isDeleting) {
+        textElement.textContent = currentText.substring(0, charIndex - 1); charIndex--;
+      } else {
+        textElement.textContent = currentText.substring(0, charIndex + 1); charIndex++;
+      }
+
+      if (!isDeleting && charIndex === currentText.length) {
+        isDeleting = true; setTimeout(typeEffect, 2000);
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false; textIndex = (textIndex + 1) % texts.length; setTimeout(typeEffect, 500);
+      } else {
+        setTimeout(typeEffect, isDeleting ? 50 : 100);
+      }
+    }
+    typeEffect();
+
+    // Toggle Password
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    togglePassword.addEventListener('click', function () {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      this.classList.toggle('fa-eye-slash');
     });
 
-    // Validation and feedback
+    // Validation Visuals
     const loginForm = document.getElementById('login-form');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const loginMessage = document.getElementById('login-message');
-
-    function isValidEmail(email) {
-      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return regex.test(email);
-    }
-
-    loginForm.addEventListener('submit', function (event) {
-      event.preventDefault();
-      const email = emailInput.value.trim();
-      const password = passwordInput.value.trim();
-
-      loginMessage.textContent = '';
-      loginMessage.className = 'message';
-
-      if (!email || !password) {
-        loginMessage.textContent = 'Please enter both email and password.';
-        loginMessage.classList.add('error-message');
-        return;
+    const msg = document.getElementById('login-message');
+    loginForm.addEventListener('submit', (e) => {
+      const email = document.getElementById('email').value;
+      const pass = document.getElementById('password').value;
+      if(!email || !pass) {
+        msg.textContent = "Please enter credentials.";
+        msg.className = "message error-msg";
+        setTimeout(() => msg.textContent = "", 3000);
+      } else {
+        msg.textContent = "Authenticating...";
+        msg.className = "message";
+        msg.style.color = "var(--accent)";
       }
-      if (!isValidEmail(email)) {
-        loginMessage.textContent = 'Please enter a valid email address.';
-        loginMessage.classList.add('error-message');
-        return;
-      }
-      if (password.length < 6) {
-        loginMessage.textContent = 'Password must be at least 6 characters long.';
-        loginMessage.classList.add('error-message');
-        return;
-      }
-
-      loginMessage.textContent = 'Login Successful! Redirecting...';
-      loginMessage.classList.add('success-message');
-
-      setTimeout(() => {
-        console.log('Redirecting to dashboard...');
-        // window.location.href = 'dashboard.html';
-      }, 1500);
     });
   </script>
-  <script src="js/config.js"></script> <script src="js/login.js"></script>   </body>
+
 </body>
 </html>

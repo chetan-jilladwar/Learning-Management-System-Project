@@ -1,4 +1,4 @@
-var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyUyX9QrGH5zBtS3-EvQs3kSlmzBTEmXWMmhiLSIIGQ1h8LDruLtkkF_-stKHexSonZog/exec";
+var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxAUni6GS7Eoe6IVad0K9OakqOCD2wAT62UVQIV16rQxURt5IZU1TAaJJSsv_4Zj2h_VA/exec";
 
 // 1. Page Load Event
 document.addEventListener('DOMContentLoaded', async () => {
@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // 2. Fetch Logic with Loader Control
 async function loadMyCourses(userId, container, loader) {
-    // Show Loader, Hide Container
     if(loader) loader.style.display = 'block';
     if(container) container.style.display = 'none';
 
@@ -43,12 +42,11 @@ async function loadMyCourses(userId, container, loader) {
         const response = await fetch(url);
         const data = await response.json();
 
-        // Hide Loader, Show Container
         if(loader) loader.style.display = 'none';
-        if(container) container.style.display = 'grid'; // Grid layout wapis laye
+        if(container) container.style.display = 'grid'; 
 
         if (data.status === 'success' && data.data && data.data.length > 0) {
-             // Filter: Only show courses that have Progress data (Enrolled)
+            // Filter: Only show enrolled courses
             const enrolledCourses = data.data.filter(c => c.Progress !== null && c.Progress !== undefined);
             
             if(enrolledCourses.length > 0){
@@ -78,11 +76,11 @@ function renderCourses(courses, userId, container) {
         const progress = course.Progress || { progressPercentage: 0 };
         const percent = progress.progressPercentage || 0;
         
-        // Link Calculation
-        let nextTopic = (progress.topicsCompleted || 0) + 1;
-        let link = `course-topic.html?courseId=${course.CourseID}&userId=${userId}&topicIndex=${nextTopic}`;
+        // 🔥 FIX: Always link to Course Detail Page first
+        // User should see overview/curriculum before jumping to video
+        let link = `course-detail.html?id=${course.CourseID}`;
 
-        // BUTTON LOGIC: "Start" vs "Continue"
+        // BUTTON LOGIC
         let btnText = "Start Course";
         let btnIcon = "fa-play";
         let badgeText = "Start Now";
@@ -95,10 +93,12 @@ function renderCourses(courses, userId, container) {
             btnText = "View Certificate";
             btnIcon = "fa-certificate";
             badgeText = "Completed";
-            link = `certificate.html?courseId=${course.CourseID}&userId=${userId}`;
+            // If completed, maybe go to certificate directly? Or still detail page?
+            // Let's keep it consistent: Detail page (where they can download cert)
+            link = `course-detail.html?id=${course.CourseID}`;
         }
 
-        // Dynamic Colors (Randomized style)
+        // Dynamic Colors
         const gradients = [
             "linear-gradient(135deg, #667eea, #764ba2)", 
             "linear-gradient(135deg, #ff9a9e, #fecfef)",
@@ -109,21 +109,21 @@ function renderCourses(courses, userId, container) {
         // Card HTML
         const html = `
         <div class="course-card">
-            <div class="course-image-wrapper" style="background: ${randomBg};">
+            <div class="course-header-box" style="background: ${randomBg};">
                 <span class="course-badge">${badgeText}</span>
-                <div class="course-icon-large"><i class="fas fa-book-open"></i></div>
+                <div class="course-floating-icon"><i class="fas fa-book-open"></i></div>
             </div>
             <div class="card-content">
                 <h3 class="course-title">${course.Title}</h3>
-                <div class="course-meta">
-                    <div class="meta-tag"><i class="fas fa-user-circle"></i> ${course.Instructor || 'Instructor'}</div>
+                <div class="course-instructor">
+                    <i class="fas fa-user-circle"></i> ${course.Instructor || 'Instructor'}
                 </div>
                 
                 <div class="card-footer">
                     <div class="progress-container">
-                        <div class="progress-labels">
-                            <span class="label-left">Completed</span>
-                            <span class="label-right">${percent}%</span>
+                        <div class="progress-info">
+                            <span>Completed</span>
+                            <span>${percent}%</span>
                         </div>
                         <div class="progress-track">
                             <div class="progress-fill" style="width: ${percent}%;"></div>

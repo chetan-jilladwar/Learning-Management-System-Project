@@ -1,199 +1,242 @@
-// js/course-detail.js (100% Working - CORS Free)
 document.addEventListener('DOMContentLoaded', async () => {
     const userId = localStorage.getItem('lsm_user_id');
     const urlParams = new URLSearchParams(window.location.search);
     const courseId = urlParams.get('id');
     
-    // 1. Auth Check
+    // Auth Check
     if (!userId) {
         localStorage.setItem('pendingEnrollCourseId', courseId);
-        alert('Please login to view course details.');
         window.location.href = 'login.html';
         return;
     }
     
-    if (!courseId) {
-        document.getElementById('course-title').textContent = 'Error: Course ID missing';
-        return;
+    // Global State
+    window.userId = userId;
+    window.currentCourseId = courseId;
+
+    if (courseId) {
+        await loadCourseData(courseId, userId);
+    } else {
+        safeSetText('course-title', 'Error: Course ID Missing');
     }
-    
-    // 2. Tab switching (keep existing)
-    document.querySelectorAll('.tab-link').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const tabId = this.getAttribute('data-tab');
-            
-            document.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
-            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-            
-            this.classList.add('active');
-            document.getElementById(tabId).classList.add('active');
-        });
-    });
-    
-    // 3. Load course details
-    await loadCourseDetails(courseId, userId);
 });
 
-async function loadCourseDetails(courseId, userId) {
-    const startLearningBtn = document.querySelector('#overview .btn-primary');
-    showLoading(startLearningBtn, 'Loading course details...');
-    
+async function loadCourseData(courseId, userId) {
+    const btn = document.getElementById('main-action-btn');
+    if (btn) btn.textContent = 'Loading...';
+
     try {
-        // ⭐ CORS-FREE: Existing APIs only
+        // Fetch All Data using CORS-friendly GET
         const [allCoursesRes, topicsRes] = await Promise.all([
             fetch(`${GOOGLE_SCRIPT_URL}?action=getAllCourses&userId=${encodeURIComponent(userId)}`),
-            fetch(`${GOOGLE_SCRIPT_URL}?action=getCourseTopicsList&courseId=${encodeURIComponent(courseId)}&userId=${encodeURIComponent(userId)}`)
+            fetch(`${GOOGLE_SCRIPT_URL}?action=getCourseTopicsList&courseId=${encodeURIComponent(courseId)}`)
         ]);
-        
-        const allCoursesData = await allCoursesRes.json();
-        const topicsData = await topicsRes.json();
-        
-        if (allCoursesData.status !== 'success' || topicsData.status !== 'success') {
-            throw new Error('Failed to load course data');
-        }
-        
-        // Find course in all courses
-        const course = allCoursesData.data.find(c => c.CourseID === courseId);
-        if (!course) {
-            throw new Error('Course not found');
-        }
-        
-        const topics = topicsData.data || [];
+
+        const allData = await allCoursesRes.json();
+        const topicData = await topicsRes.json();
+
+        // Validate
+        const course = allData.data.find(c => c.CourseID === courseId);
+        if (!course) throw new Error("Course not found");
+
+        const topics = topicData.data || [];
         const progress = course.Progress || { topicsCompleted: 0, totalTopics: 0, progressPercentage: 0 };
-        
-        renderCourseDetails(course, topics, progress, userId);
-        
-    } catch (error) {
-        console.error('Course load error:', error);
-        document.getElementById('course-title').textContent = 'Failed to load course';
-        showError(startLearningBtn, 'Error loading course');
+        const isEnrolled = progress.totalTopics > 0 || course.isEnrolled;
+
+        // Render UI
+        renderHeader(course, progress, isEnrolled);
+        renderCurriculum(topics, progress, isEnrolled);
+        renderActionBtn(course, progress, isEnrolled, topics);
+
+    } catch (err) {
+        console.error(err);
+        if (btn) {
+            btn.textContent = "Error Loading Course";
+            btn.style.background = "red";
+        }
     }
 }
 
-function renderCourseDetails(course, topics, progress, userId) {
-    // 1. Basic Info
-    document.getElementById('course-title').textContent = course.Title;
-    document.getElementById('course-instructor').textContent = `👨‍🏫 ${course.Instructor}`;
-    document.getElementById('course-duration').textContent = `⏱️ ${course.Duration}`;
-    document.getElementById('course-description').textContent = course.Description;
-    
-    // 2. Progress
-    const isEnrolled = progress.totalTopics > 0;
-    const progressEl = document.getElementById('course-progress');
-    progressEl.innerHTML = isEnrolled ? `
-        <div class="progress-bar-container">
-            <div class="progress-bar" style="width: ${progress.progressPercentage}%"></div>
-        </div>
-        <p>${progress.progressPercentage}% Complete (${progress.topicsCompleted}/${progress.totalTopics} topics)</p>
-    ` : '';
-    
-    // 3. Curriculum
-    renderCurriculum(topics, course.CourseID, userId, isEnrolled);
-    
-    // 4. Button Logic
-    const startLearningBtn = document.querySelector('#overview .btn-primary');
-    hideLoading(startLearningBtn);
-    
-    if (isEnrolled) {
-        const nextTopicIndex = progress.topicsCompleted + 1;
-        startLearningBtn.href = `course-topic.html?courseId=${course.CourseID}&topicIndex=${nextTopicIndex}&userId=${userId}`;
-        startLearningBtn.textContent = progress.progressPercentage >= 100 ? 'View Certificate 🎉' : 'Continue Learning';
-        startLearningBtn.className = 'btn btn-primary';
+// 🔥 SAFE TEXT HELPER (Ye Crash hone se bachayega)
+function safeSetText(id, text) {
+    const el = document.getElementById(id);
+    if (el) {
+        el.textContent = text;
     } else {
-        startLearningBtn.href = '#';
-        startLearningBtn.textContent = 'Enroll Now - Free';
-        startLearningBtn.className = 'btn btn-success';
-        startLearningBtn.onclick = () => handleEnrollment(course.CourseID, userId, startLearningBtn);
+        console.warn(`Element with ID '${id}' not found in HTML.`);
     }
 }
 
-function renderCurriculum(topics, courseId, userId, isEnrolled) {
-    const curriculumEl = document.getElementById('curriculum-content');
+function renderHeader(course, progress, isEnrolled) {
+    // Safe setting of text (Agar ID nahi mili to crash nahi hoga)
+    safeSetText('course-title', course.Title);
+    safeSetText('course-instructor', course.Instructor);
+    safeSetText('course-duration', course.Duration);
+    safeSetText('total-topics-count', `${course.TotalTopics || 0} Topics`);
+    safeSetText('course-description', course.Description);
+
+    // Progress Bar Logic
+    if (isEnrolled) {
+        const container = document.getElementById('progress-container');
+        if (container) {
+            container.style.display = 'block';
+            
+            const pct = progress.progressPercentage || 0;
+            const done = progress.topicsCompleted || 0;
+            const total = progress.totalTopics || 0;
+
+            const fill = document.getElementById('progress-fill');
+            if (fill) fill.style.width = `${pct}%`;
+
+            safeSetText('progress-text', `${pct}% Completed`);
+            safeSetText('topics-done-text', `${done}/${total} Done`);
+
+            // 🔥 CERTIFICATE UNLOCK (If 100%)
+            if (pct >= 100) {
+                const banner = document.getElementById('cert-banner');
+                const dlBtn = document.getElementById('download-cert-btn');
+                
+                if (banner) banner.style.display = 'flex';
+                if (dlBtn) dlBtn.onclick = downloadCertificate;
+            }
+        }
+    }
+}
+
+function renderCurriculum(topics, progress, isEnrolled) {
+    const list = document.getElementById('topic-list');
+    if (!list) return; // Safety check
     
+    list.innerHTML = '';
+
     if (topics.length === 0) {
-        curriculumEl.innerHTML = '<li class="text-muted">No topics available yet</li>';
+        list.innerHTML = '<li style="padding:15px; text-align:center;">No topics available yet.</li>';
         return;
     }
-    
-    const curriculumHTML = topics.map((topic, index) => {
-        const topicNum = topic.TopicIndex || (index + 1);
-        const topicTitle = topic.Title || 'Untitled Topic';
-        const isCompleted = topic.isCompleted;
-        const hasAssignment = topic.AssignmentQuestion;
-        
-        if (isEnrolled) {
-            return `
-                <li class="topic-item ${isCompleted ? 'completed' : ''}">
-                    <span class="topic-number">${topicNum}</span>
-                    <a href="course-topic.html?courseId=${courseId}&topicIndex=${topicNum}&userId=${userId}" class="topic-link">
-                        ${topicTitle}
-                    </a>
-                    ${hasAssignment ? '<span class="assignment-badge">📝 Assignment</span>' : ''}
-                    ${isCompleted ? '<span class="completed-badge">✅</span>' : ''}
-                </li>
-            `;
-        } else {
-            return `
-                <li class="topic-item disabled">
-                    <span class="topic-number">${topicNum}</span>
-                    <span class="topic-title">${topicTitle}</span>
-                    <span class="locked">🔒 Enroll to unlock</span>
-                </li>
-            `;
-        }
-    }).join('');
-    
-    curriculumEl.innerHTML = curriculumHTML;
+
+    topics.forEach((t, i) => {
+        const index = i + 1;
+        // Logic: Topic is completed if index <= topicsCompleted
+        const isCompleted = isEnrolled && (index <= progress.topicsCompleted);
+        const isLocked = !isEnrolled; 
+
+        // Icon Logic
+        let iconHtml = `<span class="topic-number">${index}</span>`;
+        if (isCompleted) iconHtml = `<span class="topic-number" style="background:var(--accent); color:#1a2e05;"><i class="fas fa-check"></i></span>`;
+        if (isLocked) iconHtml = `<span class="topic-number" style="background:#eee; color:#aaa;"><i class="fas fa-lock"></i></span>`;
+
+        list.innerHTML += `
+            <li class="topic-item ${isCompleted ? 'completed' : ''}">
+                <div class="topic-left">
+                    ${iconHtml}
+                    <div class="topic-info">
+                        <h4>${t.Title}</h4>
+                        <span>Topic ${index} • ${t.Duration || '15m'}</span>
+                    </div>
+                </div>
+                <div>
+                    ${isLocked ? '' : '<i class="fas fa-play-circle" style="font-size:1.5rem; color:var(--primary); cursor:pointer;"></i>'}
+                </div>
+            </li>
+        `;
+    });
 }
 
-async function handleEnrollment(courseId, userId, button) {
-    if (!confirm(`Enroll in "${courseId}"?`)) return;
+function renderActionBtn(course, progress, isEnrolled, topics) {
+    const btn = document.getElementById('main-action-btn');
+    if (!btn) return; // Safety check
     
-    showLoading(button, 'Enrolling...');
+    if (isEnrolled) {
+        const pct = progress.progressPercentage || 0;
+        if (pct >= 100) {
+            btn.innerHTML = '<i class="fas fa-award"></i> View Certificate';
+            btn.style.background = '#badc58'; // Greenish
+            btn.style.color = '#1a2e05';
+            btn.onclick = (e) => { e.preventDefault(); downloadCertificate(); };
+        } else {
+            // Find next topic
+            let nextIndex = (progress.topicsCompleted || 0) + 1;
+            if (nextIndex > topics.length) nextIndex = topics.length;
+
+            btn.innerHTML = '<i class="fas fa-play"></i> Continue Learning';
+            btn.href = `course-topic.html?courseId=${course.CourseID}&topicIndex=${nextIndex}&userId=${window.userId}`;
+        }
+    } else {
+        btn.innerHTML = '<i class="fas fa-user-plus"></i> Enroll Now';
+        btn.onclick = (e) => {
+            e.preventDefault();
+            enrollUser(course.CourseID);
+        };
+    }
+}
+
+async function enrollUser(courseId) {
+    const btn = document.getElementById('main-action-btn');
+    if (btn) {
+        btn.textContent = 'Enrolling...';
+        btn.style.opacity = '0.7';
+    }
     
     try {
-        // ⭐ CORS-FREE: URLSearchParams POST
         const params = new URLSearchParams({
             action: 'enrollCourse',
-            userId: userId,
+            userId: window.userId,
             courseId: courseId
         });
         
-        const response = await fetch(`${GOOGLE_SCRIPT_URL}?${params}`, {
-            method: 'POST'
-        });
+        await fetch(`${GOOGLE_SCRIPT_URL}?${params}`, { method: 'POST' });
         
-        const data = await response.json();
-        
-        if (data.status === 'success') {
-            alert('✅ Enrolled successfully! Redirecting...');
-            window.location.href = `course-topic.html?courseId=${courseId}&topicIndex=1&userId=${userId}`;
-        } else {
-            throw new Error(data.message || 'Enrollment failed');
+        alert("Enrolled Successfully! 🎉");
+        window.location.reload(); 
+    } catch (e) {
+        alert("Enrollment failed.");
+        if (btn) {
+            btn.textContent = "Enroll Now";
+            btn.style.opacity = '1';
         }
-    } catch (error) {
-        console.error('Enrollment error:', error);
-        alert('❌ Enrollment failed: ' + error.message);
-        hideLoading(button, 'Enroll Now');
     }
 }
 
-// UI Helpers
-function showLoading(element, text) {
-    element.disabled = true;
-    element.dataset.originalText = element.textContent;
-    element.textContent = text;
-}
+// 🔥 DOWNLOAD CERTIFICATE FUNCTION (Proper Header)
+// 🔥 DOWNLOAD CERTIFICATE FUNCTION (100% Works with Apps Script)
+async function downloadCertificate() {
+    const btn = document.getElementById('download-cert-btn');
+    const load = document.getElementById('cert-loading');
+    
+    if(btn) btn.disabled = true;
+    if(load) load.style.display = 'block';
 
-function hideLoading(element) {
-    element.disabled = false;
-    if (element.dataset.originalText) {
-        element.textContent = element.dataset.originalText;
+    try {
+        // Prepare Form Data
+        const formData = new URLSearchParams();
+        formData.append('action', 'generateCertificate');
+        formData.append('userId', window.userId);
+        formData.append('courseId', window.currentCourseId);
+
+        console.log("Sending Request:", formData.toString()); 
+
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            body: formData 
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            const link = document.createElement('a');
+            link.href = "data:application/pdf;base64," + data.base64;
+            link.download = (data.fileName || "Certificate") + ".pdf";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else {
+            alert("Server Error: " + data.message);
+        }
+    } catch (e) {
+        console.error(e);
+        alert("Network Error: " + e.message);
+    } finally {
+        if(btn) btn.disabled = false;
+        if(load) load.style.display = 'none';
     }
-}
-
-function showError(element, text) {
-    element.textContent = text;
-    element.classList.add('btn-danger');
 }
