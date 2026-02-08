@@ -3,109 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificate of Completion</title>
-    
-    <link rel="stylesheet" href="/css/style.css"> 
-    
+    <title>Modern Course Loader</title>
     <style>
-        /* Certificate Specific Styling (Aap ise styles.css mein bhi daal sakte hain) */
-        .certificate-container {
-            width: 800px;
-            height: 600px;
-            margin: 50px auto;
-            border: 20px solid #0056b3; /* Primary Color Border */
-            padding: 30px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            background: #fff url('images/certificate-bg.png') no-repeat center center; /* Optional: Use a background image */
-            background-size: cover;
-            text-align: center;
-            font-family: 'Times New Roman', serif;
+        /* --- 1. CORE SETUP --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif; /* Modern Font */
+            background-color: #0f172a; /* Dark Navy Blue (Premium feel) */
+            color: white;
+            overflow: hidden; /* Scroll band jab tak loader hai */
         }
-        .certificate-header {
-            color: #0056b3;
-            font-size: 48px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        .certificate-title {
-            font-size: 28px;
-            margin-bottom: 40px;
-            color: #333;
-        }
-        .certificate-name {
-            font-size: 40px;
-            font-family: 'Cursive', sans-serif; /* For a classic look */
-            color: #d9534f; /* Red or Gold-like color */
-            margin: 20px 0;
-            border-bottom: 2px dashed #ccc;
-            display: inline-block;
-            padding-bottom: 5px;
-        }
-        .certificate-course {
-            font-size: 24px;
-            margin-top: 30px;
-            color: #007bff;
-            font-weight: 600;
-        }
-        .certificate-footer {
-            margin-top: 50px;
+
+        /* --- 2. LOADER CONTAINER --- */
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
             display: flex;
-            justify-content: space-around;
-            align-items: flex-end;
-            font-size: 16px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.8s ease-in-out;
         }
-        .signature-area {
-            border-top: 1px solid #333;
-            width: 40%;
-            padding-top: 5px;
+
+        /* --- 3. THE STUDENT CHARACTER (CSS ART) --- */
+        .walker-container {
+            position: relative;
+            width: 100px;
+            height: 150px;
+            /* Character ko center mein rakhte hain, hum floor ko move karenge */
         }
-        #download-button {
-            margin-top: 20px;
+
+        /* Body (Capsule Shape) */
+        .body {
+            width: 30px;
+            height: 60px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb); /* Blue Gradient */
+            border-radius: 20px;
+            position: absolute;
+            top: 30px;
+            left: 35px;
+            z-index: 2;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); /* Glow */
+            animation: body-bounce 0.6s infinite alternate ease-in-out;
         }
-        .error-message {
-            color: red;
+
+        /* Head */
+        .head {
+            width: 25px;
+            height: 25px;
+            background: #f8fafc;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 37.5px;
+            z-index: 3;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            animation: head-bob 0.6s infinite alternate ease-in-out;
+        }
+
+        /* Backpack */
+        .backpack {
+            width: 15px;
+            height: 35px;
+            background: #ef4444; /* Red Bag */
+            position: absolute;
+            top: 35px;
+            left: 25px; /* Peeth par */
+            border-radius: 10px 0 0 10px;
+            z-index: 1;
+        }
+
+        /* Legs */
+        .leg {
+            width: 8px;
+            height: 45px;
+            background: #1e293b; /* Dark Pants */
+            position: absolute;
+            top: 80px;
+            left: 46px;
+            border-radius: 4px;
+            transform-origin: top center;
+        }
+
+        .leg.left {
+            animation: walk-left 0.8s infinite linear;
+        }
+
+        .leg.right {
+            animation: walk-right 0.8s infinite linear;
+        }
+
+        /* Shoes */
+        .leg::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 14px;
+            height: 8px;
+            background: white;
+            border-radius: 0 5px 2px 0;
+        }
+
+        /* --- 4. THE ROAD / PROGRESS BAR --- */
+        .road-container {
+            width: 300px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-top: 10px;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: #22d3ee; /* Cyan Neon */
+            box-shadow: 0 0 10px #22d3ee;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        /* --- 5. TEXT & TYPING EFFECT --- */
+        .text-container {
+            margin-top: 30px;
+            text-align: center;
+            height: 50px; /* Fixed height to prevent jumping */
+        }
+
+        .main-text {
             font-size: 24px;
-            margin-top: 100px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: -webkit-linear-gradient(left, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sub-text {
+            font-size: 14px;
+            color: #64748b;
+            margin-top: 5px;
+            min-height: 20px;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes walk-left {
+            0% { transform: rotate(25deg); }
+            50% { transform: rotate(-25deg); }
+            100% { transform: rotate(25deg); }
+        }
+
+        @keyframes walk-right {
+            0% { transform: rotate(-25deg); }
+            50% { transform: rotate(25deg); }
+            100% { transform: rotate(-25deg); }
+        }
+
+        @keyframes body-bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-3px); }
+        }
+        
+        @keyframes head-bob {
+            from { transform: translateY(0); }
+            to { transform: translateY(-4px); }
+        }
+
+        /* --- CONTENT STYLES (After Load) --- */
+        #main-content {
+            display: none; /* Initially hidden */
+            padding: 40px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div id="loading-message" class="loading-message" style="display: none;">Loading Certificate...</div>
+
+    <div id="loader-wrapper">
         
-        <div id="certificate-content" class="certificate-container" style="display: none;">
-            <div class="certificate-header">CERTIFICATE OF COMPLETION</div>
-            <div class="certificate-title">This is to certify that</div>
-            
-            <h1 class="certificate-name" id="student-name">...</h1>
-            
-            <p style="font-size: 20px;">has successfully completed the online course</p>
-            
-            <h2 class="certificate-course" id="course-title">...</h2>
-            
-            <p style="margin-top: 10px; font-size: 16px;">on <span id="completion-date">...</span></p>
-            
-            <div class="certificate-footer">
-                <div class="signature-area">
-                    <p id="instructor-name">...</p>
-                    <p>Instructor</p>
-                </div>
-                <div class="signature-area">
-                    <p>LSM Portal Authority</p>
-                    <p>Date Issued: <span id="issued-date">...</span></p>
-                </div>
-            </div>
-            
+        <div class="walker-container">
+            <div class="head"></div>
+            <div class="backpack"></div> <div class="body"></div>
+            <div class="leg left"></div>
+            <div class="leg right"></div>
         </div>
-        
-        <div id="status-area" style="text-align: center; margin-top: 20px;">
-            <p id="error-message" class="error-message" style="display: none;"></p>
-            <button id="download-button" class="btn btn-primary" style="display: none;">Download Certificate (PDF)</button>
+
+        <div class="road-container">
+            <div class="progress-fill" id="progress-bar"></div>
+        </div>
+
+        <div class="text-container">
+            <div class="main-text">COURSE LOADING</div>
+            <div class="sub-text" id="status-text">Setting up environment...</div>
         </div>
     </div>
 
-    <script src="js/config.js"></script>
-    <script src="js/auth-check.js"></script>
-    <script src="js/certificate.js"></script>
+    <div id="main-content">
+        <h1>Welcome to the Masterclass</h1>
+        <p>Yeh content tab dikhega jab loader 100% complete ho jayega.</p>
+        <div style="background: #1e293b; padding: 20px; border-radius: 10px; display: inline-block; margin-top: 20px;">
+            <h2>🚀 Course Dashboard</h2>
+            <p>Happy Coding!</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const progressBar = document.getElementById('progress-bar');
+            const statusText = document.getElementById('status-text');
+            const loaderWrapper = document.getElementById('loader-wrapper');
+            const mainContent = document.getElementById('main-content');
+            const body = document.body;
+
+            // Messages jo load hote waqt change honge
+            const messages = [
+                "Setting up your environment...",
+                "Fetching course modules...",
+                "Optimizing video assets...",
+                "Pouring coffee for the instructor...",
+                "Almost there..."
+            ];
+
+            let progress = 0;
+            let messageIndex = 0;
+
+            // Loader Simulation Logic
+            const interval = setInterval(() => {
+                // Random speed se progress badhayenge (realistic lagne ke liye)
+                progress += Math.floor(Math.random() * 5) + 1;
+
+                if (progress > 100) progress = 100;
+
+                // Update Bar Width
+                progressBar.style.width = progress + "%";
+
+                // Change Text based on progress milestones
+                if (progress > 20 && progress < 40) statusText.innerText = messages[1];
+                else if (progress > 40 && progress < 70) statusText.innerText = messages[2];
+                else if (progress > 70 && progress < 90) statusText.innerText = messages[3];
+                else if (progress > 90) statusText.innerText = messages[4];
+
+                // Completion Check
+                if (progress === 100) {
+                    clearInterval(interval);
+                    
+                    // Thoda sa wait taaki user 100% dekh sake
+                    setTimeout(() => {
+                        // Fade out loader
+                        loaderWrapper.style.opacity = "0";
+                        
+                        // Loader hatne ke baad content dikhayein
+                        setTimeout(() => {
+                            loaderWrapper.style.display = "none";
+                            mainContent.style.display = "block";
+                            body.style.overflow = "auto"; // Scroll enable
+                        }, 800);
+                    }, 500);
+                }
+            }, 100); // Har 100ms mein update hoga
+        });
+    </script>
 </body>
 </html>

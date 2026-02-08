@@ -3,7 +3,7 @@
 // =======================================================
 
 // ✅ YOUR API_URL - PERFECTLY CONFIGURED
-const API_URL = "https://script.google.com/macros/s/AKfycbxAUni6GS7Eoe6IVad0K9OakqOCD2wAT62UVQIV16rQxURt5IZU1TAaJJSsv_4Zj2h_VA/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbzuweqFoWdQExkI4AXo9cwzNLA_OsBVObtpPUjWMBoD0z1_BcDjy73BvPaNjwknEQq2VA/exec";
 
 /**
  * Universal API Caller - Works for BOTH GET & POST

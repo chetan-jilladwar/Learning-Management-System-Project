@@ -197,44 +197,54 @@ async function enrollUser(courseId) {
     }
 }
 
-// 🔥 DOWNLOAD CERTIFICATE FUNCTION (Proper Header)
-// 🔥 DOWNLOAD CERTIFICATE FUNCTION (100% Works with Apps Script)
+// 🔥 DOWNLOAD CERTIFICATE FUNCTION (Dynamic & Fixed)
 async function downloadCertificate() {
     const btn = document.getElementById('download-cert-btn');
     const load = document.getElementById('cert-loading');
     
-    if(btn) btn.disabled = true;
+    // UI Feedback
+    if(btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+    }
     if(load) load.style.display = 'block';
 
     try {
-        // Prepare Form Data
-        const formData = new URLSearchParams();
+        console.log("Generating certificate for:", window.userId, window.currentCourseId);
+
+        // Prepare Data using FormData (Better for Apps Script POST)
+        const formData = new FormData();
         formData.append('action', 'generateCertificate');
         formData.append('userId', window.userId);
         formData.append('courseId', window.currentCourseId);
 
-        console.log("Sending Request:", formData.toString()); 
-
+        // Fetch Request
         const response = await fetch(GOOGLE_SCRIPT_URL, {
             method: "POST",
-            body: formData 
+            body: formData
         });
 
         const data = await response.json();
 
         if (data.status === 'success') {
+            // Create Download Link
             const link = document.createElement('a');
             link.href = "data:application/pdf;base64," + data.base64;
-            link.download = (data.fileName || "Certificate") + ".pdf";
+            link.download = data.fileName || "Certificate.pdf";
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            
+            // Success UI
+            if(btn) btn.innerHTML = '<i class="fas fa-check"></i> Downloaded';
         } else {
             alert("Server Error: " + data.message);
+            if(btn) btn.innerHTML = '<i class="fas fa-download"></i> Try Again';
         }
     } catch (e) {
         console.error(e);
         alert("Network Error: " + e.message);
+        if(btn) btn.innerHTML = '<i class="fas fa-download"></i> Try Again';
     } finally {
         if(btn) btn.disabled = false;
         if(load) load.style.display = 'none';
