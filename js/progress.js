@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.location.href = 'index.html';
         return;
     }
+    
 
     await fetchProgressData(userId, loader, content);
 });

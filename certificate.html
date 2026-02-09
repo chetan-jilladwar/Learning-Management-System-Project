@@ -3,273 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Course Loader</title>
+    <title>Codeline AI - Professional Certificate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Merriweather:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
+    
     <style>
-        /* --- 1. CORE SETUP --- */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif; /* Modern Font */
-            background-color: #0f172a; /* Dark Navy Blue (Premium feel) */
-            color: white;
-            overflow: hidden; /* Scroll band jab tak loader hai */
+        :root {
+            /* Brand Colors based on your theme */
+            --primary-purple: #8a0b8a;
+            --secondary-cyan: #06b6d4; /* Used sparingly for accents */
+            --text-dark: #1a1a2e;
+            --text-muted: #555555;
+            --paper-white: #ffffff;
+            --border-gradient: linear-gradient(135deg, var(--primary-purple), #4b0082);
         }
 
-        /* --- 2. LOADER CONTAINER --- */
-        #loader-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+        body {
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 10000;
-            transition: opacity 0.8s ease-in-out;
+            min-height: 100vh;
+            background: #f0f2f5; /* Light gray background for web presentation */
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
         }
 
-        /* --- 3. THE STUDENT CHARACTER (CSS ART) --- */
-        .walker-container {
+        /* --- Certificate Container (The Paper) --- */
+        .certificate-container {
+            /* Fixed standard landscape aspect ratio for certificates */
+            width: 960px;
+            height: 640px;
+            background-color: var(--paper-white);
             position: relative;
-            width: 100px;
-            height: 150px;
-            /* Character ko center mein rakhte hain, hum floor ko move karenge */
-        }
-
-        /* Body (Capsule Shape) */
-        .body {
-            width: 30px;
-            height: 60px;
-            background: linear-gradient(135deg, #3b82f6, #2563eb); /* Blue Gradient */
-            border-radius: 20px;
-            position: absolute;
-            top: 30px;
-            left: 35px;
-            z-index: 2;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); /* Glow */
-            animation: body-bounce 0.6s infinite alternate ease-in-out;
-        }
-
-        /* Head */
-        .head {
-            width: 25px;
-            height: 25px;
-            background: #f8fafc;
-            border-radius: 50%;
-            position: absolute;
-            top: 0;
-            left: 37.5px;
-            z-index: 3;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-            animation: head-bob 0.6s infinite alternate ease-in-out;
-        }
-
-        /* Backpack */
-        .backpack {
-            width: 15px;
-            height: 35px;
-            background: #ef4444; /* Red Bag */
-            position: absolute;
-            top: 35px;
-            left: 25px; /* Peeth par */
-            border-radius: 10px 0 0 10px;
-            z-index: 1;
-        }
-
-        /* Legs */
-        .leg {
-            width: 8px;
-            height: 45px;
-            background: #1e293b; /* Dark Pants */
-            position: absolute;
-            top: 80px;
-            left: 46px;
-            border-radius: 4px;
-            transform-origin: top center;
-        }
-
-        .leg.left {
-            animation: walk-left 0.8s infinite linear;
-        }
-
-        .leg.right {
-            animation: walk-right 0.8s infinite linear;
-        }
-
-        /* Shoes */
-        .leg::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 14px;
-            height: 8px;
-            background: white;
-            border-radius: 0 5px 2px 0;
-        }
-
-        /* --- 4. THE ROAD / PROGRESS BAR --- */
-        .road-container {
-            width: 300px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            margin-top: 10px;
-            border-radius: 4px;
-            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            padding: 20px;
             overflow: hidden;
         }
 
-        .progress-fill {
+        /* Subtle Tech Background Pattern */
+        .certificate-bg-pattern {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.05;
+            background-image: 
+                radial-gradient(circle at 20% 20%, var(--primary-purple) 1px, transparent 1px),
+                radial-gradient(circle at 80% 80%, var(--primary-purple) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* The Decorative Border */
+        .certificate-border {
             height: 100%;
-            width: 0%;
-            background: #22d3ee; /* Cyan Neon */
-            box-shadow: 0 0 10px #22d3ee;
-            border-radius: 4px;
-            transition: width 0.3s ease;
+            /* Creating a double border effect with gradient */
+            border: 3px solid transparent;
+            background: linear-gradient(var(--paper-white), var(--paper-white)) padding-box,
+                        var(--border-gradient) border-box;
+            position: relative;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1;
         }
 
-        /* --- 5. TEXT & TYPING EFFECT --- */
-        .text-container {
-            margin-top: 30px;
+        /* Corner Accents */
+        .corner-accent {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 2px solid var(--primary-purple);
+            opacity: 0.3;
+        }
+        .c-top-left { top: 15px; left: 15px; border-right: none; border-bottom: none; }
+        .c-bottom-right { bottom: 15px; right: 15px; border-left: none; border-top: none; }
+
+        /* --- Header Section --- */
+        .cert-header {
             text-align: center;
-            height: 50px; /* Fixed height to prevent jumping */
+            margin-bottom: 30px;
+        }
+        
+        /* Placeholder Logo Stye */
+        .logo-placeholder {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icon-svg {
+            width: 40px; height: 40px;
+            fill: var(--primary-purple);
+        }
+        .logo-text {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary-purple);
+            letter-spacing: 1px;
         }
 
-        .main-text {
-            font-size: 24px;
+        /* --- Main Content Section --- */
+        .cert-content {
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .cert-title {
+            font-family: 'Merriweather', serif; /* Serif font for professional look */
+            font-size: 42px;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0 0 15px 0;
+            position: relative;
+            display: inline-block;
+        }
+        /* Purple underline accent */
+        .cert-title::after {
+            content: ''; position: absolute; bottom: -10px; left: 50%;
+            transform: translateX(-50%); width: 80px; height: 3px;
+            background: var(--primary-purple);
+        }
+
+        .cert-body-text {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin: 25px 0 10px 0;
+        }
+
+        .student-name {
+            font-size: 48px;
             font-weight: 700;
-            letter-spacing: 1px;
-            background: -webkit-linear-gradient(left, #ffffff, #94a3b8);
+            color: var(--primary-purple);
+            margin: 15px 0;
+            /* Subtle gradient text for premium feel */
+            background: linear-gradient(to right, var(--primary-purple), #4b0082);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .sub-text {
+        .course-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 10px 0 30px 0;
+        }
+
+        /* --- Footer Section (Signatures) --- */
+        .cert-footer {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 40px;
+            padding: 0 40px;
+        }
+
+        .signature-box, .date-box {
+            text-align: center;
+            width: 220px;
+        }
+
+        .signature-img {
+            font-family: 'Great Vibes', cursive; /* Cursive font for signature */
+            font-size: 32px;
+            color: var(--primary-purple);
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .sig-line {
+            height: 1px;
+            background: var(--primary-purple);
+            opacity: 0.5;
+            margin-bottom: 8px;
+        }
+
+        .sig-title, .date-text {
             font-size: 14px;
-            color: #64748b;
-            margin-top: 5px;
-            min-height: 20px;
-        }
-
-        /* --- ANIMATIONS --- */
-        @keyframes walk-left {
-            0% { transform: rotate(25deg); }
-            50% { transform: rotate(-25deg); }
-            100% { transform: rotate(25deg); }
-        }
-
-        @keyframes walk-right {
-            0% { transform: rotate(-25deg); }
-            50% { transform: rotate(25deg); }
-            100% { transform: rotate(-25deg); }
-        }
-
-        @keyframes body-bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-3px); }
+            font-weight: 600;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
-        @keyframes head-bob {
-            from { transform: translateY(0); }
-            to { transform: translateY(-4px); }
+        .date-value {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            display: block;
         }
 
-        /* --- CONTENT STYLES (After Load) --- */
-        #main-content {
-            display: none; /* Initially hidden */
-            padding: 40px;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
 
-    <div id="loader-wrapper">
+    <div class="certificate-container">
+        <div class="certificate-bg-pattern"></div>
         
-        <div class="walker-container">
-            <div class="head"></div>
-            <div class="backpack"></div> <div class="body"></div>
-            <div class="leg left"></div>
-            <div class="leg right"></div>
-        </div>
+        <div class="corner-accent c-top-left"></div>
+        <div class="corner-accent c-bottom-right"></div>
 
-        <div class="road-container">
-            <div class="progress-fill" id="progress-bar"></div>
-        </div>
+        <div class="certificate-border">
+            <div class="cert-header">
+                <div class="logo-placeholder">
+                    <svg class="logo-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <path d="M2 7V17" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <path d="M22 7V17" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                    <span class="logo-text">CODELINE AI</span>
+                </div>
+            </div>
 
-        <div class="text-container">
-            <div class="main-text">COURSE LOADING</div>
-            <div class="sub-text" id="status-text">Setting up environment...</div>
+            <div class="cert-content">
+                <h1 class="cert-title">Certificate of Achievement</h1>
+                
+                <p class="cert-body-text">This certificate is proudly presented to</p>
+                
+                <div class="student-name">Chetan</div>
+                
+                <p class="cert-body-text">For successfully completing the prescribed course of study in</p>
+                
+                <h2 class="course-title">Full Stack AI Development Masterclass</h2>
+            </div>
+
+            <div class="cert-footer">
+                <div class="date-box">
+                    <span class="date-value">October 26, 2025</span>
+                    <div class="sig-line"></div>
+                    <span class="date-text">Date Issued</span>
+                </div>
+
+                <div class="signature-box">
+                    <span class="signature-img">Codeline</span>
+                    <div class="sig-line"></div>
+                    <span class="sig-title">Chandrakant Sir <br><small style="font-weight:400; text-transform:none; color:var(--text-muted)">Lead Instructor</small></span>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div id="main-content">
-        <h1>Welcome to the Masterclass</h1>
-        <p>Yeh content tab dikhega jab loader 100% complete ho jayega.</p>
-        <div style="background: #1e293b; padding: 20px; border-radius: 10px; display: inline-block; margin-top: 20px;">
-            <h2>🚀 Course Dashboard</h2>
-            <p>Happy Coding!</p>
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const progressBar = document.getElementById('progress-bar');
-            const statusText = document.getElementById('status-text');
-            const loaderWrapper = document.getElementById('loader-wrapper');
-            const mainContent = document.getElementById('main-content');
-            const body = document.body;
-
-            // Messages jo load hote waqt change honge
-            const messages = [
-                "Setting up your environment...",
-                "Fetching course modules...",
-                "Optimizing video assets...",
-                "Pouring coffee for the instructor...",
-                "Almost there..."
-            ];
-
-            let progress = 0;
-            let messageIndex = 0;
-
-            // Loader Simulation Logic
-            const interval = setInterval(() => {
-                // Random speed se progress badhayenge (realistic lagne ke liye)
-                progress += Math.floor(Math.random() * 5) + 1;
-
-                if (progress > 100) progress = 100;
-
-                // Update Bar Width
-                progressBar.style.width = progress + "%";
-
-                // Change Text based on progress milestones
-                if (progress > 20 && progress < 40) statusText.innerText = messages[1];
-                else if (progress > 40 && progress < 70) statusText.innerText = messages[2];
-                else if (progress > 70 && progress < 90) statusText.innerText = messages[3];
-                else if (progress > 90) statusText.innerText = messages[4];
-
-                // Completion Check
-                if (progress === 100) {
-                    clearInterval(interval);
-                    
-                    // Thoda sa wait taaki user 100% dekh sake
-                    setTimeout(() => {
-                        // Fade out loader
-                        loaderWrapper.style.opacity = "0";
-                        
-                        // Loader hatne ke baad content dikhayein
-                        setTimeout(() => {
-                            loaderWrapper.style.display = "none";
-                            mainContent.style.display = "block";
-                            body.style.overflow = "auto"; // Scroll enable
-                        }, 800);
-                    }, 500);
-                }
-            }, 100); // Har 100ms mein update hoga
-        });
-    </script>
 </body>
 </html>
