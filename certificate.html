@@ -8,13 +8,18 @@
     
     <style>
         :root {
-            /* Brand Colors based on your theme */
+            /* Brand Colors */
             --primary-purple: #8a0b8a;
-            --secondary-cyan: #06b6d4; /* Used sparingly for accents */
+            --secondary-cyan: #06b6d4;
             --text-dark: #1a1a2e;
             --text-muted: #555555;
             --paper-white: #ffffff;
             --border-gradient: linear-gradient(135deg, var(--primary-purple), #4b0082);
+        }
+
+        /* Reset for padding handling */
+        * {
+            box-sizing: border-box;
         }
 
         body {
@@ -22,21 +27,24 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: #f0f2f5; /* Light gray background for web presentation */
+            background: #f0f2f5;
             margin: 0;
+            padding: 20px; /* Added padding for mobile spacing */
             font-family: 'Poppins', sans-serif;
         }
 
-        /* --- Certificate Container (The Paper) --- */
+        /* --- Certificate Container --- */
         .certificate-container {
-            /* Fixed standard landscape aspect ratio for certificates */
-            width: 960px;
-            height: 640px;
+            width: 100%;
+            max-width: 960px; /* Responsive Width */
+            aspect-ratio: 3/2; /* Maintain shape on desktop */
             background-color: var(--paper-white);
             position: relative;
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             padding: 20px;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Subtle Tech Background Pattern */
@@ -54,8 +62,7 @@
 
         /* The Decorative Border */
         .certificate-border {
-            height: 100%;
-            /* Creating a double border effect with gradient */
+            flex-grow: 1; /* Fill container */
             border: 3px solid transparent;
             background: linear-gradient(var(--paper-white), var(--paper-white)) padding-box,
                         var(--border-gradient) border-box;
@@ -82,10 +89,9 @@
         /* --- Header Section --- */
         .cert-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         
-        /* Placeholder Logo Stye */
         .logo-placeholder {
             display: inline-flex;
             align-items: center;
@@ -106,10 +112,13 @@
         .cert-content {
             text-align: center;
             flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .cert-title {
-            font-family: 'Merriweather', serif; /* Serif font for professional look */
+            font-family: 'Merriweather', serif;
             font-size: 42px;
             color: var(--text-dark);
             text-transform: uppercase;
@@ -118,7 +127,6 @@
             position: relative;
             display: inline-block;
         }
-        /* Purple underline accent */
         .cert-title::after {
             content: ''; position: absolute; bottom: -10px; left: 50%;
             transform: translateX(-50%); width: 80px; height: 3px;
@@ -128,7 +136,7 @@
         .cert-body-text {
             font-size: 18px;
             color: var(--text-muted);
-            margin: 25px 0 10px 0;
+            margin: 20px 0 10px 0;
         }
 
         .student-name {
@@ -136,10 +144,10 @@
             font-weight: 700;
             color: var(--primary-purple);
             margin: 15px 0;
-            /* Subtle gradient text for premium feel */
             background: linear-gradient(to right, var(--primary-purple), #4b0082);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            line-height: 1.2;
         }
 
         .course-title {
@@ -149,13 +157,13 @@
             margin: 10px 0 30px 0;
         }
 
-        /* --- Footer Section (Signatures) --- */
+        /* --- Footer Section --- */
         .cert-footer {
             width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            margin-top: 40px;
+            margin-top: 30px;
             padding: 0 40px;
         }
 
@@ -165,7 +173,7 @@
         }
 
         .signature-img {
-            font-family: 'Great Vibes', cursive; /* Cursive font for signature */
+            font-family: 'Great Vibes', cursive;
             font-size: 32px;
             color: var(--primary-purple);
             margin-bottom: 5px;
@@ -195,6 +203,62 @@
             display: block;
         }
 
+        /* ========= RESPONSIVE CSS (MOBILE) ========= */
+        @media (max-width: 768px) {
+            .certificate-container {
+                aspect-ratio: auto; /* Remove fixed ratio */
+                height: auto;       /* Allow growth */
+                padding: 10px;
+            }
+
+            .certificate-border {
+                padding: 25px 15px;
+            }
+
+            .corner-accent {
+                width: 60px;
+                height: 60px;
+            }
+
+            .cert-header { margin-bottom: 15px; }
+            .logo-text { font-size: 22px; }
+            .logo-icon-svg { width: 30px; height: 30px; }
+
+            .cert-title {
+                font-size: 24px; /* Smaller Title */
+                letter-spacing: 1px;
+                margin-bottom: 20px;
+            }
+            .cert-title::after { width: 50px; bottom: -8px; }
+
+            .student-name {
+                font-size: 32px; /* Smaller Name */
+                margin: 10px 0;
+            }
+
+            .course-title {
+                font-size: 20px;
+                margin: 5px 0 20px 0;
+            }
+
+            .cert-body-text {
+                font-size: 14px;
+                margin: 10px 0;
+            }
+
+            /* Stack Footer vertically */
+            .cert-footer {
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+                padding: 0;
+                margin-top: 20px;
+            }
+
+            .signature-box, .date-box {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>

@@ -198,12 +198,161 @@
     .founder-info p { font-size: 16px; line-height: 1.7; color: var(--text-dim); font-style: italic; }
     .signature { font-family: cursive; font-size: 24px; color: var(--text-main); margin-top: 20px; opacity: 0.8; }
 
-    /* ========= 8. FOOTER ========= */
-    .main-footer { background: var(--bg-footer); padding: 50px 0; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-dim); }
+  /* ========= PROFESSIONAL FOOTER STYLE (Final Mobile Fix) ========= */
+.modern-footer {
+    background-color: #050507; /* Deep Dark Background */
+    border-top: 1px solid rgba(154, 6, 105, 0.2);
+    padding: 80px 0 30px;
+    font-family: 'Poppins', sans-serif;
+    color: #b0b0c0;
+    position: relative;
+    overflow: hidden;
+    z-index: 10;
+}
 
+/* Top Glow Line */
+.modern-footer::before {
+    content: ''; position: absolute; top: 0; left: 50%;
+    transform: translateX(-50%); width: 60%; height: 1px;
+    background: linear-gradient(90deg, transparent, #9a0669, transparent);
+    opacity: 0.5;
+}
+
+.container {
+    max-width: 1200px; margin: 0 auto; padding: 0 20px;
+}
+
+/* Desktop Grid (4 Columns) */
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+/* --- Brand Column --- */
+.footer-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 24px; font-weight: 700; color: #fff;
+    margin-bottom: 20px; text-decoration: none;
+}
+.f-logo-img { height: 35px; border-radius: 5px; }
+.footer-logo .highlight { color: #9a0669; }
+
+.footer-desc {
+    font-size: 14px; line-height: 1.6; margin-bottom: 25px;
+    opacity: 0.8; max-width: 300px;
+}
+
+/* Social Icons */
+.social-links { display: flex; gap: 12px; }
+.social-links a {
+    width: 40px; height: 40px;
+    background: rgba(255,255,255,0.05);
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 10px; color: #fff; text-decoration: none;
+    transition: 0.3s; border: 1px solid transparent;
+}
+.social-links a:hover {
+    background: #9a0669; transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(154,6,105,0.3);
+}
+
+/* --- Links Columns --- */
+.footer-col h3 {
+    color: #fff; font-size: 18px; margin-bottom: 25px; font-weight: 600;
+}
+.footer-col ul { list-style: none; padding: 0; }
+.footer-col ul li { margin-bottom: 12px; }
+.footer-col ul li a {
+    color: #b0b0c0; text-decoration: none; font-size: 14px;
+    transition: 0.3s; display: inline-block;
+}
+.footer-col ul li a:hover { color: #9a0669; transform: translateX(5px); }
+
+/* --- Newsletter --- */
+.newsletter-col p { font-size: 14px; margin-bottom: 20px; line-height: 1.5; }
+.input-group {
+    position: relative; display: flex;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px; padding: 5px;
+}
+.input-group input {
+    width: 100%; background: transparent; border: none; outline: none;
+    color: #fff; padding: 10px 15px; font-size: 14px;
+}
+.input-group button {
+    background: #9a0669; color: #fff; border: none;
+    width: 45px; border-radius: 6px; cursor: pointer;
+    font-size: 16px; transition: 0.3s; flex-shrink: 0;
+}
+.input-group button:hover { background: #7a0555; }
+
+/* --- Bottom Bar --- */
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 30px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px; color: #777; flex-wrap: wrap; gap: 15px;
+}
+.footer-bottom strong { color: #fff; }
+.footer-bottom-links a { color: #777; transition: 0.3s; text-decoration: none; }
+.footer-bottom-links a:hover { color: #9a0669; }
+.separator { margin: 0 10px; opacity: 0.3; }
+
+/* ================= RESPONSIVE (MOBILE LEFT ALIGN FIX) ================= */
+
+@media (max-width: 992px) {
+    .footer-grid { 
+        grid-template-columns: 1fr 1fr; /* Tablet: 2 Columns */
+        gap: 40px;
+    }
+}
+
+@media (max-width: 600px) {
+    .modern-footer { padding: 60px 0 30px; }
+
+    /* 🔥 Stack everything in 1 column & ALIGN LEFT */
+    .footer-grid { 
+        grid-template-columns: 1fr; 
+        text-align: left; /* Left Align Key */
+        gap: 35px;
+    }
+
+    /* Logo Left Align */
+    .footer-logo { justify-content: flex-start; } 
+    
+    /* Social Icons Left Align */
+    .social-links { justify-content: flex-start; } 
+
+    /* Description Reset Margin */
+    .footer-desc { margin: 0 0 20px 0; max-width: 100%; }
+
+    /* Link Hover Fix (No movement on mobile to keep alignment clean) */
+    .footer-col ul li a:hover { transform: translateX(5px); }
+
+    /* Bottom Bar Stack & Left Align */
+    .footer-bottom { 
+        flex-direction: column; 
+        align-items: flex-start; /* Left Align */
+        text-align: left;
+        gap: 20px;
+    }
+    
+    .footer-bottom-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    /* Hide separator on mobile if it breaks lines, or keep if fits */
+    .separator { display: inline-block; }
+  }
     /* ========= RESPONSIVE FIXES (Mobile Layout) ========= */
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
     .hamburger span { width: 25px; height: 3px; background: #fff; transition: 0.3s; }
+  
     
     @media (max-width: 992px) {
       /* Navbar Height Fix */
@@ -376,12 +525,73 @@
     </div>
   </section>
 
-  <footer class="main-footer">
+  <footer class="modern-footer">
     <div class="container">
-      <p>&copy; 2026 CODELINE AI. Empowering the Future.</p>
-    </div>
-  </footer>
+        <div class="footer-grid">
+            
+            <div class="footer-col brand-col">
+                <a href="#" class="footer-logo">
+                    <img src="CodeLine Logo.jpg" alt="Logo" class="f-logo-img">
+                    <span>CODELINE <span class="highlight">AI</span></span>
+                </a>
+                <p class="footer-desc">
+                    Empowering students with industry-ready skills. Join the revolution of AI-driven learning and secure your future in tech.
+                </p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
 
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="aboutus.html">About Us</a></li>
+                    <li><a href="my-courses.html">All Courses</a></li>
+                    <li><a href="instructors.html">Instructors</a></li>
+                    <li><a href="placement.html">Placements</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Student Guide</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Contact Support</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col newsletter-col">
+                <h3>Stay Updated</h3>
+                <p>Subscribe to get the latest course updates and tech news.</p>
+                <form class="newsletter-form">
+                    <div class="input-group">
+                        <input type="email" placeholder="Your Email Address" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 <strong>CODELINE AI</strong>. All Rights Reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy</a>
+                <span class="separator">•</span>
+                <a href="#">Terms</a>
+                <span class="separator">•</span>
+                <a href="#">Sitemap</a>
+            </div>
+        </div>
+    </div>
+</footer>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
     AOS.init({ duration: 1000, once: true });
