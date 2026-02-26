@@ -1,4 +1,4 @@
-var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzuweqFoWdQExkI4AXo9cwzNLA_OsBVObtpPUjWMBoD0z1_BcDjy73BvPaNjwknEQq2VA/exec";
+var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz0a9i4wDEMqv43FT1xMQ12WcS1NeXqMzPWIHfGmMrJ6PpXT57eqQrckpDPzB6_grUDaQ/exec";
 
 // 1. Page Load Event
 document.addEventListener('DOMContentLoaded', async () => {

@@ -1608,9 +1608,66 @@ section-heading
     }
 }
 
-/* Hover par rokne ke liye (Optional) */
-.ticker-container:hover .ticker-wrapper {
-    animation-play-state: paused;
+/* ========= ANIMATED FOOTER TEXT (MARQUEE) ========= */
+.modern-footer {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 0;
+}
+
+.footer-big-text {
+    width: 100%;
+    overflow: hidden; /* टेक्स्ट स्क्रीन से बाहर न जाए */
+    background: #050507; /* बैकग्राउंड से मैच करे */
+    padding: 20px 0;
+    opacity: 0.15; /* हल्का दिखने के लिए */
+    user-select: none;
+    pointer-events: none;
+}
+
+.scrolling-wrapper {
+    display: flex;
+    white-space: nowrap; /* टेक्स्ट एक लाइन में रहे */
+    gap: 50px; /* शब्दों के बीच गैप */
+    animation: scrollText 20s linear infinite; /* 🔥 चलने वाला जादू */
+}
+
+.scrolling-wrapper span {
+    font-size: 10vw; /* स्क्रीन के हिसाब से बड़ा */
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 2px #fff; /* सिर्फ आउटलाइन */
+    display: inline-block;
+    text-transform: uppercase;
+    font-family: sans-serif;
+}
+
+/* अगर आप चाहते हैं कि हर दूसरा शब्द भरा हुआ (Solid) दिखे तो यह रखें, वरना हटा दें */
+.scrolling-wrapper span.stroke-text {
+    /* color: #fff;  <-- इसे uncomment करें अगर solid चाहिए */
+    /* -webkit-text-stroke: 0; */
+}
+
+/* 🔥 ANIMATION KEYFRAMES (Left Move) */
+@keyframes scrollText {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        /* टेक्स्ट को आधा पीछे ले जाएं ताकि लूप पता न चले */
+        transform: translateX(-50%); 
+    }
+}
+
+/* Mobile Adjustment */
+@media (max-width: 768px) {
+    .scrolling-wrapper span {
+        font-size: 15vw; /* मोबाइल पर थोड़ा और बड़ा */
+    }
+    .scrolling-wrapper {
+        gap: 30px;
+        animation-duration: 15s; /* मोबाइल पर थोड़ा तेज़ */
+    }
 }
   </style>
 </head>
@@ -2167,6 +2224,16 @@ section-heading
             </div>
         </div>
     </div>
+    <footer class="modern-footer">
+    <div class="footer-big-text">
+    <div class="scrolling-wrapper">
+        <span>CODELINE AI</span>
+        <span class="stroke-text">CODELINE AI</span>
+        <span>CODELINE AI</span>
+        <span class="stroke-text">CODELINE AI</span>
+    </div>
+</div>
+</footer>
 </footer>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 

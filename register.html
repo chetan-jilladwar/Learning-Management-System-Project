@@ -37,10 +37,11 @@
       width: 20px; height: 20px; background: rgba(255, 255, 255, 0.1);
       animation: animate 25s linear infinite; bottom: -150px; border-radius: 4px;
     }
-    /* Add specific particle styles here if needed, or keep minimal for brevity */
     .circles li:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
     .circles li:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
-    /* ... more circles ... */
+    .circles li:nth-child(3) { left: 70%; width: 20px; height: 20px; animation-delay: 4s; }
+    .circles li:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; }
+    .circles li:nth-child(5) { left: 65%; width: 20px; height: 20px; animation-delay: 0s; }
 
     @keyframes animate {
       0% { transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; }
@@ -75,7 +76,7 @@
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
       position: relative;
       overflow: hidden;
-      text-align: center; /* Center logo */
+      text-align: center;
     }
 
     .register-card::before {
@@ -85,13 +86,9 @@
 
     .header-area { margin-bottom: 25px; }
     
-    /* --- LOGO --- */
     .logo-img {
-      width: 90px;
-      height: auto;
-      margin-bottom: 10px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      width: 90px; height: auto; margin-bottom: 10px;
+      border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
 
     h2 { color: var(--text); font-weight: 700; font-size: 1.8rem; margin-bottom: 5px; }
@@ -141,20 +138,15 @@
       box-shadow: 0 4px 15px rgba(0, 210, 255, 0.4); margin-top: 10px;
     }
     .btn-register:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 210, 255, 0.6); }
-    .btn-register::after {
-      content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      transition: 0.5s;
-    }
-    .btn-register:hover::after { left: 100%; }
+    .btn-register:disabled { background: #555; cursor: not-allowed; box-shadow: none; }
 
     .login-link { text-align: center; margin-top: 20px; font-size: 0.9rem; color: rgba(255,255,255,0.7); }
     .login-link a { color: var(--accent); text-decoration: none; font-weight: 600; transition: 0.3s; }
     .login-link a:hover { color: #fff; text-shadow: 0 0 10px var(--accent); }
 
-    .message { text-align: center; margin-top: 15px; font-size: 0.9rem; min-height: 20px; font-weight: 500; }
-    .error-msg { color: #ff4d4d; }
-    .success-msg { color: #00d26a; }
+    .message { text-align: center; margin-top: 15px; font-size: 0.9rem; min-height: 20px; font-weight: 500; display: none;}
+    .error-msg { color: #ff4d4d; display: block; }
+    .success-msg { color: #00d26a; display: block; }
 
     /* Mobile */
     @media (max-width: 480px) { .register-card { padding: 30px 20px; } h2 { font-size: 1.6rem; } }
@@ -162,44 +154,38 @@
 </head>
 <body>
 
-  <ul class="circles"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>
-
-  <i class="fas fa-rocket floating-icon icon-1"></i>
-  <i class="fas fa-code floating-icon icon-2"></i>
-  <i class="fas fa-globe floating-icon icon-3"></i>
-  <i class="fas fa-lightbulb floating-icon icon-4"></i>
-
+  <ul class="circles"><li></li><li></li><li></li><li></li><li></li></ul>
+  
   <div class="container">
     <div class="register-card">
-      
       <div class="header-area">
-        <img src="Codeline Logo.jpg" alt="Codeline AI Logo" class="logo-img">
+        <img src="CodeLine Logo.jpg" alt="Codeline AI Logo" class="logo-img">
         <h2>Create Account</h2>
         <div class="typewriter" id="typewriter-text"></div>
       </div>
 
-      <form id="register-form" novalidate>
+      <form id="register-form">
         
         <div class="input-group">
-          <input type="text" id="name" name="name" class="form-control" placeholder=" " required autocomplete="off">
+          <input type="text" id="name" class="form-control" placeholder=" " required>
           <i class="fas fa-user input-icon"></i>
           <label for="name" class="form-label">Full Name</label>
         </div>
 
         <div class="input-group">
-          <input type="email" id="email" name="email" class="form-control" placeholder=" " required autocomplete="off">
+          <input type="email" id="email" class="form-control" placeholder=" " required>
           <i class="fas fa-envelope input-icon"></i>
           <label for="email" class="form-label">Email Address</label>
         </div>
 
         <div class="input-group">
-          <input type="tel" id="phone" name="phone" class="form-control" placeholder=" " autocomplete="off">
+          <input type="tel" id="phone" class="form-control" placeholder=" " required>
           <i class="fas fa-phone input-icon"></i>
           <label for="phone" class="form-label">Phone Number</label>
         </div>
 
         <div class="input-group">
-          <input type="password" id="password" name="password" class="form-control" placeholder=" " required>
+          <input type="password" id="password" class="form-control" placeholder=" " required>
           <i class="fas fa-lock input-icon"></i>
           <label for="password" class="form-label">Create Password</label>
         </div>
@@ -210,15 +196,14 @@
 
         <div id="message" class="message"></div>
       </form>
-
       <p class="login-link">Already a member? <a href="login.html">Login Here</a></p>
-
     </div>
   </div>
 
-  <script src="js/register.js"></script>
-
   <script>
+    // 🔥 APNA GOOGLE APPS SCRIPT URL YAHAN PASTE KAREIN
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz0a9i4wDEMqv43FT1xMQ12WcS1NeXqMzPWIHfGmMrJ6PpXT57eqQrckpDPzB6_grUDaQ/exec";
+
     // Typing Effect
     const textElement = document.getElementById('typewriter-text');
     const texts = ["Join the Future of Learning", "Unlock Your Potential", "Become a Pro Developer"];
@@ -242,21 +227,63 @@
     }
     typeEffect();
 
-    // Basic Validation Feedback
+    // 🔥 REGISTRATION LOGIC
     const form = document.getElementById('register-form');
     const msg = document.getElementById('message');
-    form.addEventListener('submit', (e) => {
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const pass = document.getElementById('password').value;
-      if(!name || !email || !pass) {
-        msg.textContent = "Please fill all required fields.";
-        msg.className = "message error-msg";
-      } else {
-        msg.textContent = "Creating Account...";
-        msg.className = "message";
-        msg.style.color = "var(--accent)";
-      }
+    const btn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', function(e) {
+        // 1. STOP PAGE RELOAD
+        e.preventDefault(); 
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const password = document.getElementById('password').value.trim();
+
+        if(!name || !email || !phone || !password) {
+            msg.textContent = "Please fill all required fields.";
+            msg.className = "message error-msg";
+            return;
+        }
+
+        // 2. DISABLE BUTTON
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+        btn.disabled = true;
+        msg.style.display = 'none';
+
+        // 3. PREPARE DATA
+        const payload = {
+            action: 'register',
+            name: name,
+            email: email,
+            phone: phone,
+            password: password
+        };
+
+        // 4. SEND DATA TO GOOGLE SHEET
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'success') {
+                msg.textContent = "Registration Successful! Redirecting...";
+                msg.className = "message success-msg";
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+            } else {
+                throw new Error(data.message);
+            }
+        })
+        .catch(err => {
+            msg.textContent = "Error: " + err.message;
+            msg.className = "message error-msg";
+            btn.innerHTML = 'Start Learning <i class="fas fa-arrow-right"></i>';
+            btn.disabled = false;
+        });
     });
   </script>
 
